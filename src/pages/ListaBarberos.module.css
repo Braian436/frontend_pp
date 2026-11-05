@@ -1,0 +1,17 @@
+.seccion {
+    width: 100%;
+    padding: 40px 80px;
+    background-color: #080808;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.contenedor {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
