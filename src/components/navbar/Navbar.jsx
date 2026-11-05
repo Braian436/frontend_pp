@@ -8,7 +8,7 @@ export default function Navbar() {
             <nav className={styles.navbar}>
 
                 {/* Logo */}
-                <NavLink to="/" className={styles.brand}>
+                <NavLink to="/">
                     <img src={Logo} alt="Barbería Clase A" className={styles.logoRedondo}/>
                 </NavLink>
 
