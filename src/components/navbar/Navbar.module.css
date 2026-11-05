@@ -1,6 +1,10 @@
 .header {
-    background-color: #0e0d0d;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    z-index: 100;
+    background-color: rgba(26, 26, 26, 0.35);
 }
 
 .navbar {
@@ -11,7 +15,6 @@
     margin: 0 auto;
     padding: 12px 20px;
 }
-
 
 .logoRedondo {
     height: 75px;

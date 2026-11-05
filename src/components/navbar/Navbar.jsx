@@ -1,4 +1,5 @@
-import React from "react";
+
+import { NavLink } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import Logo from "../../assets/LOGO-BARBER.png";
 
@@ -6,35 +7,38 @@ export default function Navbar() {
     return (
         <header className={styles.header}>
             <nav className={styles.navbar}>
-                
+
                 {/* Logo */}
-                <a href="#inicio" className={styles.brand}>
-                    <img src={Logo} alt="Barbería Clase A" className={styles.logoRedondo} />
-                </a>
+                <NavLink to="/" className={styles.brand}>
+                    <img src={Logo} alt="Barbería Clase A" className={styles.logoRedondo}/>
+                </NavLink>
 
                 <ul className={styles.navMenu}>
+
                     <li className={styles.navItem}>
-                        <a href="#servicios" className={styles.botonLindo}>
+                        <NavLink to="/" end className={styles.botonLindo}>
                             INICIO
-                        </a>
+                        </NavLink>
                     </li>
+
                     <li className={styles.navItem}>
-                        <a href="#nosotros" className={styles.botonLindo}>
+                        <NavLink to="/servicios" className={styles.botonLindo}>
                             SERVICIOS
-                        </a>
+                        </NavLink>
                     </li>
+
                     <li className={styles.navItem}>
-                        <a href="#contacto" className={styles.botonLindo}>
+                        <NavLink to="/barberos" className={styles.botonLindo}>
                             BARBEROS
-                        </a>
+                        </NavLink>
                     </li>
+
                     <li className={styles.navItem}>
-                        <a href="#inicio" className={`${styles.botonLindo} ${styles.botonActivo}`}>
+                        <NavLink to="/registrar-turno" className={`${styles.botonLindo} ${styles.botonActivo}`}>
                             REGISTRAR TURNO
-                        </a>
+                        </NavLink>
                     </li>
                 </ul>
-                
             </nav>
         </header>
     );
