@@ -1,4 +1,3 @@
-
 import { NavLink } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import Logo from "../../assets/LOGO-BARBER.png";
