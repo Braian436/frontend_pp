@@ -1,0 +1,455 @@
+.pagina {
+    min-height: 100%;
+    padding: 56px 40px 80px;
+    color: #fff;
+    background:
+        radial-gradient(900px 380px at 8% -8%, rgba(217, 196, 147, 0.13), transparent 60%),
+        radial-gradient(700px 300px at 92% 0%, rgba(217, 196, 147, 0.05), transparent 60%),
+        #080808;
+}
+
+.contenedor {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* ---------- Encabezado ---------- */
+
+.encabezado {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 34px;
+}
+
+.etiqueta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #d9c493;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+}
+
+.linea {
+    width: 34px;
+    height: 1px;
+    background-color: #d9c493;
+}
+
+.titulo {
+    margin: 12px 0 10px;
+    color: #fff;
+    font-size: clamp(34px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.descripcion {
+    max-width: 560px;
+    margin: 0;
+    color: #9e9e9e;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.botonNuevo,
+.botonSecundario,
+.botonEliminar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 46px;
+    padding: 0 22px;
+    font-size: 14px;
+    font-weight: 800;
+    font-family: inherit;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.botonNuevo {
+    color: #1a1a1a;
+    background-color: #d9c493;
+    border: 1px solid #d9c493;
+    box-shadow: 0 10px 26px rgba(217, 196, 147, 0.18);
+}
+
+.botonNuevo:hover {
+    background-color: #ecdcb5;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(217, 196, 147, 0.28);
+}
+
+/* ---------- Herramientas ---------- */
+
+.herramientas {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding: 14px;
+    background-color: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+}
+
+.buscador {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 240px;
+    max-width: 380px;
+}
+
+.buscadorIcono {
+    position: absolute;
+    left: 14px;
+    color: #858585;
+    font-size: 13px;
+    pointer-events: none;
+}
+
+.buscador input {
+    width: 100%;
+    height: 42px;
+    padding: 0 40px 0 38px;
+    color: #f5f5f5;
+    font-size: 14px;
+    font-family: inherit;
+    background-color: #0b0b0b;
+    border: 1px solid #2b2b2b;
+    border-radius: 10px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.buscador input::placeholder {
+    color: #6e6e6e;
+}
+
+.buscador input:focus {
+    outline: none;
+    border-color: #d9c493;
+    box-shadow: 0 0 0 3px rgba(217, 196, 147, 0.13);
+}
+
+.buscador input::-webkit-search-cancel-button {
+    display: none;
+}
+
+.limpiarBusqueda {
+    position: absolute;
+    right: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    color: #9a9a9a;
+    font-size: 12px;
+    background: transparent;
+    border: 0;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.limpiarBusqueda:hover {
+    color: #fff;
+    background-color: #222;
+}
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filtro {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 38px;
+    padding: 0 13px;
+    color: #adadad;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: inherit;
+    background-color: transparent;
+    border: 1px solid #303030;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filtro:hover {
+    color: #fff;
+    border-color: #525252;
+}
+
+.filtro > svg {
+    font-size: 11px;
+}
+
+.filtroActivo {
+    color: #1a1a1a;
+    background-color: #d9c493;
+    border-color: #d9c493;
+}
+
+.filtroActivo:hover {
+    color: #1a1a1a;
+    border-color: #ecdcb5;
+}
+
+.filtroPunto {
+    width: 7px;
+    height: 7px;
+    background-color: currentColor;
+    border-radius: 50%;
+    box-shadow: 0 0 7px currentColor;
+}
+
+.activo {
+    color: #4ade80;
+}
+
+.suspendido {
+    color: #facc15;
+}
+
+.inactivo {
+    color: #f87171;
+}
+
+.filtroContador {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    color: #d0d0d0;
+    font-size: 10px;
+    font-weight: 800;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+}
+
+.filtroActivo .filtroContador {
+    color: #1a1a1a;
+    background-color: rgba(0, 0, 0, 0.16);
+}
+
+/* ---------- Resultados ---------- */
+
+.resultados {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 26px;
+    margin-bottom: 16px;
+    color: #858585;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.limpiarFiltros {
+    padding: 0;
+    color: #d9c493;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: inherit;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+/* ---------- Grilla ---------- */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+/* ---------- Vacío ---------- */
+
+.vacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 24px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(217, 196, 147, 0.28);
+    border-radius: 18px;
+}
+
+.vacioIcono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 18px;
+    color: #d9c493;
+    font-size: 24px;
+    background-color: rgba(217, 196, 147, 0.08);
+    border: 1px solid rgba(217, 196, 147, 0.25);
+    border-radius: 50%;
+}
+
+.vacio h2 {
+    margin: 0 0 8px;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.vacio p {
+    max-width: 420px;
+    margin: 0 0 22px;
+    color: #929292;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.botonSecundario {
+    color: #d0d0d0;
+    background-color: transparent;
+    border: 1px solid #3a3a3a;
+}
+
+.botonSecundario:hover {
+    color: #fff;
+    background-color: #232323;
+    border-color: #555;
+}
+
+/* ---------- Confirmación de borrado ---------- */
+
+.confirmacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 0;
+    text-align: center;
+}
+
+.advertenciaIcono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 62px;
+    height: 62px;
+    margin-bottom: 18px;
+    color: #f87171;
+    font-size: 24px;
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-radius: 50%;
+}
+
+.confirmacion h3 {
+    margin: 0 0 8px;
+    color: #fff;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.confirmacion h3 strong {
+    color: #d9c493;
+}
+
+.confirmacion p {
+    max-width: 380px;
+    margin: 0 0 24px;
+    color: #9d9d9d;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.confirmacionAcciones {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.botonEliminar {
+    color: #fff;
+    background-color: #b91c1c;
+    border: 1px solid #ef4444;
+}
+
+.botonEliminar:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 860px) {
+    .pagina {
+        padding: 42px 24px 64px;
+    }
+
+    .encabezado {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .herramientas {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .buscador {
+        max-width: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .pagina {
+        padding: 34px 18px 56px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filtros {
+        gap: 6px;
+    }
+
+    .filtro {
+        height: 36px;
+        padding: 0 11px;
+    }
+
+    .confirmacionAcciones {
+        flex-direction: column-reverse;
+    }
+
+    .confirmacionAcciones button {
+        width: 100%;
+    }
+}
