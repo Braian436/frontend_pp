@@ -1,0 +1,59 @@
+.header {
+    background-color: #0e0d0d;
+    width: 100%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1750px;
+    margin: 0 auto;
+    padding: 12px 20px;
+}
+
+
+.logoRedondo {
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 3px;
+}
+
+
+.navMenu {
+    display: flex;
+    gap: 4rem; /* Espacio entre los botones */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.botonLindo {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 25px; /* Bordes tipo píldora */
+    font-weight: 950;
+    transition: all 0.3s ease; /* Animación suave para todos los cambios */
+    border: 1px solid transparent;
+    display: block; 
+}
+
+.botonLindo:hover {
+    background-color: #D9C493; /* Fondo dorado */
+    color: #1a1a1a; /* Letra oscura */
+    transform: translateY(-2px); /* Se levanta un poco */
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+}
+
+.botonActivo {
+    color: #D9C493;
+    border: 1px solid #D9C493; /* Borde dorado constante */
+}
+
+.botonActivo:hover {
+    background-color: #D9C493;
+}
