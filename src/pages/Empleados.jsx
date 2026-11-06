@@ -1,283 +1,208 @@
-import { useMemo, useState } from "react";
-import {
-    FaExclamationTriangle,
-    FaPlus,
-    FaSearch,
-    FaTimes,
-    FaTrash,
-    FaUserPlus,
-    FaUsers,
-} from "react-icons/fa";
-import CardEmpleado from "../components/cardEmpleado/CardEmpleado.jsx";
-import FormularioEmpleado from "../components/formularioEmpleado/FormularioEmpleado.jsx";
-import ModalEmpleado from "../components/modalEmpleado/ModalEmpleado.jsx";
-import { ESTADOS } from "../data/empleados.js";
-import useEmpleados from "../hooks/useEmpleados.js";
+import { useState } from "react";
+import EmpleadoCard from "../components/empleadoCard/EmpleadoCard";
+import EmpleadoFiltros from "../components/empleadoFiltro/EmpleadoFiltro";
+import EmpleadoModal from "../components/empleadoModal/EmpleadoModal";
 import styles from "./Empleados.module.css";
 
-function normalizar(texto) {
-    return String(texto ?? "")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase()
-        .trim();
-}
+
+const empleadosIniciales = [
+  {
+    id: 1,
+    nombre: "Enzo Figueroa",
+    dni: "30123456",
+    rol: "Barbero",
+    estado: "activo",
+    comision: 15,
+    fechaAlta: "12/03/2024",
+    foto: null,
+  },
+  {
+    id: 2,
+    nombre: "Martín Acosta",
+    dni: "28555111",
+    rol: "Barbero",
+    estado: "suspendido",
+    comision: 10,
+    fechaAlta: "20/01/2025",
+    foto: null,
+  },
+  {
+    id: 3,
+    nombre: "Lucas Herrera",
+    dni: "35777888",
+    rol: "Barbero",
+    estado: "inactivo",
+    comision: 20,
+    fechaAlta: "05/08/2023",
+    foto: null,
+  },
+];
 
 export default function Empleados() {
-    const { empleados, crear, eliminar } = useEmpleados();
-    const [modalCrear, setModalCrear] = useState(false);
-    const [empleadoAEliminar, setEmpleadoAEliminar] = useState(null);
-    const [busqueda, setBusqueda] = useState("");
-    const [filtroEstado, setFiltroEstado] = useState("todos");
+  const [empleados, setEmpleados] = useState(empleadosIniciales);
 
-    const conteos = useMemo(() => {
-        const resultado = { todos: empleados.length };
+  const [busqueda, setBusqueda] = useState("");
+  const [filtro, setFiltro] = useState("todos");
 
-        ESTADOS.forEach((estado) => {
-            resultado[estado.valor] = empleados.filter(
-                (empleado) => empleado.estado === estado.valor
-            ).length;
-        });
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [empleadoEditar, setEmpleadoEditar] = useState(null);
 
-        return resultado;
-    }, [empleados]);
+  const empleadosFiltrados = empleados.filter((empleado) => {
+    const texto = busqueda.toLowerCase().trim();
 
-    const filtrados = useMemo(() => {
-        const termino = normalizar(busqueda);
+    const coincideBusqueda =
+      empleado.nombre.toLowerCase().includes(texto) ||
+      empleado.dni.includes(texto);
 
-        return empleados.filter((empleado) => {
-            const coincideEstado =
-                filtroEstado === "todos" || empleado.estado === filtroEstado;
+    const coincideEstado =
+      filtro === "todos" || empleado.estado === filtro;
 
-            const coincideBusqueda =
-                !termino ||
-                normalizar(empleado.nombre).includes(termino) ||
-                normalizar(empleado.dni).includes(termino);
+    return coincideBusqueda && coincideEstado;
+  });
 
-            return coincideEstado && coincideBusqueda;
-        });
-    }, [empleados, filtroEstado, busqueda]);
+  const nuevoEmpleado = () => {
+    setEmpleadoEditar(null);
+    setMostrarModal(true);
+  };
 
-    const crearEmpleado = (datos) => {
-        crear(datos);
-        setModalCrear(false);
-    };
+  const editarEmpleado = (empleado) => {
+    setEmpleadoEditar(empleado);
+    setMostrarModal(true);
+  };
 
-    const confirmarEliminacion = () => {
-        if (!empleadoAEliminar) return;
-        eliminar(empleadoAEliminar.id);
-        setEmpleadoAEliminar(null);
-    };
+  const cerrarModal = () => {
+    setMostrarModal(false);
+    setEmpleadoEditar(null);
+  };
 
-    const hayFiltrosActivos = busqueda.trim() !== "" || filtroEstado !== "todos";
+  const guardarEmpleado = (datos) => {
+    // Datos de demostración: no se envían a Django.
+    const { password, archivoFoto, ...empleadoDatos } = datos;
 
-    return (
-        <section className={styles.pagina}>
-            <div className={styles.contenedor}>
-                <header className={styles.encabezado}>
-                    <div>
-                        <span className={styles.etiqueta}>
-                            <span className={styles.linea} aria-hidden="true" />
-                            Panel de administración
-                        </span>
-                        <h1 className={styles.titulo}>Empleados</h1>
-                        <p className={styles.descripcion}>
-                            Gestioná el equipo de la barbería, sus comisiones y su estado
-                            de disponibilidad.
-                        </p>
-                    </div>
+    // En una API real, la contraseña se enviaría
+    // de forma segura al backend, no al estado.
+    void password;
+    void archivoFoto;
 
-                    <button
-                        type="button"
-                        className={styles.botonNuevo}
-                        onClick={() => setModalCrear(true)}
-                    >
-                        <FaPlus aria-hidden="true" />
-                        Nuevo empleado
-                    </button>
-                </header>
+    if (empleadoEditar) {
+      setEmpleados((anteriores) =>
+        anteriores.map((empleado) =>
+          empleado.id === empleadoEditar.id
+            ? {
+                ...empleado,
+                ...empleadoDatos,
+              }
+            : empleado
+        )
+      );
+    } else {
+      const nuevo = {
+        ...empleadoDatos,
+        id: crypto.randomUUID(),
+        fechaAlta: new Date().toLocaleDateString("es-AR"),
+      };
 
-                <div className={styles.herramientas}>
-                    <div className={styles.buscador}>
-                        <FaSearch className={styles.buscadorIcono} aria-hidden="true" />
-                        <input
-                            type="search"
-                            value={busqueda}
-                            onChange={(evento) => setBusqueda(evento.target.value)}
-                            placeholder="Buscar por nombre o DNI..."
-                            aria-label="Buscar empleados por nombre o DNI"
-                        />
-                        {busqueda && (
-                            <button
-                                type="button"
-                                className={styles.limpiarBusqueda}
-                                onClick={() => setBusqueda("")}
-                                aria-label="Limpiar búsqueda"
-                            >
-                                <FaTimes />
-                            </button>
-                        )}
-                    </div>
+      setEmpleados((anteriores) => [...anteriores, nuevo]);
+    }
 
-                    <div className={styles.filtros} role="group" aria-label="Filtrar por estado">
-                        <button
-                            type="button"
-                            className={`${styles.filtro} ${filtroEstado === "todos" ? styles.filtroActivo : ""}`}
-                            onClick={() => setFiltroEstado("todos")}
-                        >
-                            <FaUsers aria-hidden="true" />
-                            Todos
-                            <span className={styles.filtroContador}>{conteos.todos}</span>
-                        </button>
+    cerrarModal();
+  };
 
-                        {ESTADOS.map((estado) => (
-                            <button
-                                key={estado.valor}
-                                type="button"
-                                className={`${styles.filtro} ${filtroEstado === estado.valor ? styles.filtroActivo : ""}`}
-                                onClick={() => setFiltroEstado(estado.valor)}
-                            >
-                                <span
-                                    className={`${styles.filtroPunto} ${styles[estado.valor]}`}
-                                    aria-hidden="true"
-                                />
-                                {estado.etiqueta}
-                                <span className={styles.filtroContador}>
-                                    {conteos[estado.valor] ?? 0}
-                                </span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                <div className={styles.resultados}>
-                    <span>
-                        {filtrados.length === 1
-                            ? "1 empleado"
-                            : `${filtrados.length} empleados`}
-                        {hayFiltrosActivos && ` de ${empleados.length}`}
-                    </span>
-                    {hayFiltrosActivos && (
-                        <button
-                            type="button"
-                            className={styles.limpiarFiltros}
-                            onClick={() => {
-                                setBusqueda("");
-                                setFiltroEstado("todos");
-                            }}
-                        >
-                            Limpiar filtros
-                        </button>
-                    )}
-                </div>
-
-                {filtrados.length > 0 ? (
-                    <div className={styles.grid}>
-                        {filtrados.map((empleado) => (
-                            <CardEmpleado
-                                key={empleado.id}
-                                empleado={empleado}
-                                onEliminar={setEmpleadoAEliminar}
-                            />
-                        ))}
-                    </div>
-                ) : (
-                    <div className={styles.vacio}>
-                        <span className={styles.vacioIcono}>
-                            <FaUsers aria-hidden="true" />
-                        </span>
-                        <h2>
-                            {empleados.length === 0
-                                ? "Todavía no hay empleados"
-                                : "No encontramos resultados"}
-                        </h2>
-                        <p>
-                            {empleados.length === 0
-                                ? "Creá el primer empleado para empezar a armar el equipo."
-                                : "Probá con otro nombre, DNI o cambiá el filtro de estado."}
-                        </p>
-                        {empleados.length === 0 ? (
-                            <button
-                                type="button"
-                                className={styles.botonNuevo}
-                                onClick={() => setModalCrear(true)}
-                            >
-                                <FaPlus aria-hidden="true" />
-                                Crear empleado
-                            </button>
-                        ) : (
-                            <button
-                                type="button"
-                                className={styles.botonSecundario}
-                                onClick={() => {
-                                    setBusqueda("");
-                                    setFiltroEstado("todos");
-                                }}
-                            >
-                                Limpiar filtros
-                            </button>
-                        )}
-                    </div>
-                )}
-            </div>
-
-            <ModalEmpleado
-                show={modalCrear}
-                onHide={() => setModalCrear(false)}
-                titulo="Nuevo empleado"
-                subtitulo="Completá los datos para sumarlo al equipo"
-                icono={<FaUserPlus />}
-            >
-                <FormularioEmpleado
-                    key={modalCrear ? "crear-abierto" : "crear-cerrado"}
-                    empleados={empleados}
-                    onGuardar={crearEmpleado}
-                    onCancelar={() => setModalCrear(false)}
-                    textoGuardar="Crear empleado"
-                />
-            </ModalEmpleado>
-
-            <ModalEmpleado
-                show={Boolean(empleadoAEliminar)}
-                onHide={() => setEmpleadoAEliminar(null)}
-                titulo="Eliminar empleado"
-                subtitulo="Esta acción no se puede deshacer"
-                icono={<FaTrash />}
-                size="md"
-            >
-                {empleadoAEliminar && (
-                    <div className={styles.confirmacion}>
-                        <span className={styles.advertenciaIcono}>
-                            <FaExclamationTriangle aria-hidden="true" />
-                        </span>
-                        <h3>
-                            ¿Eliminar a <strong>{empleadoAEliminar.nombre}</strong>?
-                        </h3>
-                        <p>
-                            Se borrarán sus datos, su foto y su configuración de comisiones
-                            del equipo.
-                        </p>
-
-                        <div className={styles.confirmacionAcciones}>
-                            <button
-                                type="button"
-                                className={styles.botonSecundario}
-                                onClick={() => setEmpleadoAEliminar(null)}
-                            >
-                                Cancelar
-                            </button>
-                            <button
-                                type="button"
-                                className={styles.botonEliminar}
-                                onClick={confirmarEliminacion}
-                            >
-                                <FaTrash aria-hidden="true" />
-                                Eliminar empleado
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </ModalEmpleado>
-        </section>
+  const eliminarEmpleado = (empleado) => {
+    const confirmar = window.confirm(
+      `¿Seguro que querés eliminar a ${empleado.nombre}?`
     );
+
+    if (!confirmar) return;
+
+    setEmpleados((anteriores) =>
+      anteriores.filter((e) => e.id !== empleado.id)
+    );
+  };
+
+  return (
+    <section className={styles.pagina}>
+      <div className="container">
+
+        {/* ENCABEZADO */}
+        <div className="row align-items-center g-3 mb-4">
+
+          <div className="col-12 col-md-8">
+            <span className={styles.subtitulo}>
+              — PANEL DE ADMINISTRACIÓN
+            </span>
+
+            <h1 className={styles.titulo}>
+              Empleados
+            </h1>
+
+            <p className="text-secondary mb-0">
+              Gestioná el equipo de la barbería,
+              sus comisiones y su estado.
+            </p>
+          </div>
+
+          <div className="col-12 col-md-4 text-md-end">
+            <button
+              type="button"
+              className={`btn ${styles.botonNuevo}`}
+              onClick={nuevoEmpleado}
+            >
+              + Nuevo empleado
+            </button>
+          </div>
+
+        </div>
+
+        {/* FILTROS */}
+        <EmpleadoFiltros
+          busqueda={busqueda}
+          setBusqueda={setBusqueda}
+          filtro={filtro}
+          setFiltro={setFiltro}
+          empleados={empleados}
+        />
+
+        {/* CANTIDAD */}
+        <p className={styles.cantidad}>
+          {empleadosFiltrados.length} EMPLEADOS
+        </p>
+
+        {/* TARJETAS */}
+        <div className="row g-4">
+          {empleadosFiltrados.map((empleado) => (
+            <div
+              key={empleado.id}
+              className="col-12 col-md-6 col-lg-4"
+            >
+              <EmpleadoCard
+                empleado={empleado}
+                onEditar={editarEmpleado}
+                onEliminar={eliminarEmpleado}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* SIN RESULTADOS */}
+        {empleadosFiltrados.length === 0 && (
+          <div className="text-center py-5 text-secondary">
+            No se encontraron empleados.
+          </div>
+        )}
+
+      </div>
+
+      {/* MODAL */}
+      {mostrarModal && (
+        <EmpleadoModal
+          key={empleadoEditar?.id ?? "nuevo"}
+          empleado={empleadoEditar}
+          cerrar={cerrarModal}
+          guardar={guardarEmpleado}
+        />
+      )}
+
+    </section>
+  );
 }

@@ -1,0 +1,136 @@
+.card {
+    background-color: #191919;
+    border: 1px solid #494338;
+    border-radius: 14px;
+    overflow: hidden;
+    color: white;
+}
+
+.portada {
+    height: 190px;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: repeating-linear-gradient(
+        45deg,
+        #20201f,
+        #20201f 5px,
+        #242321 5px,
+        #242321 10px
+    );
+}
+
+.avatar {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #29251e;
+    border: 1px solid #a99570;
+    color: #D9C493;
+
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.avatar img {
+    object-fit: cover;
+}
+
+.estado {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    background-color: #202020;
+}
+
+.activo {
+    color: #00e676;
+    border: 1px solid #00c853;
+    }
+
+.suspendido {
+    color: #ffd600;
+    border: 1px solid #ffd600;
+}
+
+.inactivo {
+    color: #ff5252;
+    border: 1px solid #ff5252;
+}
+
+.comision {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    padding: 7px 11px;
+
+    background-color: #D9C493;
+    color: #111;
+}
+
+.nombre {
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.rol {
+    color: #aaa;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.dato {
+    padding: 10px;
+    background: #242424;
+    border: 1px solid #333;
+    border-radius: 7px;
+}
+
+.dato small {
+    display: block;
+    color: #D9C493;
+    font-size: 10px;
+    margin-bottom: 5px;
+}
+
+.dato strong {
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.botonEditar {
+    color: #D9C493;
+    border: 1px solid #D9C493;
+    font-weight: bold;
+    border-radius: 20px;
+}
+
+.botonEditar:hover {
+    background: #D9C493;
+    color: #111;
+}
+
+.botonEliminar {
+    color: #ff7777;
+    border: 1px solid #803030;
+    font-weight: bold;
+    border-radius: 20px;
+}
+
+.botonEliminar:hover {
+    background: #803030;
+    color: white;
+}

@@ -1,0 +1,64 @@
+.filtros {
+    padding: 12px;
+    margin: 0;
+    background-color: #191919;
+    border: 1px solid #333;
+    border-radius: 12px;
+    align-items: center;
+}
+
+.buscador {
+    width: 450px;
+    background-color: #101010;
+    border: 1px solid #383838;
+    border-radius: 20px;
+    color: white;
+    padding: 10px 12px;
+}
+
+.buscador::placeholder {
+    color: #888;
+}
+
+.buscador:focus {
+    background: #101010;
+    color: white;
+    border-color: #D9C493;
+    box-shadow: none;
+}
+
+.boton {
+    background: #161616;
+    border: 1px solid #383838;
+    color: #ddd;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.boton:hover {
+    background: #333;
+    border-color: #D9C493;
+    color: white;
+}
+
+.seleccionado, .seleccionado:hover {
+    background: #D9C493;
+    color: #111;
+    border-color: #D9C493;
+}
+
+.activo {
+    color: #00e676;
+}
+
+.suspendido {
+    color: #ffd600;
+}
+
+.inactivo {
+    color: #ff5252;
+}
+
+.todos {
+    color: #D9C493;
+}

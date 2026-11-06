@@ -1,0 +1,258 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background-color: rgba(0, 0, 0, 0.85);
+}
+
+.modal {
+    z-index: 2001;
+    overflow-y: auto;
+    padding: 15px 0;
+}
+
+.contenido {
+    background-color: #191919;
+    color: white;
+
+    border: 1px solid #635740;
+    border-radius: 15px;
+
+    max-height: calc(100dvh - 40px);
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    padding: 22px;
+    background-color: #1c1c1c;
+    border-bottom: 1px solid #333;
+    flex-shrink: 0;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* SOLO LOS CAMPOS HACEN SCROLL */
+
+.cuerpo {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #777 #202020;
+}
+
+.cuerpo::-webkit-scrollbar {
+    width: 7px;
+}
+
+.cuerpo::-webkit-scrollbar-track {
+    background-color: #202020;
+}
+
+.cuerpo::-webkit-scrollbar-thumb {
+    background-color: #777;
+    border-radius: 10px;
+}
+
+
+.fotoZona {
+    background-color: #232220;
+    border: 1px dashed #635740;
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.avatar {
+    width: 85px;
+    height: 85px;
+
+    border: 1px solid #D9C493;
+    border-radius: 50%;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+    background-color: #28251f;
+    color: #D9C493;
+    font-size: 32px;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.botonFoto {
+    background-color: #D9C493;
+    color: #111;
+    border: 1px solid #D9C493;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.botonFoto:hover {
+    background-color: #ebd8aa;
+    color: #111;
+}
+
+.input {
+    background-color: #111;
+    border: 1px solid #383838;
+    color: white;
+    padding: 11px;
+    color-scheme: dark;
+}
+
+.input:focus {
+    background-color: #111;
+    border-color: #D9C493;
+    color: white;
+    box-shadow: none;
+}
+
+.input::placeholder {
+    color: #777;
+}
+
+.input:read-only {
+    background-color: #25231e;
+    color: #bbb;
+    border-color: #4b4538;
+}
+
+.input option {
+    background-color: #191919;
+    color: white;
+}
+
+.botonPassword {
+    background-color: #252525;
+    border: 1px solid #383838;
+    color: #D9C493;
+    font-size: 12px;
+}
+
+.botonPassword:hover {
+    background-color: #333;
+    border-color: #D9C493;
+    color: #D9C493;
+}
+
+.botonEstado {
+    background-color: #111;
+    border: 1px solid #383838;
+    color: #bbb;
+    padding: 13px 8px;
+
+    border-radius: 8px;
+    text-transform: capitalize;
+    font-size: 13px;
+}
+
+.botonEstado:hover {
+    border-color: #D9C493;
+    color: white;
+    background-color: #252525;
+}
+
+.estadoActivo,
+.estadoActivo:hover {
+    background-color: #28251d;
+    border-color: #D9C493;
+    color: #D9C493;
+}
+
+.activo {
+    color: #00e676;
+}
+
+.suspendido {
+    color: #ffd600;
+}
+
+.inactivo {
+    color: #ff5252;
+}
+
+.rango {
+    accent-color: #D9C493;
+}
+
+.rango::-webkit-slider-thumb {
+    background-color: #D9C493;
+}
+
+.rango::-moz-range-thumb {
+    background-color: #D9C493;
+}
+
+.porcentaje {
+    min-width: 60px;
+    padding: 10px;
+
+    text-align: center;
+    color: #D9C493;
+
+    border: 1px solid #444;
+    border-radius: 7px;
+    background-color: #111;
+}
+
+.footerBotones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    padding: 18px 24px;
+    border-top: 1px solid #333;
+    background-color: #191919;
+
+    flex-shrink: 0;
+}
+
+.botonCancelar {
+    background-color: transparent;
+    color: #ddd;
+    border: 1px solid #555;
+    border-radius: 7px;
+
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.botonCancelar:hover {
+    background-color: #333;
+    border-color: #777;
+    color: white;
+}
+
+.botonGuardar {
+    background-color: #D9C493;
+    color: #111;
+    border: 1px solid #D9C493;
+    border-radius: 7px;
+
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.botonGuardar:hover {
+    background-color: #ebd8aa;
+    border-color: #ebd8aa;
+    color: #111;
+}
