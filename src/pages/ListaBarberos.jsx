@@ -8,7 +8,7 @@ export default function ListaBarberos() {
     const [cargando, setCargando] = useState(true);
 
     // 3. Ejecutamos la petición HTTP al cargar el componente
-       useEffect(() => {
+    useEffect(() => {
         fetch("http://localhost:8000/api/empleados/")
             .then((response) => {
                 if (!response.ok) {

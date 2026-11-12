@@ -27,18 +27,6 @@ export default function Navbar() {
                     </li>
 
                     <li className={styles.navItem}>
-                        <NavLink to="/barberos" className={styles.botonLindo}>
-                            BARBEROS
-                        </NavLink>
-                    </li>
-
-                    <li className={styles.navItem}>
-                        <NavLink to="/empleados" className={styles.botonLindo}>
-                            EMPLEADOS
-                        </NavLink>
-                    </li>
-
-                    <li className={styles.navItem}>
                         <NavLink to="/registrar-turno" className={`${styles.botonLindo} ${styles.botonActivo}`}>
                             REGISTRAR TURNO
                         </NavLink>
