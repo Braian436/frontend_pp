@@ -11,7 +11,7 @@ export default function CardBarbero( {id, nombre, especialidad, foto} ) {
                 <p className={styles.especialidad}>{especialidad}</p>
             </div>
 
-            <Link to={`/registrar-turno?barbero=${id}`} className={styles.botonReservar}>
+            <Link to={`/turnos-disponibles?barbero=${encodeURIComponent(id)}&nombre=${encodeURIComponent(nombre)}`} className={styles.botonReservar}>
                 Reservar Turno
             </Link>
         </article>
