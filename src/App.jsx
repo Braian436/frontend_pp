@@ -31,6 +31,7 @@ function App() {
           <Route path="/registrar-turno" element={<ListaBarberos/>} />
           <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
           <Route path="/agenda" element={<AgendaBarberos />} />
+          <Route path="/agenda" element={<AgendaBarberos />} />
         </Routes>
       </main>
       {!esHomeAdministrador && <Footer />}
