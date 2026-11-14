@@ -30,23 +30,24 @@ export default function ListaBarberos() {
 
     return (
         <section className={styles.seccion}>
-            <div className={styles.contenedor}>
+            <div className={`container ${styles.contenedor}`}>
                 {cargando ? (
-                    <p>Cargando lista de barberos...</p>
+                    <p className="text-center text-light">Cargando lista de barberos...</p>
                 ) : barberos.length === 0 ? (
-                    <p>No se encontraron barberos disponibles.</p>
+                    <p className="text-center text-light">No se encontraron barberos disponibles.</p>
                 ) : (
-                    barberos.map((barbero) => (
-                        <CardBarbero
-                            key={barbero.id_empleado}
-                            id={barbero.id_empleado}
-                            nombre={barbero.nombre_empleado}
-                            especialidad={barbero.especialidad}
-                            // Si la API no te da la URL completa de la imagen, descomenta la línea de abajo:
-                            // foto={`http://localhost:8000${barbero.foto}`}
-                            foto={barbero.foto_empleado} 
-                        />
-                    ))
+                    <div className="row g-4">
+                        {barberos.map((barbero) => (
+                            <div className="col-12 col-lg-6" key={barbero.id_empleado}>
+                                <CardBarbero
+                                    id={barbero.id_empleado}
+                                    nombre={barbero.nombre_empleado}
+                                    especialidad={barbero.especialidad}
+                                    foto={barbero.foto_empleado}
+                                />
+                            </div>
+                        ))}
+                    </div>
                 )}
             </div>
         </section>

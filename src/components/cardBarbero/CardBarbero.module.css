@@ -1,9 +1,4 @@
 .card {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    width: 100%;
-    padding: 10px 20px;
     background-color: rgba(70, 70, 70, 0.55);
     backdrop-filter: blur(3px);
     border: 3px solid #b7a47c;
@@ -26,7 +21,7 @@
 }
 
 .informacion {
-    flex: 1;
+    min-width: 0;
 }
 
 .nombre {

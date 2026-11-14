@@ -1,0 +1,66 @@
+.botonAvisos {
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    background: transparent;
+    color: #f5f1e8;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.botonAvisos:hover,
+.botonAvisos:focus-visible {
+    background: #1c1a17;
+    color: #d9c493;
+}
+
+.contador {
+    background: #a94335;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.panelAvisos {
+    width: 300px;
+    border: 1px solid #d9c493;
+    border-radius: 12px;
+    background: #1c1a17;
+}
+
+.panelAvisos h2 {
+    color: #d9c493;
+    font-family: Baskerville, "Palatino Linotype", Georgia, serif;
+    font-size: 22px;
+}
+
+.aviso {
+    color: #d9c493;
+}
+
+.aviso p {
+    color: #f5f1e8;
+    font-size: 15px;
+}
+
+.aviso span {
+    color: #aaa49a;
+    font-size: 14px;
+}
+
+.cerrarSesion {
+    padding: 0.6rem 1.2rem;
+    border: 1px solid #a94335;
+    border-radius: 25px;
+    color: #e45b4b;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.4s ease;
+}
+
+.cerrarSesion:hover,
+.cerrarSesion:focus-visible {
+    border-color: #a94335;
+    background: #a94335;
+    color: #fff;
+}
