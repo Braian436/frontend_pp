@@ -1,0 +1,79 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 19rem;
+    padding: 20px;
+    background-color: rgba(70, 70, 70, 0.55);
+    backdrop-filter: blur(3px);
+    border: 3px solid #b7a47c;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    background-color: rgba(80, 80, 80, 0.7);
+    border-color: #D9C493;
+    transform: translateY(-3px);
+}
+
+.hora {
+    color: #D9C493;
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0 0 8px;
+}
+
+.cliente {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 10px;
+}
+
+.servicios {
+    color: #e0e0e0;
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0 0 18px;
+    line-height: 1.4;
+}
+
+.acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.boton {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    min-height: 37px;
+    color: #D9C493;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    background-color: transparent;
+    border: 1px solid #D9C493;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton:hover {
+    background-color: #D9C493;
+    color: #1a1a1a;
+}
+
+.botonEliminar {
+    border-color: #c96b6b;
+    color: #e68a8a;
+}
+
+.botonEliminar:hover {
+    background-color: #c96b6b;
+    color: #ffffff;
+}
