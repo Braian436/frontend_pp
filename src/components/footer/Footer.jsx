@@ -13,20 +13,20 @@ export default function Footer() {
 
                 <div className="row justify-content-center gy-5">
 
-                    <div className={`col-12 col-md-5 ${styles.contacto}`}>
+                    <div className={`col-12 col-md-5 d-flex flex-column align-items-center ${styles.contacto}`}>
 
                         <h2 className={styles.titulo}>Contacto</h2>
 
-                        <div className={styles.datosContacto}>
+                        <div className={`d-flex flex-column align-items-center gap-3 ${styles.datosContacto}`}>
 
-                            <div className={styles.dato}>
+                            <div className={`d-flex align-items-center gap-3 ${styles.dato}`}>
                                 <span className={styles.iconoBlanco}>
                                     <FaMapMarkerAlt className={styles.ubicacion}/>
                                 </span>
                                 <a href="https://maps.app.goo.gl/MBkYgDFP2jXBkbmg9">Barberia Clase A</a>
                             </div>
 
-                            <div className={styles.dato}>
+                            <div className={`d-flex align-items-center gap-3 ${styles.dato}`}>
                                 <span className={styles.iconoBlanco}>
                                     <FaPhoneAlt />
                                 </span>
@@ -39,7 +39,7 @@ export default function Footer() {
                             <a href="mailto:barberiaclasea@gmail.com">barberiaclasea@gmail.com</a>
                         </div>
 
-                        <div className={styles.redes}>
+                        <div className={`d-flex justify-content-center align-items-center gap-4 mt-3 ${styles.redes}`}>
                             <a
                                 href="https://www.facebook.com/"
                                 target="_blank"
@@ -63,15 +63,14 @@ export default function Footer() {
 
                     </div>
 
-                    {/* HORARIOS: Reemplazo de <Col xs={12} md={5}> */}
-                    <div className={`col-12 col-md-5 ${styles.horarios}`}>
+                    <div className={`col-12 col-md-5 d-flex flex-column align-items-center ${styles.horarios}`}>
 
                         <h2 className={styles.titulo}>Nuestros Horarios</h2>
 
-                        <div className={styles.listaHorarios}>
+                        <div className={`d-flex flex-column gap-2 w-100 ${styles.listaHorarios}`}>
 
                             {horarios.map((dia) => (
-                                <div key={dia} className={styles.filaHorario}>
+                                <div key={dia} className={`d-flex align-items-baseline gap-2 ${styles.filaHorario}`}>
                                     <span>{dia}</span>
                                     <span className={styles.puntos}></span>
                                     <span>10:00 - 22:00</span>
@@ -87,7 +86,7 @@ export default function Footer() {
             </div>
 
         {/* COPYRIGHT */}
-        <div className={styles.copyright}>
+        <div className={`text-center mt-5 ${styles.copyright}`}>
             {new Date().getFullYear()} Barbería Clase A.
             {" "}© Todos los derechos reservados
         </div>
