@@ -121,7 +121,7 @@ export default function Empleados() {
   };
 
   return (
-    <section className={styles.pagina}>
+    <section className={`min-vh-100 py-3 pb-5 ${styles.pagina}`}>
       <div className="container">
 
         {/* ENCABEZADO */}

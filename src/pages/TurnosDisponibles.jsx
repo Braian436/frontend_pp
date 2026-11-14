@@ -90,7 +90,7 @@ export default function TurnosDisponibles() {
         <section className={styles.seccion} style={{ "--fondo-turnos": `url(${fondo})` }}>
             <div className={`container ${styles.contenedor}`}>
                 <header className={styles.encabezado}><h1 className="h4 mb-0 fw-bold">Horario semanal</h1></header>
-                <div className={styles.navegacionSemana}>
+                <div className={`d-flex align-items-center justify-content-center gap-3 ${styles.navegacionSemana}`}>
                     <button className={`btn ${styles.botonNavegacion}`} onClick={() => moverSemana(-1)} disabled={semanaActual} aria-label="Semana anterior"><FaChevronLeft /></button>
                     <p className="mb-0 text-center">{new Intl.DateTimeFormat("es-AR", { day: "numeric", month: "long" }).format(dias[0].fecha)}{" - "}{new Intl.DateTimeFormat("es-AR", { day: "numeric", month: "long", year: "numeric" }).format(dias[5].fecha)}</p>
                     <button className={`btn ${styles.botonNavegacion}`} onClick={() => moverSemana(1)} aria-label="Semana siguiente"><FaChevronRight /></button>
@@ -98,9 +98,9 @@ export default function TurnosDisponibles() {
                 {cargando && <p role="status" className="text-center">Consultando horarios disponibles...</p>}
                 {errorDisponibilidad && <p role="alert" className="text-center text-warning">{errorDisponibilidad}</p>}
                 <div className="d-flex flex-column gap-3">
-                    {dias.map((dia) => <div className={`row g-3 align-items-center ${styles.filaDia}`} key={dia.clave}>
-                        <div className="col-12 col-md-3 col-lg-2"><div className={styles.etiquetaDia}><span>{dia.nombre}</span><span>{dia.corta}</span></div></div>
-                        <div className="col-12 col-md-9 col-lg-10"><div className={styles.listaHorarios}>
+                    {dias.map((dia) =>                     <div className={`row g-3 align-items-center ${styles.filaDia}`} key={dia.clave}>
+                        <div className="col-12 col-md-3 col-lg-2"><div className={`d-flex flex-column align-items-center justify-content-center ${styles.etiquetaDia}`}><span>{dia.nombre}</span><span>{dia.corta}</span></div></div>
+                        <div className="col-12 col-md-9 col-lg-10"><div className={`d-flex align-items-center justify-content-between gap-2 ${styles.listaHorarios}`}>
                             <button className={`btn ${styles.botonNavegacion}`} onClick={() => moverHorarios(dia.clave, -1)} disabled={!indices[dia.clave]} aria-label={`Horarios anteriores, ${dia.nombre}`}><FaChevronLeft /></button>
                             {horas.slice(indices[dia.clave] || 0, (indices[dia.clave] || 0) + 4).map((hora) => <button type="button" key={hora} className={`btn ${styles.botonHorario} ${seleccion?.clave === dia.clave && seleccion?.hora === hora ? styles.horarioSeleccionado : ""}`} disabled={cargando || Boolean(errorDisponibilidad) || disponibilidad[`${dia.clave}T${hora}`] !== true} onClick={() => { setSeleccion({ ...dia, hora }); setErrorReserva(""); setFormAbierto(true); }}>{hora}</button>)}
                             <button className={`btn ${styles.botonNavegacion}`} onClick={() => moverHorarios(dia.clave, 1)} disabled={(indices[dia.clave] || 0) >= horas.length - 4} aria-label={`Horarios siguientes, ${dia.nombre}`}><FaChevronRight /></button>
@@ -119,7 +119,7 @@ export default function TurnosDisponibles() {
             </div>}
             {confirmado && <div className={`modal show d-block ${styles.modalExito}`} role="dialog" aria-modal="true" aria-labelledby="tituloConfirmado">
                 <div className={`modal-dialog modal-dialog-centered ${styles.dialogoExito}`}><div className={`modal-content ${styles.modalContent} p-3`}>
-                    <h2 id="tituloConfirmado" className={`fs-6 fw-bold ${styles.tituloExito}`}>TURNO CONFIRMADO <FaCheckCircle /></h2>
+                    <h2 id="tituloConfirmado" className={`d-flex align-items-center justify-content-between fs-6 fw-bold ${styles.tituloExito}`}>TURNO CONFIRMADO <FaCheckCircle /></h2>
                     <p className="mb-2 fw-bold">{seleccion?.nombre} · {seleccion?.completa} · HS: {seleccion?.hora}</p>
                     <p className="mb-0">Barbero: <strong>{barbero}</strong></p>
                 </div></div>

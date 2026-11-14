@@ -1,0 +1,201 @@
+.dashboard {
+    background: #151413;
+    color: #f5f1e8;
+}
+
+.hero {
+    min-height: clamp(250px, 35vw, 410px);
+    padding: 3rem clamp(1.25rem, 7vw, 6rem);
+    background-position: center 42%;
+    background-size: cover;
+}
+
+.heroTexto {
+    width: min(100%, 720px);
+    text-align: start;
+}
+
+.eyebrow {
+    margin: 0 0 0.65rem;
+    color: #d9c493;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    margin: 0;
+    color: #d9c493;
+    font-family: Baskerville, "Baskerville Old Face", "Palatino Linotype", Georgia, serif;
+    font-size: clamp(2.2rem, 5vw, 4.25rem);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.heroTexto > p:last-child {
+    max-width: 520px;
+    margin: 1rem 0 0;
+    color: #e4dfd5;
+    font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+}
+
+.tarjetaIndicador {
+    min-width: 0;
+    border: 1px solid #302d29;
+    border-radius: 12px;
+    background: #1d1b19;
+}
+
+.cuerpoIndicador {
+    color: #f5f1e8;
+}
+
+.tarjetaIndicador .valor {
+    margin: 0;
+}
+
+.tarjetaIndicador .detalle {
+    margin-top: auto;
+}
+
+.indicadorEncabezado {
+    color: #9c968b;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.indicadorEncabezado svg {
+    flex-shrink: 0;
+    color: #d9c493;
+    font-size: 1.1rem;
+}
+
+.valor {
+    color: #fff;
+    font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+    line-height: 1.1;
+}
+
+.detalle {
+    font-size: 0.78rem;
+}
+
+.verde {
+    color: #83b77f;
+}
+
+.ambar {
+    color: #a94335;
+}
+
+.accesos h2,
+.encabezadoProductos h2 {
+    margin: 0;
+    color: white;
+    font-family: Baskerville, "Baskerville Old Face", "Palatino Linotype", Georgia, serif;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.botonAcceso {
+    min-height: 48px;
+    padding: 0.65rem;
+    border: 1px solid rgba(217, 196, 147, 0.5);
+    border-radius: 20px;
+    background: #201d17;
+    color: #e9d8ae;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.botonAcceso svg {
+    flex-shrink: 0;
+    font-size: 1.05rem;
+}
+
+.botonAcceso:hover {
+    transform: translateY(-2px);
+    background: #30291c;
+    color: #fff;
+}
+
+.seccionProductos {
+    padding-top: 2px;
+    scroll-margin-top: 1rem;
+}
+
+.encabezadoProductos h2 {
+    color: #f5f1e8;
+    font-size: 1.65rem;
+}
+
+.totalProductos {
+    color: #a39e93;
+    font-size: 0.85rem;
+}
+
+.tarjetaProducto {
+    overflow: hidden;
+    border: 1px solid #37332d;
+    border-radius: 12px;
+    background: #1d1b19;
+    color: #f5f1e8;
+}
+
+.imagenProducto {
+    height: 220px;
+    color: rgba(217, 196, 147, 0.65);
+}
+
+.fotoProducto {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.imagenProducto svg {
+    width: 3rem;
+    height: 3rem;
+    stroke-width: 1.2;
+}
+
+
+.categoria {
+    color: #b2a57f;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.infoProducto h3 {
+    margin: 0.3rem 0 0.75rem;
+    color: #f5f1e8;
+    font-family: Baskerville, "Baskerville Old Face", "Palatino Linotype", Georgia, serif;
+    font-size: 1.25rem;
+}
+
+.stockBajo,
+.stockNormal {
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.stockBajo {
+    color: #a94335;
+}
+
+.stockNormal {
+    color: #83b77f;
+}
+
+.avisoProducto {
+    margin: 0.55rem 0 0;
+    color: #a94335;
+    font-size: 0.75rem;
+}
