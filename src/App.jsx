@@ -6,6 +6,7 @@ import Empleados from './pages/Empleados';
 import ListaBarberos from './pages/ListaBarberos.jsx';
 import Home from './pages/Home.jsx';
 import TurnosDisponibles from './pages/TurnosDisponibles.jsx';
+import AgendaBarberos from './pages/AgendaBarberos.jsx';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/empleados" element={<Empleados />} />
           <Route path="/registrar-turno" element={<ListaBarberos/>} />
           <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
+          <Route path="/agenda" element={<AgendaBarberos />} />
         </Routes>
       </main>
       <Footer />
