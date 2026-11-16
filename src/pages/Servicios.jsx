@@ -1,4 +1,5 @@
 import CardServicio from "../components/cardServicio/CardServicio";
+import fondo from "../assets/fondoservicio1.jpg"; 
 
 export default function Servicios() {
     const servicios = [
@@ -8,15 +9,26 @@ export default function Servicios() {
     ];
     
     return (
-        <section className="container mt-5 text-white">
-            <div className="text-center mb-5">
-                <h2 className="fw-bold" style={{ color: '#d4af37', letterSpacing: '2px' }}>DESTACADOS</h2>
-            </div>
-            
-            <div className="d-flex flex-column gap-4">
-                {servicios.map((servicio) => (
-                    <CardServicio key={servicio.id} servicio={servicio} />
-                ))}
+        <section 
+            className="container-fluid py-5 text-white" 
+            style={{ 
+                backgroundImage: `url(${fondo})`, 
+                backgroundSize: 'cover', 
+                backgroundPosition: 'center',
+                backgroundColor: 'rgba(0,0,0,0.7)',
+                backgroundBlendMode: 'overlay'
+            }}
+        >
+            <div className="container">
+                <div className="text-center mb-5">
+                    <h2 className="fw-bold" style={{ color: '#D9C493', letterSpacing: '2px' }}>DESTACADOS</h2>
+                </div>
+                
+                <div className="d-flex flex-column gap-4">
+                    {servicios.map((servicio) => (
+                        <CardServicio key={servicio.id} servicio={servicio} />
+                    ))}
+                </div>
             </div>
         </section>
     );

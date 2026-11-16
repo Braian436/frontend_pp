@@ -10,6 +10,7 @@ import NavbarAdministrador from './components/navbarAdministrador/NavbarAdminist
 import HomeBarber from './pages/HomeBarber.jsx';
 import Navbar from './components/navbar/Navbar.jsx'
 import Footer from './components/footer/Footer.jsx'
+import GestionProductos from './pages/GestionProductos';
 
 function App() {
   const { pathname } = useLocation();
@@ -23,12 +24,13 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<HomeAdministrador />} />
           <Route path="/admin/empleados" element={<Empleados />} />
-          <Route path="/servicios" element={<Servicios />} /> {/* <-- TU RUTA (eliminada la duplicada) */}
+          <Route path="/servicios" element={<Servicios />} />
           <Route path="/barberos" element={<ListaBarberos/>} />
           <Route path="/empleados" element={<Navigate to="/admin/empleados" replace />} />
           <Route path="/registrar-turno" element={<ListaBarberos/>} />
           <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
           <Route path="/home-barbero" element={<HomeBarber/>}/>
+          <Route path="/admin/productos" element={<GestionProductos />} />
         </Routes>
       </main>
       {!esRutaAdministrador && <Footer />}

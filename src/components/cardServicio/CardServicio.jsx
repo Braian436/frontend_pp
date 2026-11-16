@@ -9,12 +9,21 @@ export default function CardServicio({ servicio }) {
             </div>
             
             <div className="col-md-7 p-4 d-flex flex-column justify-content-center">
-                <h3 className="fw-bold mb-2" style={{ color: '#d4af37' }}>{servicio.nombre}</h3>
+                <h3 className="fw-bold mb-2" style={{ color: '#D9C493' }}>{servicio.nombre}</h3>
                 <p className="text-secondary mb-4" style={{ lineHeight: '1.6' }}>{servicio.descripcion}</p>
                 
                 <div className="d-flex justify-content-between align-items-center">
-                    <span className="text-warning fw-bold">${servicio.precio}</span>
-                    <Link to="/registrar-turno" className="btn btn-outline-warning btn-sm rounded-pill px-4">
+                    
+                    <span className="fw-bold" style={{ color: '#D9C493', fontSize: '1.2rem' }}>
+                        ${servicio.precio}
+                    </span>
+                    
+                    
+                    <Link 
+                        to="/registrar-turno" 
+                        className="btn btn-sm rounded-pill px-4" 
+                        style={{ backgroundColor: '#D9C493', color: '#000', fontWeight: 'bold' }}
+                    >
                         Registrar Turno
                     </Link>
                 </div>
