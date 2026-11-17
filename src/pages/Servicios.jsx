@@ -26,7 +26,12 @@ export default function Servicios() {
                 
                 <div className="d-flex flex-column gap-4">
                     {servicios.map((servicio) => (
-                        <CardServicio key={servicio.id} servicio={servicio} />
+                        <CardServicio 
+                        key={servicio.id}
+                        nombre={servicio.nombre}
+                        descripcion={servicio.descripcion}
+                        precio={servicio.precio}
+                        />
                     ))}
                 </div>
             </div>

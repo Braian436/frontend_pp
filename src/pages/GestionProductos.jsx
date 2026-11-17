@@ -37,7 +37,13 @@ export default function GestionProductos() {
                 <div className="row g-4">
                     {productos.map((prod) => (
                         <div className="col-12 col-md-6 col-lg-4" key={prod.id}>
-                            <CardProducto producto={prod} />
+                            {/* CAMBIO: antes era <CardProducto producto={prod} /> */}
+                            <CardProducto
+                                nombre={prod.nombre}
+                                descripcion={prod.descripcion}
+                                precio={prod.precio}
+                                activo={prod.activo}
+                            />
                         </div>
                     ))}
                 </div>

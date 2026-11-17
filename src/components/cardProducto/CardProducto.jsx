@@ -1,66 +1,62 @@
-import { useState } from "react";
+import React, { useState } from 'react'
+import styles from './CardProducto.module.css'
 
-export default function CardProducto({ producto }) {
-    const [activo, setActivo] = useState(producto.activo);
+export default function CardProducto({ nombre, descripcion, precio, activo }) {
+  const [estaActivo, setEstaActivo] = useState(activo)
 
-    const handleEditar = () => {
-        alert(`Editando: ${producto.nombre}`);
-    };
+  const handleEditar = () => {
+    alert(`Editando: ${nombre}`)
+  }
 
-    const handleAgregarStock = () => {
-        alert(`Agregando stock a: ${producto.nombre}`);
-    };
+  const handleAgregarStock = () => {
+    alert(`Agregando stock a: ${nombre}`)
+  }
 
-    const handleToggleActivo = () => {
-        setActivo(!activo);
-    };
+  const handleToggleActivo = () => {
+    setEstaActivo(!estaActivo)
+  }
 
-    return (
-        <div className="card bg-dark text-white border-secondary rounded h-100" style={{ borderRadius: '20px' }}>
-            
-            <div className="d-flex align-items-center justify-content-center" style={{ backgroundColor: '#2a2a2a', minHeight: '120px', borderTopLeftRadius: '20px', borderTopRightRadius: '20px' }}>
-                <span className="text-secondary">Foto</span>
+  return (
+    <div className={styles.card}>
+        <div className={styles.foto}>
+            <span className={styles.fotoTexto}>Foto</span>
+        </div>
+
+        <div className={styles.cuerpo}>
+            <div className={styles.encabezado}>
+                <h5 className={styles.nombre}>{nombre}</h5>
+                <span className={`${styles.indicador} ${estaActivo ? styles.indicadorActivo : ''}`}></span>
             </div>
-            
-            <div className="card-body p-3 d-flex flex-column">
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                    <h5 className="fw-bold mb-0" style={{ color: '#D9C493', fontSize: '1.1rem' }}>{producto.nombre}</h5>
-                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: activo ? '#28a745' : '#6c757d' }}></span>
+
+            <p className={styles.descripcion}>{descripcion}</p>
+
+            <div className={styles.precioContenedor}>
+                <span className={styles.precio}>${precio}</span>
+            </div>
+
+            <div className={styles.acciones}>
+                <div className={styles.botones}>
+                    <button type="button" className={`${styles.boton} ${styles.botonEditar}`} onClick={handleEditar}>
+                        Editar
+                    </button>
+                    <button type="button" className={`${styles.boton} ${styles.botonStock}`} onClick={handleAgregarStock}>
+                        Añadir Stock
+                    </button>
                 </div>
-                
-                <p className="text-secondary mb-2" style={{ fontSize: '0.8rem' }}>{producto.descripcion}</p>
-                
-                <div className="mb-3">
-                    <span className="badge bg-secondary text-dark fw-bold px-3 py-2 rounded-pill">
-                        ${producto.precio}
+
+                <div className={styles.estado}>
+                    <input
+                        className={styles.switch}
+                        type="checkbox"
+                        checked={estaActivo}
+                        onChange={handleToggleActivo}
+                    />
+                    <span className={`${styles.estadoTexto} ${estaActivo ? styles.estadoTextoActivo : ''}`}>
+                        {estaActivo ? 'ACTIVO' : 'INACTIVO'}
                     </span>
-                </div>
-
-                <div className="mt-auto">
-                    <div className="d-flex gap-2 mb-3">
-                        <button className="btn btn-sm btn-outline-light rounded-pill px-3 flex-grow-1" onClick={handleEditar}>
-                            Editar
-                        </button>
-                        <button className="btn btn-sm rounded-pill px-3 flex-grow-1" style={{ backgroundColor: '#D9C493', color: '#000', fontWeight: 'bold' }} onClick={handleAgregarStock}>
-                            Añadir Stock
-                        </button>
-                    </div>
-
-                    <div className="d-flex align-items-center gap-2">
-                        <div className="form-check form-switch m-0">
-                            <input 
-                                className="form-check-input" 
-                                type="checkbox" 
-                                checked={activo} 
-                                onChange={handleToggleActivo} 
-                            />
-                        </div>
-                        <span className="fw-bold" style={{ color: activo ? '#D9C493' : '#6c757d' }}>
-                            {activo ? 'ACTIVO' : 'INACTIVO'}
-                        </span>
-                    </div>
                 </div>
             </div>
         </div>
-    );
+    </div>
+  )
 }

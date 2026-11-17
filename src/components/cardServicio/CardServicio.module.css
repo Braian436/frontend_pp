@@ -1,0 +1,81 @@
+.card {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    background-color: #1a1a1a;
+    border: 1px solid #6c757d;
+    border-radius: 20px;
+}
+
+.imagen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 41.66%;
+    min-height: 200px;
+    background-color: #2a2a2a;
+}
+
+.imagenTexto {
+    color: #6c757d;
+}
+
+.contenido {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 1 0;
+    padding: 24px;
+}
+
+.nombre {
+    color: #D9C493;
+    font-weight: 700;
+    margin: 0 0 8px;
+}
+
+.descripcion {
+    color: #6c757d;
+    line-height: 1.6;
+    margin: 0 0 24px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.precio {
+    color: #D9C493;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.boton {
+    padding: 6px 24px;
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    background-color: #D9C493;
+    border-radius: 50rem;
+    transition: all 0.3s ease;
+}
+
+.boton:hover {
+    background-color: #b7a47c;
+    color: #000;
+}
+
+/* En pantallas chicas la imagen ocupa todo el ancho (como col-md-5 de Bootstrap) */
+@media (max-width: 767px) {
+    .imagen {
+        width: 100%;
+    }
+
+    .contenido {
+        flex: 1 1 100%;
+    }
+}
