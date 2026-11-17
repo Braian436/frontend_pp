@@ -33,12 +33,8 @@ function App() {
           <Route path="/empleados" element={<Navigate to="/admin/empleados" replace />} />
           <Route path="/registrar-turno" element={<ListaBarberos/>} />
           <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
-<<<<<<< HEAD
           <Route path="/agenda" element={<AgendaBarberos />} />
-          <Route path="/agenda" element={<AgendaBarberos />} />
-=======
           <Route path="/home-barbero" element={<HomeBarber/>}/>
->>>>>>> 47f0f0f6109d415e0af88f36a1bc4de3b7259828
         </Routes>
       </main>
       {!esRutaAdministrador && <Footer />}
