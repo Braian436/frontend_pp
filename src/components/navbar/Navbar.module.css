@@ -46,3 +46,12 @@
 .botonActivo:hover {
     background-color: #D9C493;
 }
+
+.botonSalir {
+    color: #D9C493;
+    background-color: transparent;
+    border-color: rgba(217, 196, 147, 0.5);
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+}

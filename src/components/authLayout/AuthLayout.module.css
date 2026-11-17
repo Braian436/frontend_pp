@@ -1,0 +1,57 @@
+.pagina {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+    padding: 32px 20px;
+    color: #f5efe3;
+    background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.72)),
+        url("../../assets/imagen_fondo.png") center / cover no-repeat;
+}
+
+.centro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* La caja del login: fondo oscuro y borde dorado fino. */
+.tarjeta {
+    width: min(100%, 700px);
+    overflow: hidden;
+    background-color: rgba(10, 10, 10, 0.92);
+    border: 1px solid #b08d57;
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.cuerpo {
+    padding: clamp(24px, 5vw, 38px);
+}
+
+.marca {
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.logo {
+    width: clamp(90px, 14vh, 120px);
+    height: auto;
+}
+
+.ubicacion {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.2px;
+}
+
+@media (max-width: 575.98px) {
+    .pagina {
+        padding: 20px 14px;
+    }
+}
