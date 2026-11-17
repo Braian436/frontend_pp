@@ -1,0 +1,87 @@
+.point {
+    pointer-events: none;
+}
+
+.carouselImg {
+    height: 600px;
+}
+
+.georgia {
+    font-family: Baskerville, 'Baskerville Old Face', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    font-size: 35px;
+}
+
+.dorado {
+    color: #D9C493;
+}
+
+.subtitulo {
+    font-family: Baskerville, 'Baskerville Old Face', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    font-size: 20px;
+}
+
+.seccionOscura {
+    background-color: #100f0f;
+}
+
+.etiquetaDorada {
+    color: #D9C493;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.tituloSeccion {
+    color: #ffffff;
+    font-size: 2.7rem;
+}
+
+.textoDescripcion {
+    color: #a39e93;
+    font-size: 17px;
+}
+
+.cardProducto {
+    background-color: #161411;
+    border: 1px solid #D9C493;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    border-radius: 20px;
+}
+
+.cardProducto:hover {
+    border-color: #D9C493;
+    transform: translateY(-4px);
+}
+
+.lineaDorada {
+    border-top: 2px solid #D9C493;
+}
+
+.numeroRitual {
+    color: #D9C493;
+    font-size: 20px;
+}
+
+.boton {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    margin: 10px;
+    min-height: 37px;
+    color: #D9C493;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    background-color: transparent;
+    border: 1px solid #D9C493;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton:hover {
+    background-color: #ffffff;
+    color: #1a1a1a;
+}

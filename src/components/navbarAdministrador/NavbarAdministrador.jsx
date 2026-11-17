@@ -26,7 +26,7 @@ export default function NavbarAdministrador() {
                 <div id="navegacion-admin" className={`collapse navbar-collapse ${menuAbierto ? "show" : ""}`}>
                     <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-4">
                         <li className="nav-item"><NavLink to="/admin" end className={`nav-link ${estilosCliente.botonLindo}`} onClick={() => setMenuAbierto(false)}>INICIO</NavLink></li>
-                        <li className="nav-item"><NavLink to="/empleados" className={`nav-link ${estilosCliente.botonLindo}`} onClick={() => setMenuAbierto(false)}>EMPLEADOS</NavLink></li>
+                        <li className="nav-item"><NavLink to="/admin/empleados" className={`nav-link ${estilosCliente.botonLindo}`} onClick={() => setMenuAbierto(false)}>EMPLEADOS</NavLink></li>
                         <li className="nav-item"><NavLink to="/servicios" className={`nav-link ${estilosCliente.botonLindo}`} onClick={() => setMenuAbierto(false)}>SERVICIOS</NavLink></li>
                         <li className="nav-item"><a href="/admin#productos" className={`nav-link ${estilosCliente.botonLindo}`} onClick={() => setMenuAbierto(false)}>PRODUCTOS</a></li>
                         <li className="nav-item">
