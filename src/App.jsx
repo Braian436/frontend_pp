@@ -1,28 +1,41 @@
-import { Navigate, Routes, Route, useLocation } from "react-router-dom";
+import { Navigate, Outlet, Routes, Route, useLocation } from "react-router-dom";
 import styles from './App.module.css'
 import Empleados from './pages/Empleados';
 import ListaBarberos from './pages/ListaBarberos.jsx';
 import Home from './pages/Home.jsx';
 import TurnosDisponibles from './pages/TurnosDisponibles.jsx';
+<<<<<<< HEAD
 
 
 import Servicios from './pages/Servicios'; // <-- Tu import
+=======
+import Servicios from './pages/Servicios';
+>>>>>>> 046bc3be32a2659f385d13d0e65f020d901a291b
 import HomeAdministrador from './pages/HomeAdministrador.jsx';
 import NavbarAdministrador from './components/navbarAdministrador/NavbarAdministrador.jsx';
 import HomeBarber from './pages/HomeBarber.jsx';
 import Navbar from './components/navbar/Navbar.jsx'
 import Footer from './components/footer/Footer.jsx'
+import GestionProductos from './pages/GestionProductos';
+import Login from './pages/Login.jsx';
+import { useAuth } from './auth/AuthContext.jsx';
+import "@fontsource/montserrat"
 
+<<<<<<< HEAD
 import AgendaBarberos from './pages/AgendaBarberos.jsx';
 
 
 function App() {
+=======
+function Layout() {
+>>>>>>> 046bc3be32a2659f385d13d0e65f020d901a291b
   const { pathname } = useLocation();
   const esRutaAdministrador = pathname === "/admin" || pathname.startsWith("/admin/");
 
   return (
-    <div className={`d-flex flex-column min-vh-100 ${styles.app}`}>
+    <div className={esRutaAdministrador ? styles.adminLayout : `d-flex flex-column min-vh-100 ${styles.app}`}>
       {esRutaAdministrador ? <NavbarAdministrador /> : <Navbar />}
+<<<<<<< HEAD
       <main className={`flex-grow-1 w-100 ${styles.contenido}`}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -36,9 +49,46 @@ function App() {
           <Route path="/agenda" element={<AgendaBarberos />} />
           <Route path="/home-barbero" element={<HomeBarber/>}/>
         </Routes>
+=======
+      <main className={`flex-grow-1 w-100 ${esRutaAdministrador ? styles.contenidoAdmin : styles.contenido}`}>
+        <Outlet />
+>>>>>>> 046bc3be32a2659f385d13d0e65f020d901a291b
       </main>
       {!esRutaAdministrador && <Footer />}
     </div>
+  )
+}
+
+function RutaPrivada() {
+  const { autenticado } = useAuth();
+  return autenticado ? <Outlet /> : <Navigate to="/login" replace />;
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/servicios" element={<Servicios />} />
+        <Route path="/registrar-turno" element={<ListaBarberos />} />
+        <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
+      </Route>
+
+      {/* Todo lo que está acá adentro exige sesión iniciada. */}
+      <Route element={<RutaPrivada />}>
+        <Route element={<Layout />}>
+          <Route path="/admin" element={<HomeAdministrador />} />
+          <Route path="/admin/empleados" element={<Empleados />} />
+          <Route path="/admin/productos" element={<GestionProductos />} />
+          <Route path="/admin/servicios" element={<Servicios administracion />} />
+          <Route path="/barberos" element={<ListaBarberos />} />
+          <Route path="/empleados" element={<Navigate to="/admin/empleados" replace />} />
+          <Route path="/home-barbero" element={<HomeBarber />} />
+        </Route>
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }
 

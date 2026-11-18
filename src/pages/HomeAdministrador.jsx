@@ -1,4 +1,5 @@
-import { LuCalendarPlus, LuCircleDollarSign, LuClipboardList, LuPackage, LuReceipt, LuTicket, } from "react-icons/lu";
+import { LuCalendarPlus, LuCircleDollarSign, LuClipboardList, LuPackage, LuReceipt, LuScissors, LuTicket, } from "react-icons/lu";
+import { Link } from "react-router-dom";
 import fondoAdministrador from "../assets/fachero3.png";
 import imagenCeraMate from "../assets/CeraMate.png";
 import imagenPomadaBrillo from "../assets/PomadaBrillo.png";
@@ -53,9 +54,14 @@ const accesos = [
         icono: LuCircleDollarSign,
     },
     {
-        titulo: "Control de stock",
-        destino: "#productos",
+        titulo: "Gestionar productos",
+        destino: "/admin/productos",
         icono: LuPackage,
+    },
+    {
+        titulo: "Gestionar servicios",
+        destino: "/admin/servicios",
+        icono: LuScissors,
     },
     {
         titulo: "Liquidaciones",
@@ -112,7 +118,7 @@ export default function HomeAdministrador() {
             <div className="container-fluid d-flex flex-column gap-4 px-3 px-lg-5 py-4">
                 <section className="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3" aria-label="Resumen del día">
                     {indicadores.map(({ titulo, valor, detalle, icono: Icono, color, id }) => (
-                        <article className="col" id={id} key={titulo}>
+                        <article className={`col ${styles.indicadorResumen}`} id={id} key={titulo}>
                             <div className={`card h-100 ${styles.tarjetaIndicador}`}>
                                 <div className={`card-body d-flex flex-column gap-2 ${styles.cuerpoIndicador}`}>
                                     <div className={`d-flex align-items-center justify-content-between gap-2 ${styles.indicadorEncabezado}`}>
@@ -131,10 +137,10 @@ export default function HomeAdministrador() {
                     <div className="row row-cols-2 row-cols-md-3 row-cols-xl-5 g-3 mt-1">
                         {accesos.map(({ titulo, destino, icono: Icono }) => (
                             <div className="col" key={titulo}>
-                                <a className={`btn d-flex align-items-center justify-content-center gap-2 w-100 h-100 ${styles.botonAcceso}`} href={destino}>
+                                <Link className={`btn d-flex align-items-center justify-content-center gap-2 w-100 h-100 ${styles.botonAcceso}`} to={destino}>
                                     <Icono aria-hidden="true" />
                                     <span>{titulo}</span>
-                                </a>
+                                </Link>
                             </div>
                         ))}
                     </div>
@@ -145,7 +151,10 @@ export default function HomeAdministrador() {
                         <div>
                             <h2 id="productos-titulo">Productos destacados</h2>
                         </div>
-                        <span className={styles.totalProductos}>{productos.length} productos</span>
+                        <div className="d-flex align-items-center gap-3">
+                            <span className={styles.totalProductos}>{productos.length} productos</span>
+                            <Link className="btn btn-outline-light btn-sm" to="/admin/productos">Administrar</Link>
+                        </div>
                     </div>
 
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
