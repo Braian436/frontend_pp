@@ -1,5 +1,5 @@
 .dashboard {
-    background: #151413;
+    background: #0e0d0d;
     color: #f5f1e8;
 }
 
@@ -8,6 +8,7 @@
     padding: 3rem clamp(1.25rem, 7vw, 6rem);
     background-position: center 42%;
     background-size: cover;
+    border-radius: 45px;
 }
 
 .heroTexto {
@@ -17,9 +18,10 @@
 
 .eyebrow {
     margin: 0 0 0.65rem;
+    font-family: 'Montserrat', sans-serif;
     color: #d9c493;
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 900;
     letter-spacing: 0.2em;
     text-transform: uppercase;
 }
@@ -36,19 +38,26 @@
 .heroTexto > p:last-child {
     max-width: 520px;
     margin: 1rem 0 0;
-    color: #e4dfd5;
+    color: #ffffff;
     font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .tarjetaIndicador {
     min-width: 0;
-    border: 1px solid #d9c493;
+    border-right: 3px solid rgb(164, 164, 164);
+    border-bottom: 3px solid rgb(164, 164, 164);
     border-radius: 12px;
-    background: #bbbaba27;
+    background: #0e0d0d00;
+}
+
+.indicadorResumen {
+    position: relative;
 }
 
 .cuerpoIndicador {
-    color: #f5f1e8;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .tarjetaIndicador .valor {
@@ -57,11 +66,12 @@
 
 .tarjetaIndicador .detalle {
     margin-top: auto;
+    font-size: 15px;;
 }
 
 .indicadorEncabezado {
-    color: #9c968b;
-    font-size: 0.68rem;
+    color: #d9c493;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -95,7 +105,7 @@
 .encabezadoProductos h2 {
     margin: 0;
     color: white;
-    font-family: Baskerville, "Baskerville Old Face", "Palatino Linotype", Georgia, serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 25px;
     font-weight: 700;
 }
@@ -103,14 +113,14 @@
 .botonAcceso {
     min-height: 48px;
     padding: 0.65rem;
-    border: 1px solid rgba(217, 196, 147, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
-    background: #bbbaba27;
-    color: #e9d8ae;
+    background: #1e1e1e;
+    color: #ffffff;
     font-size: 15px;
     font-weight: 600;
     text-decoration: none;
-    transition: background-color 160ms ease, transform 160ms ease;
+    transition: background-color 160ms ease, transform 160ms ease;    
 }
 
 .botonAcceso svg {
@@ -130,20 +140,20 @@
 }
 
 .encabezadoProductos h2 {
-    color: #f5f1e8;
+    color: #ffffff;
     font-size: 1.65rem;
 }
 
 .totalProductos {
-    color: #a39e93;
+    color: #ffce65;
     font-size: 0.85rem;
 }
 
 .tarjetaProducto {
     overflow: hidden;
-    border: 1px solid #eaeaea;
-    border-radius: 12px;
-    background: #bbbaba27;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    background: #1e1e1e;
     color: #f5f1e8;
 }
 
@@ -176,7 +186,7 @@
 .infoProducto h3 {
     margin: 0.3rem 0 0.75rem;
     color: #f5f1e8;
-    font-family: Baskerville, "Baskerville Old Face", "Palatino Linotype", Georgia, serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.25rem;
 }
 

@@ -13,15 +13,16 @@ import Footer from './components/footer/Footer.jsx'
 import GestionProductos from './pages/GestionProductos';
 import Login from './pages/Login.jsx';
 import { useAuth } from './auth/AuthContext.jsx';
+import "@fontsource/montserrat"
 
 function Layout() {
   const { pathname } = useLocation();
-  const esRutaAdministrador = pathname === "/admin" || pathname.startsWith("/admin/");
+  const esRutaAdministrador = pathname === "/servicios" || pathname === "/admin" || pathname.startsWith("/admin/");
 
   return (
-    <div className={`d-flex flex-column min-vh-100 ${styles.app}`}>
+    <div className={esRutaAdministrador ? styles.adminLayout : `d-flex flex-column min-vh-100 ${styles.app}`}>
       {esRutaAdministrador ? <NavbarAdministrador /> : <Navbar />}
-      <main className={`flex-grow-1 w-100 ${styles.contenido}`}>
+      <main className={`flex-grow-1 w-100 ${esRutaAdministrador ? styles.contenidoAdmin : styles.contenido}`}>
         <Outlet />
       </main>
       {!esRutaAdministrador && <Footer />}
@@ -38,11 +39,13 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+      </Route>
 
       {/* Todo lo que está acá adentro exige sesión iniciada. */}
       <Route element={<RutaPrivada />}>
         <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
           <Route path="/admin" element={<HomeAdministrador />} />
           <Route path="/admin/empleados" element={<Empleados />} />
           <Route path="/admin/productos" element={<GestionProductos />} />
@@ -52,9 +55,9 @@ function App() {
           <Route path="/registrar-turno" element={<ListaBarberos />} />
           <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
           <Route path="/home-barbero" element={<HomeBarber />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

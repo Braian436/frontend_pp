@@ -112,7 +112,7 @@ export default function HomeAdministrador() {
             <div className="container-fluid d-flex flex-column gap-4 px-3 px-lg-5 py-4">
                 <section className="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3" aria-label="Resumen del día">
                     {indicadores.map(({ titulo, valor, detalle, icono: Icono, color, id }) => (
-                        <article className="col" id={id} key={titulo}>
+                        <article className={`col ${styles.indicadorResumen}`} id={id} key={titulo}>
                             <div className={`card h-100 ${styles.tarjetaIndicador}`}>
                                 <div className={`card-body d-flex flex-column gap-2 ${styles.cuerpoIndicador}`}>
                                     <div className={`d-flex align-items-center justify-content-between gap-2 ${styles.indicadorEncabezado}`}>

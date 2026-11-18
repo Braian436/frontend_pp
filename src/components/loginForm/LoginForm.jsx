@@ -22,10 +22,7 @@ export default function LoginForm({ onIngresar }) {
         setCargando(true);
 
         try {
-            await onIngresar(
-                { username: usuario.trim(), password },
-                recordar
-            );
+            await onIngresar({ username: usuario.trim(), password }, recordar);
 
             if (recordar) {
                 localStorage.setItem(CLAVE_USUARIO, usuario.trim());
