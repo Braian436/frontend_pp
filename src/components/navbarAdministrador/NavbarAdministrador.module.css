@@ -142,6 +142,11 @@
     font-size: 14px;
 }
 
+.titulo {
+    color: #d9c493;
+    font-size: 16px;
+}
+
 @media (max-width: 767.98px) {
     .sidebar {
         grid-column: 1;

@@ -37,39 +37,6 @@ const indicadores = [
     },
 ];
 
-const accesos = [
-    {
-        titulo: "Nuevo turno",
-        destino: "/registrar-turno",
-        icono: LuCalendarPlus,
-    },
-    {
-        titulo: "Abrir ticket",
-        destino: "/turnos-disponibles",
-        icono: LuTicket,
-    },
-    {
-        titulo: "Gestionar caja",
-        destino: "#caja",
-        icono: LuCircleDollarSign,
-    },
-    {
-        titulo: "Gestionar productos",
-        destino: "/admin/productos",
-        icono: LuPackage,
-    },
-    {
-        titulo: "Gestionar servicios",
-        destino: "/admin/servicios",
-        icono: LuScissors,
-    },
-    {
-        titulo: "Liquidaciones",
-        destino: "#liquidaciones",
-        icono: LuClipboardList,
-    },
-];
-
 const productos = [
     {
         nombre: "Cera mate",
@@ -132,20 +99,6 @@ export default function HomeAdministrador() {
                     ))}
                 </section>
 
-                <section className={styles.accesos} aria-labelledby="accesos-titulo">
-                    <h2 id="accesos-titulo">Accesos rápidos</h2>
-                    <div className="row row-cols-2 row-cols-md-3 row-cols-xl-5 g-3 mt-1">
-                        {accesos.map(({ titulo, destino, icono: Icono }) => (
-                            <div className="col" key={titulo}>
-                                <Link className={`btn d-flex align-items-center justify-content-center gap-2 w-100 h-100 ${styles.botonAcceso}`} to={destino}>
-                                    <Icono aria-hidden="true" />
-                                    <span>{titulo}</span>
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
                 <section className={styles.seccionProductos} id="productos" aria-labelledby="productos-titulo">
                     <div className={`d-flex align-items-end justify-content-between gap-3 mb-3 ${styles.encabezadoProductos}`}>
                         <div>
@@ -179,12 +132,11 @@ export default function HomeAdministrador() {
                                             <span className={styles.categoria}>{producto.categoria}</span>
                                             <h3>{producto.nombre}</h3>
                                             <div className="d-flex align-items-center justify-content-between gap-2">
-                                                <span>{producto.precio}</span>
+                                                <span className={styles.precio}>{producto.precio}</span>
                                                 <span className={stockBajo ? styles.stockBajo : styles.stockNormal}>
                                                     {producto.stock} en stock
                                                 </span>
                                             </div>
-                                            {stockBajo && <p className={styles.avisoProducto}>Stock bajo · mínimo {producto.minimo}</p>}
                                         </div>
                                     </div>
                                 </article>

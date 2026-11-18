@@ -21,6 +21,13 @@ export default function NavbarAdministrador() {
                     <NavLink to="/admin" end className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
                         <LuHouse aria-hidden="true" /> Inicio
                     </NavLink>
+                    <NavLink to="/admin/turnos" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
+                        <LuScissors aria-hidden="true" /> Nuevo Turno
+                    </NavLink>
+                    <h3 className={styles.titulo}>Gestion</h3>
+                    <NavLink to="/admin/caja" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
+                        <LuScissors aria-hidden="true" /> Caja
+                    </NavLink>
                     <NavLink to="/admin/empleados" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
                         <LuUsers aria-hidden="true" /> Empleados
                     </NavLink>
@@ -29,6 +36,9 @@ export default function NavbarAdministrador() {
                     </NavLink>
                     <NavLink to="/admin/servicios" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
                         <LuScissors aria-hidden="true" /> Servicios
+                    </NavLink>
+                    <NavLink to="/admin/clientes" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
+                        <LuUsers aria-hidden="true" /> Clientes
                     </NavLink>
                 </nav>
                 <button type="button" className={`btn d-flex align-items-center gap-2 ${styles.cerrarSesion}`} onClick={cerrarSesion}>
