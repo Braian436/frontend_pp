@@ -106,7 +106,6 @@ export default function HomeAdministrador() {
                         </div>
                         <div className="d-flex align-items-center gap-3">
                             <span className={styles.totalProductos}>{productos.length} productos</span>
-                            <Link className="btn btn-outline-light btn-sm" to="/admin/productos">Administrar</Link>
                         </div>
                     </div>
 
