@@ -4,13 +4,7 @@ import Empleados from './pages/Empleados';
 import ListaBarberos from './pages/ListaBarberos.jsx';
 import Home from './pages/Home.jsx';
 import TurnosDisponibles from './pages/TurnosDisponibles.jsx';
-<<<<<<< HEAD
-
-
-import Servicios from './pages/Servicios'; // <-- Tu import
-=======
 import Servicios from './pages/Servicios';
->>>>>>> 046bc3be32a2659f385d13d0e65f020d901a291b
 import HomeAdministrador from './pages/HomeAdministrador.jsx';
 import NavbarAdministrador from './components/navbarAdministrador/NavbarAdministrador.jsx';
 import HomeBarber from './pages/HomeBarber.jsx';
@@ -21,21 +15,13 @@ import Login from './pages/Login.jsx';
 import { useAuth } from './auth/AuthContext.jsx';
 import "@fontsource/montserrat"
 
-<<<<<<< HEAD
-import AgendaBarberos from './pages/AgendaBarberos.jsx';
-
-
-function App() {
-=======
 function Layout() {
->>>>>>> 046bc3be32a2659f385d13d0e65f020d901a291b
   const { pathname } = useLocation();
   const esRutaAdministrador = pathname === "/admin" || pathname.startsWith("/admin/");
 
   return (
     <div className={esRutaAdministrador ? styles.adminLayout : `d-flex flex-column min-vh-100 ${styles.app}`}>
       {esRutaAdministrador ? <NavbarAdministrador /> : <Navbar />}
-<<<<<<< HEAD
       <main className={`flex-grow-1 w-100 ${styles.contenido}`}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -49,10 +35,8 @@ function Layout() {
           <Route path="/agenda" element={<AgendaBarberos />} />
           <Route path="/home-barbero" element={<HomeBarber/>}/>
         </Routes>
-=======
       <main className={`flex-grow-1 w-100 ${esRutaAdministrador ? styles.contenidoAdmin : styles.contenido}`}>
         <Outlet />
->>>>>>> 046bc3be32a2659f385d13d0e65f020d901a291b
       </main>
       {!esRutaAdministrador && <Footer />}
     </div>
