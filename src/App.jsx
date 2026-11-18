@@ -22,6 +22,19 @@ function Layout() {
   return (
     <div className={esRutaAdministrador ? styles.adminLayout : `d-flex flex-column min-vh-100 ${styles.app}`}>
       {esRutaAdministrador ? <NavbarAdministrador /> : <Navbar />}
+      <main className={`flex-grow-1 w-100 ${styles.contenido}`}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/admin" element={<HomeAdministrador />} />
+          <Route path="/admin/empleados" element={<Empleados />} />
+          <Route path="/servicios" element={<Servicios />} /> {/* <-- TU RUTA (eliminada la duplicada) */}
+          <Route path="/barberos" element={<ListaBarberos/>} />
+          <Route path="/empleados" element={<Navigate to="/admin/empleados" replace />} />
+          <Route path="/registrar-turno" element={<ListaBarberos/>} />
+          <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
+          <Route path="/agenda" element={<AgendaBarberos />} />
+          <Route path="/home-barbero" element={<HomeBarber/>}/>
+        </Routes>
       <main className={`flex-grow-1 w-100 ${esRutaAdministrador ? styles.contenidoAdmin : styles.contenido}`}>
         <Outlet />
       </main>

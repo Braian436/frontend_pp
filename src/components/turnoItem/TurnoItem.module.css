@@ -1,0 +1,54 @@
+.turno {
+  background: #0b0b0b;
+  border: 1px solid #222;
+  border-left: 4px solid #777;
+}
+
+.hora,
+.cliente {
+  color: #fff;
+}
+
+.estado {
+  padding: 6px 18px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.finalizado {
+  border-left-color: #3fae7a;
+}
+.finalizado .estado {
+  color: #3fae7a;
+}
+
+.enCurso {
+  background: #211d14;
+  border-left-color: #D9C493;
+}
+.enCurso .estado {
+  background: #D9C493;
+  border-color: #D9C493;
+  color: #111;
+  font-weight: 600;
+}
+
+.pendiente .estado {
+  color: #bbb;
+}
+
+/* Cancelado: queda registrado pero tachado y apagado */
+.cancelado {
+  border-left-color: #dc3545;
+  opacity: 0.75;
+}
+.cancelado .hora,
+.cancelado .cliente {
+  color: #999;
+  text-decoration: line-through;
+}
+.cancelado .estado {
+  color: #dc3545;
+}
