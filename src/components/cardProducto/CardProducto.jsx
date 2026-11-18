@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './CardProducto.module.css'
 
-export default function CardProducto({ nombre, descripcion, precio, activo }) {
+export default function CardProducto({ nombre, descripcion, precio, activo, onEditar, onEliminar, onCambioEstado }) {
   const [estaActivo, setEstaActivo] = useState(activo)
 
   const handleEditar = () => {
-    alert(`Editando: ${nombre}`)
+    onEditar ? onEditar() : alert(`Editando: ${nombre}`)
   }
 
   const handleAgregarStock = () => {
@@ -13,7 +13,9 @@ export default function CardProducto({ nombre, descripcion, precio, activo }) {
   }
 
   const handleToggleActivo = () => {
-    setEstaActivo(!estaActivo)
+    const nuevoEstado = !estaActivo
+    setEstaActivo(nuevoEstado)
+    onCambioEstado?.(nuevoEstado)
   }
 
   return (
@@ -39,8 +41,8 @@ export default function CardProducto({ nombre, descripcion, precio, activo }) {
                     <button type="button" className={`${styles.boton} ${styles.botonEditar}`} onClick={handleEditar}>
                         Editar
                     </button>
-                    <button type="button" className={`${styles.boton} ${styles.botonStock}`} onClick={handleAgregarStock}>
-                        Añadir Stock
+                    <button type="button" className={`${styles.boton} ${styles.botonStock}`} onClick={onEliminar || handleAgregarStock}>
+                        {onEliminar ? "Eliminar" : "Añadir Stock"}
                     </button>
                 </div>
 

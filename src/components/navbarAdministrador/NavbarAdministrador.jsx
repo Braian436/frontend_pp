@@ -24,10 +24,10 @@ export default function NavbarAdministrador() {
                     <NavLink to="/admin/empleados" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
                         <LuUsers aria-hidden="true" /> Empleados
                     </NavLink>
-                    <a href="/admin#productos" className={`nav-link ${styles.enlace}`}>
+                    <NavLink to="/admin/productos" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
                         <LuPackage aria-hidden="true" /> Productos
-                    </a>
-                    <NavLink to="/servicios" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
+                    </NavLink>
+                    <NavLink to="/admin/servicios" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
                         <LuScissors aria-hidden="true" /> Servicios
                     </NavLink>
                 </nav>

@@ -17,7 +17,7 @@ import "@fontsource/montserrat"
 
 function Layout() {
   const { pathname } = useLocation();
-  const esRutaAdministrador = pathname === "/servicios" || pathname === "/admin" || pathname.startsWith("/admin/");
+  const esRutaAdministrador = pathname === "/admin" || pathname.startsWith("/admin/");
 
   return (
     <div className={esRutaAdministrador ? styles.adminLayout : `d-flex flex-column min-vh-100 ${styles.app}`}>
@@ -41,6 +41,9 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/servicios" element={<Servicios />} />
+        <Route path="/registrar-turno" element={<ListaBarberos />} />
+        <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
       </Route>
 
       {/* Todo lo que está acá adentro exige sesión iniciada. */}
@@ -49,11 +52,9 @@ function App() {
           <Route path="/admin" element={<HomeAdministrador />} />
           <Route path="/admin/empleados" element={<Empleados />} />
           <Route path="/admin/productos" element={<GestionProductos />} />
-          <Route path="/servicios" element={<Servicios />} />
+          <Route path="/admin/servicios" element={<Servicios administracion />} />
           <Route path="/barberos" element={<ListaBarberos />} />
           <Route path="/empleados" element={<Navigate to="/admin/empleados" replace />} />
-          <Route path="/registrar-turno" element={<ListaBarberos />} />
-          <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
           <Route path="/home-barbero" element={<HomeBarber />} />
         </Route>
       </Route>
