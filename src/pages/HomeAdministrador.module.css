@@ -42,9 +42,9 @@
 
 .tarjetaIndicador {
     min-width: 0;
-    border: 1px solid #302d29;
+    border: 1px solid #d9c493;
     border-radius: 12px;
-    background: #1d1b19;
+    background: #bbbaba27;
 }
 
 .cuerpoIndicador {
@@ -105,7 +105,7 @@
     padding: 0.65rem;
     border: 1px solid rgba(217, 196, 147, 0.5);
     border-radius: 20px;
-    background: #201d17;
+    background: #bbbaba27;
     color: #e9d8ae;
     font-size: 15px;
     font-weight: 600;
@@ -120,8 +120,8 @@
 
 .botonAcceso:hover {
     transform: translateY(-2px);
-    background: #30291c;
-    color: #fff;
+    background: #d9c493;
+    color: #000000;
 }
 
 .seccionProductos {
@@ -141,9 +141,9 @@
 
 .tarjetaProducto {
     overflow: hidden;
-    border: 1px solid #37332d;
+    border: 1px solid #eaeaea;
     border-radius: 12px;
-    background: #1d1b19;
+    background: #bbbaba27;
     color: #f5f1e8;
 }
 
