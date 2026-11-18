@@ -54,6 +54,9 @@
     border-radius: 25px;
     color: #e45b4b;
     font-weight: 800;
+    font-family: inherit;
+    background-color: transparent;
+    cursor: pointer;
     text-decoration: none;
     transition: all 0.4s ease;
 }

@@ -1,0 +1,184 @@
+.formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+.bienvenido {
+    margin: 0 0 10px;
+    color: #c9b48a;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.32em;
+}
+
+.titulo {
+    margin: 0;
+    color: #f5efe3;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(32px, 5.6vw, 40px);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.5px;
+}
+
+.titulo span {
+    color: #c9a86a;
+}
+
+.subtitulo {
+    margin: 10px 0 0;
+    color: #9a9a9a;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.linea {
+    display: block;
+    width: 52px;
+    height: 3px;
+    margin: 16px 0 4px;
+    background-color: #b08d57;
+    border-radius: 2px;
+}
+
+.alerta {
+    margin: 18px 0 0;
+    padding: 10px 14px;
+    color: #fecaca;
+    font-size: 13px;
+    background-color: rgba(220, 38, 38, 0.14);
+    border: 1px solid rgba(239, 68, 68, 0.42);
+    border-radius: 10px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.etiqueta {
+    margin: 0;
+    color: #e9e4da;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.input {
+    height: 50px;
+    color: #fff;
+    background-color: #0b0b0b;
+    border: 1px solid #363636;
+    border-radius: 10px;
+}
+
+.input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.input:focus {
+    color: #fff;
+    background-color: #0b0b0b;
+    border-color: #d9c493;
+    box-shadow: 0 0 0 0.2rem rgba(217, 196, 147, 0.15);
+}
+
+.grupoPassword {
+    position: relative;
+}
+
+.inputPassword {
+    padding-right: 84px;
+}
+
+.botonVer {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    padding: 6px 12px;
+    color: #d9c493;
+    font-size: 12px;
+    font-weight: 700;
+    background-color: transparent;
+    border: 0;
+    border-radius: 8px;
+    transform: translateY(-50%);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.botonVer:hover {
+    color: #ecdcb5;
+    background-color: rgba(217, 196, 147, 0.12);
+}
+
+.botonVer:focus-visible {
+    outline: 2px solid #d9c493;
+    outline-offset: 1px;
+}
+
+.opciones {
+    margin-top: 16px;
+}
+
+.check {
+    background-color: transparent;
+    border-color: #b08d57;
+    cursor: pointer;
+}
+
+.check:checked {
+    background-color: #d9c493;
+    border-color: #d9c493;
+}
+
+.check:focus {
+    border-color: #d9c493;
+    box-shadow: 0 0 0 0.2rem rgba(217, 196, 147, 0.15);
+}
+
+.recordar {
+    color: #d6d1c8;
+    font-size: 13px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.botonIngresar {
+    width: 100%;
+    height: 50px;
+    margin-top: 24px;
+    color: #1a1a1a;
+    font-size: 15px;
+    font-weight: 800;
+    background-color: #d9c493;
+    border: 1px solid #d9c493;
+    border-radius: 10px;
+}
+
+.botonIngresar:hover,
+.botonIngresar:focus {
+    color: #1a1a1a;
+    background-color: #ecdcb5;
+    border-color: #ecdcb5;
+}
+
+.botonIngresar:disabled {
+    color: #7a7468;
+    background-color: #3a342b;
+    border-color: #3a342b;
+}
+
+.ayuda {
+    margin: 20px 0 0;
+    color: #8f8f8f;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+@media (max-width: 575.98px) {
+    .titulo {
+        font-size: 34px;
+    }
+}

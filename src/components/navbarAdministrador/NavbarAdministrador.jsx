@@ -4,6 +4,7 @@ import { LuBell, LuCircleAlert } from "react-icons/lu";
 import styles from "./NavbarAdministrador.module.css";
 import estilosCliente from "../navbar/Navbar.module.css";
 import Logo from "../../assets/LOGO-BARBER.png";
+import { useAuth } from "../../auth/AuthContext.jsx";
 
 const avisosStock = [
     { producto: "Cera mate", stock: 2, minimo: 5 },
@@ -13,6 +14,7 @@ const avisosStock = [
 export default function NavbarAdministrador() {
     const [avisosAbiertos, setAvisosAbiertos] = useState(false);
     const [menuAbierto, setMenuAbierto] = useState(false);
+    const { cerrarSesion } = useAuth();
 
     return (
         <header className={`${estilosCliente.header} sticky-top`}>
@@ -44,7 +46,16 @@ export default function NavbarAdministrador() {
                                         </div>)}
                                     </div>}
                                 </div>
-                                <NavLink to="/" className={`nav-link ${styles.cerrarSesion}`} onClick={() => setMenuAbierto(false)}>CERRAR SESIÓN</NavLink>
+                                <button
+                                    type="button"
+                                    className={`nav-link ${styles.cerrarSesion}`}
+                                    onClick={() => {
+                                        setMenuAbierto(false);
+                                        cerrarSesion();
+                                    }}
+                                >
+                                    CERRAR SESIÓN
+                                </button>
                             </div>
                         </li>
                     </ul>
