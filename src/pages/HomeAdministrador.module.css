@@ -101,37 +101,12 @@
     color: #a94335;
 }
 
-.accesos h2,
 .encabezadoProductos h2 {
     margin: 0;
     color: white;
     font-family: 'Montserrat', sans-serif;
     font-size: 25px;
     font-weight: 700;
-}
-
-.botonAcceso {
-    min-height: 48px;
-    padding: 0.65rem;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    background: #1e1e1e;
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 160ms ease, transform 160ms ease;    
-}
-
-.botonAcceso svg {
-    flex-shrink: 0;
-    font-size: 1.05rem;
-}
-
-.botonAcceso:hover {
-    transform: translateY(-2px);
-    background: #d9c493;
-    color: #000000;
 }
 
 .seccionProductos {
@@ -202,12 +177,6 @@
 
 .stockNormal {
     color: #83b77f;
-}
-
-.avisoProducto {
-    margin: 0.55rem 0 0;
-    color: #a94335;
-    font-size: 0.75rem;
 }
 
 .precio {

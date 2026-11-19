@@ -24,44 +24,6 @@
     background-color: #100f0f;
 }
 
-.etiquetaDorada {
-    color: #D9C493;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 3px;
-}
-
-.tituloSeccion {
-    color: #ffffff;
-    font-size: 2.7rem;
-}
-
-.textoDescripcion {
-    color: #a39e93;
-    font-size: 17px;
-}
-
-.cardProducto {
-    background-color: #161411;
-    border: 1px solid #D9C493;
-    transition: border-color 0.3s ease, transform 0.3s ease;
-    border-radius: 20px;
-}
-
-.cardProducto:hover {
-    border-color: #D9C493;
-    transform: translateY(-4px);
-}
-
-.lineaDorada {
-    border-top: 2px solid #D9C493;
-}
-
-.numeroRitual {
-    color: #D9C493;
-    font-size: 20px;
-}
-
 .boton {
     flex: 1;
     display: inline-flex;

@@ -14,6 +14,7 @@ import GestionProductos from './pages/GestionProductos';
 import Login from './pages/Login.jsx';
 import { useAuth } from './auth/AuthContext.jsx';
 import "@fontsource/montserrat"
+import AgendaBarberos from "./pages/AgendaBarberos.jsx"
 
 function Layout() {
   const { pathname } = useLocation();
@@ -23,19 +24,6 @@ function Layout() {
     <div className={esRutaAdministrador ? styles.adminLayout : `d-flex flex-column min-vh-100 ${styles.app}`}>
       {esRutaAdministrador ? <NavbarAdministrador /> : <Navbar />}
       <main className={`flex-grow-1 w-100 ${styles.contenido}`}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/admin" element={<HomeAdministrador />} />
-          <Route path="/admin/empleados" element={<Empleados />} />
-          <Route path="/servicios" element={<Servicios />} /> {/* <-- TU RUTA (eliminada la duplicada) */}
-          <Route path="/barberos" element={<ListaBarberos/>} />
-          <Route path="/empleados" element={<Navigate to="/admin/empleados" replace />} />
-          <Route path="/registrar-turno" element={<ListaBarberos/>} />
-          <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
-          <Route path="/agenda" element={<AgendaBarberos />} />
-          <Route path="/home-barbero" element={<HomeBarber/>}/>
-        </Routes>
-      <main className={`flex-grow-1 w-100 ${esRutaAdministrador ? styles.contenidoAdmin : styles.contenido}`}>
         <Outlet />
       </main>
       {!esRutaAdministrador && <Footer />}
@@ -57,6 +45,7 @@ function App() {
         <Route path="/servicios" element={<Servicios />} />
         <Route path="/registrar-turno" element={<ListaBarberos />} />
         <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
+        <Route path="/agenda" element={<AgendaBarberos />} />
       </Route>
 
       {/* Todo lo que está acá adentro exige sesión iniciada. */}

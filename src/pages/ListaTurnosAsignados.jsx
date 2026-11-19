@@ -1,4 +1,3 @@
-import React from 'react'
 import CardTurnos from '../components/cardTurnos/CardTurnos';
 
 export default function ListaTurnosAsignados() {

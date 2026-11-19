@@ -1,7 +1,6 @@
 import slide1 from '../assets/slide1.png';
 import slide2 from '../assets/slide2.png';
 import slide3 from '../assets/slide3.png';
-import React from 'react'
 import ListaTurnosAsignados from './ListaTurnosAsignados'
 import styles from './HomeBarber.module.css';
 export default function HomeBarber() {

@@ -93,13 +93,6 @@
     border-color: #d9c493; 
 }
 
-.resumen { 
-    color: #e9d8ae; 
-    text-align: center; 
-    background: rgba(217,196,147,.1); 
-    border: 1px solid rgba(217,196,147,.45); 
-}
-
 .modalOverlay, .modalExito { 
     overflow-y: auto; 
     background: rgba(0,0,0,.72); 

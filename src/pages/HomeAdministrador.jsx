@@ -1,5 +1,4 @@
-import { LuCalendarPlus, LuCircleDollarSign, LuClipboardList, LuPackage, LuReceipt, LuScissors, LuTicket, } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { LuCalendarPlus, LuCircleDollarSign, LuPackage, LuReceipt, LuTicket, } from "react-icons/lu";
 import fondoAdministrador from "../assets/fachero3.png";
 import imagenCeraMate from "../assets/CeraMate.png";
 import imagenPomadaBrillo from "../assets/PomadaBrillo.png";

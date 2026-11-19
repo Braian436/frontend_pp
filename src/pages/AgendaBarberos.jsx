@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './AgendaBarberos.module.css'
 import { useState } from "react";
 import AgendaCard from "../components/agendaCard/AgendaCard";

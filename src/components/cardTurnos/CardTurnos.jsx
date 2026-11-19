@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './CardTurnos.module.css'
 export default function CardTurnos({hora,nombre,servicios}) {
   return (
