@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"; // 1. Importamos useState y useEffect
-import CardBarbero from "../components/cardBarbero/CardBarbero";
+import CardBarbero from "../../components/cardBarbero/CardBarbero";
 import styles from "./ListaBarberos.module.css";
 
 export default function ListaBarberos() {

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import EmpleadoCard from "../components/empleadoCard/EmpleadoCard";
-import EmpleadoFiltros from "../components/empleadoFiltro/EmpleadoFiltro";
-import EmpleadoModal from "../components/empleadoModal/EmpleadoModal";
+import EmpleadoCard from "../../components/empleadoCard/EmpleadoCard";
+import EmpleadoFiltros from "../../components/empleadoFiltro/EmpleadoFiltro";
+import EmpleadoModal from "../../components/empleadoModal/EmpleadoModal";
 import styles from "./Empleados.module.css";
 
 

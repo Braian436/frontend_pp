@@ -1,20 +1,20 @@
 import { Navigate, Outlet, Routes, Route, useLocation } from "react-router-dom";
 import styles from './App.module.css'
-import Empleados from './pages/Empleados';
-import ListaBarberos from './pages/ListaBarberos.jsx';
-import Home from './pages/Home.jsx';
-import TurnosDisponibles from './pages/TurnosDisponibles.jsx';
-import Servicios from './pages/Servicios';
-import HomeAdministrador from './pages/HomeAdministrador.jsx';
+import Empleados from './pages/administrador/Empleados';
+import ListaBarberos from './pages/cliente/ListaBarberos.jsx';
+import Home from './pages/cliente/Home.jsx';
+import TurnosDisponibles from './pages/cliente/TurnosDisponibles.jsx';
+import Servicios from './pages/administrador/Servicios';
+import HomeAdministrador from './pages/administrador/HomeAdministrador.jsx';
 import NavbarAdministrador from './components/navbarAdministrador/NavbarAdministrador.jsx';
-import HomeBarber from './pages/HomeBarber.jsx';
+import HomeBarber from './pages/barbero/HomeBarber.jsx';
 import Navbar from './components/navbar/Navbar.jsx'
 import Footer from './components/footer/Footer.jsx'
-import GestionProductos from './pages/GestionProductos';
+import GestionProductos from './pages/administrador/GestionProductos';
 import Login from './pages/Login.jsx';
 import { useAuth } from './auth/AuthContext.jsx';
 import "@fontsource/montserrat"
-import AgendaBarberos from "./pages/AgendaBarberos.jsx"
+import AgendaBarberos from "./pages/barbero/AgendaBarberos.jsx"
 
 function Layout() {
   const { pathname } = useLocation();

@@ -1,7 +1,7 @@
 import styles from './AgendaBarberos.module.css'
 import { useState } from "react";
-import AgendaCard from "../components/agendaCard/AgendaCard";
-import TurnoModal from "../components/turnoModal/TurnoModal";
+import AgendaCard from "../../components/agendaCard/AgendaCard";
+import TurnoModal from "../../components/turnoModal/TurnoModal";
 
 const barberosIniciales = [
   {

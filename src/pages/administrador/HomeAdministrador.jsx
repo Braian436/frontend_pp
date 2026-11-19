@@ -1,8 +1,8 @@
 import { LuCalendarPlus, LuCircleDollarSign, LuPackage, LuReceipt, LuTicket, } from "react-icons/lu";
-import fondoAdministrador from "../assets/fachero3.png";
-import imagenCeraMate from "../assets/CeraMate.png";
-import imagenPomadaBrillo from "../assets/PomadaBrillo.png";
-import imagenAceiteParaBarba from "../assets/AceiteParaBarba.png";
+import fondoAdministrador from "../../assets/fachero3.png";
+import imagenCeraMate from "../../assets/CeraMate.png";
+import imagenPomadaBrillo from "../../assets/PomadaBrillo.png";
+import imagenAceiteParaBarba from "../../assets/AceiteParaBarba.png";
 import styles from "./HomeAdministrador.module.css";
 
 const indicadores = [
@@ -73,13 +73,15 @@ const estiloFondo = {
 export default function HomeAdministrador() {
     return (
         <div className={`min-vh-100 ${styles.dashboard}`}>
-            <section className={`d-flex align-items-center ${styles.hero}`} style={estiloFondo}>
-                <div className={styles.heroTexto}>
-                    <p className={styles.eyebrow}>Panel de administración</p>
-                    <h1>Bienvenido, administrador</h1>
-                    <p>Todo lo que necesitás para gestionar tu barbería, en un solo lugar.</p>
-                </div>
-            </section>
+            <div className="container-fluid px-3 px-lg-5">
+                <section className={`d-flex align-items-center ${styles.hero}`} style={estiloFondo}>
+                    <div className={styles.heroTexto}>
+                        <p className={styles.eyebrow}>Panel de administración</p>
+                        <h1>Bienvenido, administrador</h1>
+                        <p>Todo lo que necesitás para gestionar tu barbería, en un solo lugar.</p>
+                    </div>
+                </section>
+            </div>
 
             <div className="container-fluid d-flex flex-column gap-4 px-3 px-lg-5 py-4">
                 <section className="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3" aria-label="Resumen del día">

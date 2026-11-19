@@ -1,6 +1,6 @@
-import slide1 from '../assets/slide1.png';
-import slide2 from '../assets/slide2.png';
-import slide3 from '../assets/slide3.png';
+import slide1 from '../../assets/slide1.png';
+import slide2 from '../../assets/slide2.png';
+import slide3 from '../../assets/slide3.png';
 import styles from './Home.module.css';
 import { LuBox, LuSparkles, LuDroplet, LuFlaskConical } from 'react-icons/lu';
 

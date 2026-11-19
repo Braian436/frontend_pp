@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaCheckCircle, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import fondo from "../assets/facha1.png";
+import fondo from "../../assets/facha1.png";
 import styles from "./TurnosDisponibles.module.css";
 
 const horas = Array.from({ length: 13 }, (_, i) => `${String(i + 10).padStart(2, "0")}:00`);

@@ -15,7 +15,7 @@
 .adminLayout {
     display: grid;
     grid-template-columns: 230px minmax(0, 1fr);
-    grid-template-rows: 96px minmax(0, 1fr);
+    grid-template-rows: 120px minmax(0, 1fr);
     min-height: 100vh;
     background: #0e0d0d;
 }

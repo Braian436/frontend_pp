@@ -1,6 +1,6 @@
 import { useState } from "react";
-import CardProducto from "../components/cardProducto/CardProducto";
-import fondo from "../assets/adminproductos2.jpg";
+import CardProducto from "../../components/cardProducto/CardProducto";
+import fondo from "../../assets/adminproductos2.jpg";
 
 const iniciales = [
     { id: 1, nombre: "CERA FUERTE", descripcion: "Fijación extrema", precio: "8.500", activo: true },

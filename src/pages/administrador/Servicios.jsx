@@ -1,5 +1,5 @@
-import CardServicio from "../components/cardServicio/CardServicio";
-import fondo from "../assets/fondoservicio1.jpg";
+import CardServicio from "../../components/cardServicio/CardServicio";
+import fondo from "../../assets/fondoservicio1.jpg";
 import { useState } from "react";
 
 const iniciales = [

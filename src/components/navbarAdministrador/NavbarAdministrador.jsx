@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { LuBell, LuCircleAlert, LuHouse, LuLogOut, LuPackage, LuScissors, LuUsers } from "react-icons/lu";
+import { LuBell, LuCircleAlert, LuHouse, LuLogOut, LuPackage, LuScissors, LuUsers, LuDollarSign, LuUserSearch} from "react-icons/lu";
 import styles from "./NavbarAdministrador.module.css";
 import Logo from "../../assets/LOGO-BARBER.png";
 import { useAuth } from "../../auth/AuthContext.jsx";
@@ -26,7 +26,7 @@ export default function NavbarAdministrador() {
                     </NavLink>
                     <h3 className={styles.titulo}>Gestion</h3>
                     <NavLink to="/admin/caja" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
-                        <LuScissors aria-hidden="true" /> Caja
+                        <LuDollarSign aria-hidden="true" /> Caja
                     </NavLink>
                     <NavLink to="/admin/empleados" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
                         <LuUsers aria-hidden="true" /> Empleados
@@ -38,7 +38,7 @@ export default function NavbarAdministrador() {
                         <LuScissors aria-hidden="true" /> Servicios
                     </NavLink>
                     <NavLink to="/admin/clientes" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
-                        <LuUsers aria-hidden="true" /> Clientes
+                        <LuUserSearch aria-hidden="true" /> Clientes
                     </NavLink>
                 </nav>
                 <button type="button" className={`btn d-flex align-items-center gap-2 ${styles.cerrarSesion}`} onClick={cerrarSesion}>
