@@ -10,6 +10,7 @@
     height: calc(100vh - 48px);
     margin: 24px 16px;
     padding: 1.25rem 1rem;
+    overflow-y: auto;
     background: #1e1e1e;
     border-radius: 30px;
 
@@ -141,8 +142,21 @@
 }
 
 .titulo {
+    margin: 1rem 0 0.25rem;
     color: #d9c493;
     font-size: 16px;
+}
+
+.pendiente {
+    color: #aaa49a;
+    cursor: not-allowed;
+}
+
+.pendiente small {
+    margin-left: auto;
+    color: #c9b48a;
+    font-size: 0.65rem;
+    white-space: nowrap;
 }
 
 @media (max-width: 767.98px) {

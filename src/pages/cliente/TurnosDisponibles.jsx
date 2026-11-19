@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaCheckCircle, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useAuth } from "../../auth/AuthContext.jsx";
 import fondo from "../../assets/facha1.png";
 import styles from "./TurnosDisponibles.module.css";
 
 const horas = Array.from({ length: 13 }, (_, i) => `${String(i + 10).padStart(2, "0")}:00`);
 const campos = [["nombre", "NOMBRE"], ["apellido", "APELLIDO"], ["telefono", "TEL/CELULAR"], ["correo", "CORREO ELECTRONICO"]];
 const formularioInicial = { nombre: "", apellido: "", telefono: "", correo: "" };
-const apiUrl = (import.meta.env.VITE_API_URL || "http://localhost:8000/api").replace(/\/$/, "");
 const fechaLocal = (fecha) => `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, "0")}-${String(fecha.getDate()).padStart(2, "0")}`;
 
 export default function TurnosDisponibles() {
+    const { request } = useAuth();
     const [params] = useSearchParams();
     const [inicio, setInicio] = useState(() => { const hoy = new Date(); hoy.setHours(12, 0, 0, 0); return hoy; });
     const [seleccion, setSeleccion] = useState(null);
@@ -40,9 +41,7 @@ export default function TurnosDisponibles() {
             const consulta = new URLSearchParams({ empleado, desde: fechaLocal(inicio), hasta: fechaLocal(hasta) });
             horas.forEach((hora) => consulta.append("horas", hora));
             try {
-                const respuesta = await fetch(`${apiUrl}/turnos/disponibilidad/?${consulta}`, { signal: controller.signal });
-                if (!respuesta.ok) throw new Error("No se pudo consultar la disponibilidad.");
-                const { slots } = await respuesta.json();
+                const { slots } = await request(`/turnos/disponibilidad/?${consulta}`, { signal: controller.signal });
                 if (!Array.isArray(slots)) throw new Error("Respuesta de disponibilidad inválida.");
                 setDisponibilidad(Object.fromEntries(slots.map(({ fecha, hora, disponible }) => [`${fecha}T${String(hora).slice(0, 5)}`, disponible])));
             } catch (error) {
@@ -51,7 +50,7 @@ export default function TurnosDisponibles() {
         };
         cargar();
         return () => controller.abort();
-    }, [empleado, inicio, actualizar]);
+    }, [empleado, inicio, actualizar, request]);
 
     useEffect(() => {
         if (!confirmado) return;
@@ -71,17 +70,19 @@ export default function TurnosDisponibles() {
         e.preventDefault(); if (!seleccion || reservando) return;
         setReservando(true); setErrorReserva("");
         try {
-            const respuesta = await fetch(`${apiUrl}/turnos/reservas/`, {
-                method: "POST", headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ empleado, fecha: fechaLocal(seleccion.fecha), hora: seleccion.hora, nombre: formulario.nombre, apellido: formulario.apellido, telefono: formulario.telefono, email: formulario.correo }),
+            await request("/turnos/reservas/", {
+                method: "POST",
+                body: { empleado, fecha: fechaLocal(seleccion.fecha), hora: seleccion.hora, nombre: formulario.nombre, apellido: formulario.apellido, telefono: formulario.telefono, email: formulario.correo },
             });
-            const datos = await respuesta.json().catch(() => ({}));
-            if (!respuesta.ok) {
-                if (respuesta.status === 409 || datos.code === "slot_unavailable") { setErrorReserva("Ese horario ya no está disponible. Elegí otro."); setActualizar((n) => n + 1); return; }
-                throw new Error(datos.detail || "No se pudo confirmar el turno.");
-            }
             setActualizar((n) => n + 1); setConfirmado(true);
-        } catch (error) { setErrorReserva(error.message); }
+        } catch (error) {
+            if (error.status === 409 || error.data?.code === "slot_unavailable") {
+                setErrorReserva("Ese horario ya no está disponible. Elegí otro.");
+                setActualizar((n) => n + 1);
+            } else {
+                setErrorReserva(error.message);
+            }
+        }
         finally { setReservando(false); }
     };
     const semanaActual = fechaLocal(inicio) === fechaLocal(new Date());

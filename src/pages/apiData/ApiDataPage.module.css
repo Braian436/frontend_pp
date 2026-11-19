@@ -1,0 +1,93 @@
+.pagina {
+    min-height: 100%;
+    color: #f5f1e8;
+    background: #0e0d0d;
+}
+
+.encabezado {
+    margin-bottom: 1.5rem;
+}
+
+.encabezado h1 {
+    margin: 0;
+    color: #d9c493;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.encabezado p:last-child {
+    margin: 0.5rem 0 0;
+    color: #aaa49a;
+}
+
+.subtitulo {
+    margin: 0 0 0.4rem;
+    color: #c9b48a;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.filtros {
+    padding: 1rem;
+    color: #f5f1e8;
+    background: #1e1e1e;
+    border: 1px solid #37332b;
+    border-radius: 0.75rem;
+}
+
+.filtros label {
+    color: #e9e4da;
+}
+
+.boton {
+    color: #1a1a1a;
+    font-weight: 700;
+    background: #d9c493;
+    border-color: #d9c493;
+}
+
+.boton:hover,
+.boton:focus-visible {
+    color: #1a1a1a;
+    background: #ecdcb5;
+    border-color: #ecdcb5;
+}
+
+.tablaContenedor {
+    overflow-x: auto;
+    background: #1e1e1e;
+    border: 1px solid #37332b;
+    border-radius: 0.75rem;
+}
+
+.tabla {
+    min-width: 100%;
+    color: #f5f1e8;
+    vertical-align: middle;
+}
+
+.tabla th {
+    color: #d9c493;
+    white-space: nowrap;
+}
+
+.tabla td {
+    max-width: 28rem;
+    color: #e9e4da;
+    overflow-wrap: anywhere;
+}
+
+.estado,
+.error {
+    padding: 1.25rem;
+    color: #aaa49a;
+    text-align: center;
+    background: #1e1e1e;
+    border-radius: 0.75rem;
+}
+
+.error {
+    color: #fecaca;
+    border: 1px solid rgba(239, 68, 68, 0.42);
+}

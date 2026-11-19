@@ -1,86 +1,104 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { LuBell, LuCircleAlert, LuHouse, LuLogOut, LuPackage, LuScissors, LuUsers, LuDollarSign, LuUserSearch} from "react-icons/lu";
+import {
+    LuCalendarDays,
+    LuLogOut,
+    LuPackage,
+    LuReceipt,
+    LuScissors,
+    LuUserSearch,
+    LuUsers,
+    LuWallet,
+} from "react-icons/lu";
 import styles from "./NavbarAdministrador.module.css";
 import Logo from "../../assets/LOGO-BARBER.png";
 import { useAuth } from "../../auth/AuthContext.jsx";
+import { menusPorGrupo, rutaInicialPorGrupo } from "../../auth/roles.js";
 
-const avisosStock = [
-    { producto: "Cera mate", stock: 2, minimo: 5 },
-    { producto: "Aceite para barba", stock: 3, minimo: 4 },
-];
+const iconos = {
+    calendar: LuCalendarDays,
+    receipt: LuReceipt,
+    scissors: LuScissors,
+    users: LuUsers,
+};
+
+const iconosPendientes = {
+    Clientes: LuUserSearch,
+    Servicios: LuScissors,
+    Ventas: LuWallet,
+    Cajas: LuWallet,
+    "Movimientos de caja": LuReceipt,
+    "Productos y stock": LuPackage,
+};
 
 export default function NavbarAdministrador() {
-    const [avisosAbiertos, setAvisosAbiertos] = useState(false);
-    const { usuario, cerrarSesion } = useAuth();
+    const { usuario, grupo, cerrarSesion } = useAuth();
+    const menu = menusPorGrupo[grupo] ?? { rutas: [], pendientes: [] };
+    const rutaInicial = rutaInicialPorGrupo[grupo] ?? "/";
 
     return (
         <>
             <aside className={styles.sidebar}>
-                <nav className={`nav flex-column gap-2 ${styles.enlaces}`} aria-label="Navegación de administrador">
-                    <NavLink to="/admin" end className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
-                        <LuHouse aria-hidden="true" /> Inicio
-                    </NavLink>
-                    <NavLink to="/admin/turnos" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
-                        <LuScissors aria-hidden="true" /> Nuevo Turno
-                    </NavLink>
-                    <h3 className={styles.titulo}>Gestion</h3>
-                    <NavLink to="/admin/caja" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
-                        <LuDollarSign aria-hidden="true" /> Caja
-                    </NavLink>
-                    <NavLink to="/admin/empleados" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
-                        <LuUsers aria-hidden="true" /> Empleados
-                    </NavLink>
-                    <NavLink to="/admin/productos" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
-                        <LuPackage aria-hidden="true" /> Productos
-                    </NavLink>
-                    <NavLink to="/admin/servicios" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
-                        <LuScissors aria-hidden="true" /> Servicios
-                    </NavLink>
-                    <NavLink to="/admin/clientes" className={({ isActive }) => `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`}>
-                        <LuUserSearch aria-hidden="true" /> Clientes
-                    </NavLink>
+                <nav
+                    className={`nav flex-column gap-2 ${styles.enlaces}`}
+                    aria-label={`Navegación de ${grupo ?? "usuario"}`}
+                >
+                    {menu.rutas.map(({ label, to, icon }) => {
+                        const Icono = iconos[icon];
+                        return (
+                            <NavLink
+                                key={to}
+                                to={to}
+                                className={({ isActive }) =>
+                                    `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`
+                                }
+                            >
+                                <Icono aria-hidden="true" />
+                                {label}
+                            </NavLink>
+                        );
+                    })}
+
+                    {menu.pendientes.length > 0 && (
+                        <>
+                            <h2 className={styles.titulo}>Pendiente</h2>
+                            {menu.pendientes.map((label) => {
+                                const Icono = iconosPendientes[label];
+                                return (
+                                    <span
+                                        className={`${styles.enlace} ${styles.pendiente}`}
+                                        aria-disabled="true"
+                                        key={label}
+                                    >
+                                        <Icono aria-hidden="true" />
+                                        <span>{label}</span>
+                                        <small>Pendiente</small>
+                                    </span>
+                                );
+                            })}
+                        </>
+                    )}
                 </nav>
-                <button type="button" className={`btn d-flex align-items-center gap-2 ${styles.cerrarSesion}`} onClick={cerrarSesion}>
+
+                <button
+                    type="button"
+                    className={`btn d-flex align-items-center gap-2 ${styles.cerrarSesion}`}
+                    onClick={cerrarSesion}
+                >
                     <LuLogOut aria-hidden="true" /> Cerrar sesión
                 </button>
             </aside>
 
             <header className={`d-flex align-items-center gap-3 ${styles.cabecera}`}>
-                <NavLink to="/admin" className={styles.logoCaja} aria-label="Inicio de administración">
+                <NavLink
+                    to={rutaInicial}
+                    className={styles.logoCaja}
+                    aria-label="Inicio del panel"
+                >
                     <img src={Logo} alt="Barbería Clase A" />
                 </NavLink>
-                <p className={styles.saludo}>Bienvenido, <strong>{usuario}</strong></p>
-                <div className="position-relative ms-auto">
-                    <button
-                        type="button"
-                        className={`btn d-inline-flex align-items-center justify-content-center position-relative ${styles.botonAvisos}`}
-                        aria-label={`${avisosStock.length} avisos de bajo stock`}
-                        aria-expanded={avisosAbiertos}
-                        aria-controls="avisos-stock"
-                        onClick={() => setAvisosAbiertos((abiertos) => !abiertos)}
-                    >
-                        <LuBell aria-hidden="true" />
-                        <span className={`position-absolute top-0 start-100 translate-middle badge rounded-pill ${styles.contador}`}>
-                            {avisosStock.length}
-                        </span>
-                    </button>
-                    {avisosAbiertos && (
-                        <div id="avisos-stock" className={`position-absolute top-100 end-0 mt-2 p-3 shadow ${styles.panelAvisos}`}>
-                            <h2 className="mb-3">Avisos de stock</h2>
-                            {avisosStock.map((aviso) => (
-                                <div key={aviso.producto} className={`d-flex align-items-start gap-2 py-2 ${styles.aviso}`}>
-                                    <LuCircleAlert aria-hidden="true" />
-                                    <p className="d-grid gap-1 mb-0">
-                                        <strong>{aviso.producto}</strong>
-                                        <span>{aviso.stock} unidades · mínimo {aviso.minimo}</span>
-                                        
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
+                <p className={styles.saludo}>
+                    {grupo} · <strong>{usuario}</strong>
+                </p>
             </header>
         </>
     );

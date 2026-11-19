@@ -117,33 +117,6 @@
     outline-offset: 1px;
 }
 
-.opciones {
-    margin-top: 16px;
-}
-
-.check {
-    background-color: transparent;
-    border-color: #b08d57;
-    cursor: pointer;
-}
-
-.check:checked {
-    background-color: #d9c493;
-    border-color: #d9c493;
-}
-
-.check:focus {
-    border-color: #d9c493;
-    box-shadow: 0 0 0 0.2rem rgba(217, 196, 147, 0.15);
-}
-
-.recordar {
-    color: #d6d1c8;
-    font-size: 13px;
-    cursor: pointer;
-    user-select: none;
-}
-
 .botonIngresar {
     width: 100%;
     height: 50px;

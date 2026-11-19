@@ -1,17 +1,10 @@
 import { useId, useState } from "react";
 import styles from "./LoginForm.module.css";
 
-const CLAVE_USUARIO = "barberia:usuarioRecordado";
-
-export default function LoginForm({ onIngresar }) {
+export default function LoginForm({ onIngresar, aviso }) {
     const id = useId();
-    const [usuario, setUsuario] = useState(
-        () => localStorage.getItem(CLAVE_USUARIO) ?? ""
-    );
+    const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
-    const [recordar, setRecordar] = useState(
-        () => Boolean(localStorage.getItem(CLAVE_USUARIO))
-    );
     const [verPassword, setVerPassword] = useState(false);
     const [cargando, setCargando] = useState(false);
     const [error, setError] = useState("");
@@ -22,13 +15,7 @@ export default function LoginForm({ onIngresar }) {
         setCargando(true);
 
         try {
-            await onIngresar({ username: usuario.trim(), password }, recordar);
-
-            if (recordar) {
-                localStorage.setItem(CLAVE_USUARIO, usuario.trim());
-            } else {
-                localStorage.removeItem(CLAVE_USUARIO);
-            }
+            await onIngresar({ username: usuario.trim(), password });
         } catch (fallo) {
             setError(
                 fallo?.message ||
@@ -47,6 +34,12 @@ export default function LoginForm({ onIngresar }) {
             </h1>
             <p className={styles.subtitulo}>Accedé a tu cuenta para continuar</p>
             <span className={styles.linea} aria-hidden="true" />
+
+            {aviso && (
+                <div className={`alert alert-warning ${styles.alerta}`} role="alert">
+                    {aviso}
+                </div>
+            )}
 
             {error && (
                 <div className={`alert alert-danger ${styles.alerta}`} role="alert">
@@ -104,22 +97,6 @@ export default function LoginForm({ onIngresar }) {
                         {verPassword ? "Ocultar" : "Ver"}
                     </button>
                 </div>
-            </div>
-
-            <div className={`form-check ${styles.opciones}`}>
-                <input
-                    id={`${id}-recordar`}
-                    className={`form-check-input ${styles.check}`}
-                    type="checkbox"
-                    checked={recordar}
-                    onChange={(evento) => setRecordar(evento.target.checked)}
-                />
-                <label
-                    className={`form-check-label ${styles.recordar}`}
-                    htmlFor={`${id}-recordar`}
-                >
-                    Recordarme
-                </label>
             </div>
 
             <button

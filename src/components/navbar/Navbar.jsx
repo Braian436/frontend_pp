@@ -3,10 +3,11 @@ import { NavLink } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import Logo from "../../assets/LOGO-BARBER.png";
 import { useAuth } from "../../auth/AuthContext.jsx";
+import { rutaInicialPorGrupo } from "../../auth/roles.js";
 
 export default function Navbar() {
     const [abierto, setAbierto] = useState(false);
-    const { usuario, autenticado, cerrarSesion } = useAuth();
+    const { usuario, grupo, autenticado, cerrarSesion } = useAuth();
 
     return (
         <header className={`${styles.header} sticky-top`}>
@@ -22,6 +23,15 @@ export default function Navbar() {
                         <li className="nav-item"><NavLink to="/" end className={`nav-link ${styles.botonLindo}`} onClick={() => setAbierto(false)}>INICIO</NavLink></li>
                         <li className="nav-item"><NavLink to="/servicios" className={`nav-link ${styles.botonLindo}`} onClick={() => setAbierto(false)}>SERVICIOS</NavLink></li>
                         <li className="nav-item"><NavLink to="/registrar-turno" className={`nav-link ${styles.botonLindo} ${styles.botonActivo}`} onClick={() => setAbierto(false)}>REGISTRAR TURNO</NavLink></li>
+                        {autenticado && <li className="nav-item">
+                            <NavLink
+                                to={rutaInicialPorGrupo[grupo] ?? "/"}
+                                className={`nav-link ${styles.botonLindo}`}
+                                onClick={() => setAbierto(false)}
+                            >
+                                PANEL
+                            </NavLink>
+                        </li>}
                         {autenticado && <li className="nav-item">
                             <button
                                 type="button"
