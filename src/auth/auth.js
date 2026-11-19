@@ -11,6 +11,10 @@ export class ApiError extends Error {
     }
 }
 
+export function sesionExpiradaPorError(error, token) {
+    return Boolean(token) && error?.status === 401;
+}
+
 async function leerRespuesta(response) {
     const texto = await response.text();
 
@@ -54,7 +58,9 @@ export async function apiRequest(path, token, options = {}) {
     if (!response.ok) {
         const mensaje =
             response.status === 401
-                ? "La sesión expiró. Iniciá sesión nuevamente."
+                ? token
+                    ? "La sesión expiró. Iniciá sesión nuevamente."
+                    : data?.detail || data?.message || "No se pudo completar la solicitud."
                 : response.status === 403
                   ? "Acceso denegado."
                   : data?.detail || data?.message || "No se pudo completar la solicitud.";

@@ -32,7 +32,7 @@
     flex-shrink: 0;
 }
 
-.enlace:hover,
+.enlace:hover:not(:disabled),
 .activo {
     transform: translateY(-2px);
     background: #d9c493;
@@ -150,6 +150,10 @@
 .pendiente {
     color: #aaa49a;
     cursor: not-allowed;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    opacity: 1;
 }
 
 .pendiente small {

@@ -13,7 +13,7 @@ export default function ListaBarberos() {
         const controller = new AbortController();
         const cargar = async () => {
             try {
-                const data = await request("/empleados/", {
+                const data = await request("/barberos/", {
                     signal: controller.signal,
                 });
                 setBarberos(
@@ -45,8 +45,13 @@ export default function ListaBarberos() {
                             <div className="col-12 col-lg-6" key={barbero.id_empleado}>
                                 <CardBarbero
                                     id={barbero.id_empleado}
-                                    nombre={barbero.nombre_empleado}
-                                    especialidad={barbero.especialidad}
+                                    nombre={
+                                        barbero.nombre_empleado ||
+                                        [barbero.nombre, barbero.apellido]
+                                            .filter(Boolean)
+                                            .join(" ")
+                                    }
+                                    especialidad={barbero.especialidad || "Barbero"}
                                     foto={barbero.foto_empleado}
                                 />
                             </div>

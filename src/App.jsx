@@ -13,8 +13,13 @@ import ListaBarberos from "./pages/cliente/ListaBarberos.jsx";
 import TurnosDisponibles from "./pages/cliente/TurnosDisponibles.jsx";
 import Servicios from "./pages/administrador/Servicios";
 import Login from "./pages/Login.jsx";
+import Empleados from "./pages/administrador/Empleados.jsx";
+import GestionProductos from "./pages/administrador/GestionProductos.jsx";
+import HomeAdministrador from "./pages/administrador/HomeAdministrador.jsx";
+import HomeBarber from "./pages/barbero/HomeBarber.jsx";
 import ApiDataPage from "./pages/apiData/ApiDataPage.jsx";
 import { useAuth } from "./auth/AuthContext.jsx";
+import { rutaInicialPorGrupo } from "./auth/roles.js";
 import Navbar from "./components/navbar/Navbar.jsx";
 import NavbarAdministrador from "./components/navbarAdministrador/NavbarAdministrador.jsx";
 import Footer from "./components/footer/Footer.jsx";
@@ -29,7 +34,10 @@ const rutasInternas = [
 
 function Layout() {
     const { pathname } = useLocation();
-    const esPortal = rutasInternas.includes(pathname);
+    const { grupo } = useAuth();
+    const esPortal =
+        grupo === "Administrador" &&
+        (rutasInternas.includes(pathname) || pathname.startsWith("/admin"));
 
     return (
         <div
@@ -51,6 +59,13 @@ function Layout() {
 function RutaPrivada() {
     const { autenticado } = useAuth();
     return autenticado ? <Outlet /> : <Navigate to="/login" replace />;
+}
+
+function RutaPorGrupo({ grupoPermitido }) {
+    const { grupo } = useAuth();
+    return grupo === grupoPermitido
+        ? <Outlet />
+        : <Navigate to={rutaInicialPorGrupo[grupo] ?? "/"} replace />;
 }
 
 function RedireccionSesionExpirada() {
@@ -79,6 +94,18 @@ function App() {
 
                 <Route element={<RutaPrivada />}>
                     <Route element={<Layout />}>
+                        <Route element={<RutaPorGrupo grupoPermitido="Administrador" />}>
+                            <Route path="/admin" element={<HomeAdministrador />} />
+                            <Route path="/admin/empleados" element={<Empleados />} />
+                            <Route path="/admin/productos" element={<GestionProductos />} />
+                            <Route
+                                path="/admin/servicios"
+                                element={<Servicios administracion />}
+                            />
+                        </Route>
+                        <Route element={<RutaPorGrupo grupoPermitido="Barbero" />}>
+                            <Route path="/home-barbero" element={<HomeBarber />} />
+                        </Route>
                         <Route
                             path="/empleados/"
                             element={

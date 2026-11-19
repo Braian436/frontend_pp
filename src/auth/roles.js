@@ -10,6 +10,7 @@ const pendientesCaja = [
 export const menusPorGrupo = {
     Administrador: {
         rutas: [
+            { label: "Inicio", to: "/admin", icon: "home" },
             { label: "Empleados", to: "/empleados/", icon: "users" },
             { label: "Liquidaciones", to: "/liquidaciones/", icon: "receipt" },
             {
@@ -27,6 +28,7 @@ export const menusPorGrupo = {
     },
     Barbero: {
         rutas: [
+            { label: "Inicio", to: "/home-barbero", icon: "home" },
             {
                 label: "Disponibilidad",
                 to: "/turnos/disponibilidad/",
@@ -40,7 +42,7 @@ export const menusPorGrupo = {
 };
 
 export const rutaInicialPorGrupo = {
-    Administrador: "/empleados/",
+    Administrador: "/admin",
     Cajero: "/turnos/reservas/",
-    Barbero: "/turnos/disponibilidad/",
+    Barbero: "/home-barbero",
 };

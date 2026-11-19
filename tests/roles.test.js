@@ -2,10 +2,11 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { menusPorGrupo, rutaInicialPorGrupo } from "../src/auth/roles.js";
 
-test("each role only links to the API routes available for that group", () => {
+test("each role links to its dashboard and available API routes", () => {
     assert.deepEqual(
         menusPorGrupo.Administrador.rutas.map(({ to }) => to),
         [
+            "/admin",
             "/empleados/",
             "/liquidaciones/",
             "/turnos/disponibilidad/",
@@ -19,15 +20,16 @@ test("each role only links to the API routes available for that group", () => {
     assert.deepEqual(
         menusPorGrupo.Barbero.rutas.map(({ to }) => to),
         [
+            "/home-barbero",
             "/turnos/disponibilidad/",
             "/turnos/reservas/",
             "/liquidaciones/",
         ]
     );
     assert.deepEqual(rutaInicialPorGrupo, {
-        Administrador: "/empleados/",
+        Administrador: "/admin",
         Cajero: "/turnos/reservas/",
-        Barbero: "/turnos/disponibilidad/",
+        Barbero: "/home-barbero",
     });
 });
 

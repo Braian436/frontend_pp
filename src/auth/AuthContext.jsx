@@ -1,5 +1,10 @@
 import { createContext, useCallback, useContext, useState } from "react";
-import { apiRequest, login, logout } from "./auth.js";
+import {
+    apiRequest,
+    login,
+    logout,
+    sesionExpiradaPorError,
+} from "./auth.js";
 
 const AuthContext = createContext(null);
 
@@ -31,7 +36,7 @@ export function AuthProvider({ children }) {
             try {
                 return await apiRequest(path, sesion?.token, options);
             } catch (error) {
-                if (error.status === 401) {
+                if (sesionExpiradaPorError(error, sesion?.token)) {
                     setSesion(null);
                     setSesionExpirada(true);
                 }

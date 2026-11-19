@@ -1,6 +1,12 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { apiRequest, login, logout, obtenerGrupo } from "../src/auth/auth.js";
+import {
+    apiRequest,
+    login,
+    logout,
+    obtenerGrupo,
+    sesionExpiradaPorError,
+} from "../src/auth/auth.js";
 
 const fetchOriginal = globalThis.fetch;
 
@@ -55,6 +61,24 @@ test("apiRequest identifies unauthorized responses for session expiry", async ()
 
     await assert.rejects(apiRequest("/turnos/reservas/", "token-prueba"), {
         message: "La sesión expiró. Iniciá sesión nuevamente.",
+        status: 401,
+    });
+});
+
+test("unauthorized public requests do not count as an expired session", () => {
+    assert.equal(sesionExpiradaPorError({ status: 401 }, null), false);
+    assert.equal(sesionExpiradaPorError({ status: 401 }, "token-prueba"), true);
+});
+
+test("unauthorized public API responses are not described as an expired session", async () => {
+    globalThis.fetch = async () =>
+        Response.json(
+            { detail: "No se permiten solicitudes anónimas." },
+            { status: 401 }
+        );
+
+    await assert.rejects(apiRequest("/barberos/", null), {
+        message: "No se permiten solicitudes anónimas.",
         status: 401,
     });
 });
