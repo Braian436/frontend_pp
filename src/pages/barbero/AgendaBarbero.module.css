@@ -17,3 +17,11 @@
     font-size: 14px;
     margin: 0;
 }
+
+.etiqueta {
+        max-width: 520px;
+    margin: 1rem 0 0;
+    color: #ffffff;
+    font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+    font-family: 'Montserrat', sans-serif;
+}
