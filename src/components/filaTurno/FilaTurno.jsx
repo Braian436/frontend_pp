@@ -25,7 +25,7 @@ export default function FilaTurno({ turno, onIniciar }) {
                 <span className={styles.estado}>{estado.texto}</span>
                 {turno.estado === "pendiente" && (
                     <button type="button" className={styles.botonIniciar} onClick={() => onIniciar(turno.id)}>
-                        INICIAR SERVICIO
+                        INICIAR
                     </button>
                 )}
             </div>

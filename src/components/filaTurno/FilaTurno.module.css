@@ -59,14 +59,14 @@
 }
 
 .enCurso {
-    background-color: rgba(201, 162, 77, 0.09);
-    border-color: rgba(201, 162, 77, 0.45);
+    background-color: #ead19b17;
+    border-color: rgba(202, 188, 157,0.45);
     border-left-color: #e6c777;
 }
 
 .enCurso .estado {
-    background-color: #c9a24d;
-    border-color: #c9a24d;
+    background-color: #d9c493;
+    border-color: #d9c493;
     color: #000;
     font-weight: 500;
 }
@@ -77,8 +77,8 @@
 
 .botonIniciar {
     background: transparent;
-    border: 1px solid #c9a24d;
-    color: #e6c777;
+    border: 1px solid #d9c493;
+    color: #d9c493;
     border-radius: 999px;
     padding: 4px 14px;
     font-size: 12px;
@@ -86,7 +86,7 @@
 }
 
 .botonIniciar:hover {
-    background-color: #c9a24d;
+    background-color: #d9c493;
     color: #000;
 }
 

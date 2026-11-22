@@ -4,6 +4,9 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  css: {
+    devSourcemap: true,
+  },
   server: {
     // En desarrollo, las llamadas a /api/... se envían al backend Django.
     proxy: {
@@ -14,3 +17,4 @@ export default defineConfig({
     },
   },
 })
+
