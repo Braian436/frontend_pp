@@ -1,0 +1,101 @@
+.card {
+    background-color: #0e0e0e;
+    border: 1px solid rgba(201, 162, 77, 0.35);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid #c9a24d;
+    background-color: #111;
+    color: #c9a24d;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.especialidad {
+    color: #b0b0b0;
+    font-size: 13px;
+}
+
+/* Fecha */
+.selectorFecha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid rgba(201, 162, 77, 0.35);
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+}
+
+.fechaTexto {
+    display: inline-block;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.fechaTexto::first-letter {
+    text-transform: uppercase;
+}
+
+.flecha {
+    background: none;
+    border: none;
+    color: #c9a24d;
+    font-size: 22px;
+    display: flex;
+    padding: 0;
+}
+
+/* Resumen */
+.resumen {
+    font-size: 12px;
+    padding: 3px 12px;
+    border-radius: 999px;
+    border: 1px solid;
+}
+
+.resumenFinalizado {
+    border-color: #4caf7a;
+    color: #4caf7a;
+}
+
+.resumenEnCurso {
+    border-color: #e6c777;
+    color: #e6c777;
+}
+
+.resumenPendiente {
+    border-color: #9a9a9a;
+    color: #9a9a9a;
+}
+
+.vacio {
+    color: #8a8a8a;
+    text-align: center;
+    margin: 0;
+}
+
+.botonDorado {
+    background: transparent;
+    border: 1px solid #c9a24d;
+    color: #c9a24d;
+    border-radius: 999px;
+    padding: 8px 24px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.botonDorado:hover {
+    background-color: #c9a24d;
+    color: #000;
+}

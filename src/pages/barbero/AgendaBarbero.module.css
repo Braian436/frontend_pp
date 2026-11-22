@@ -1,0 +1,19 @@
+.etiqueta {
+    color: #c9a24d;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+.titulo {
+    color: #fff;
+    font-size: 26px;
+    font-weight: 500;
+    margin: 2px 0 4px;
+}
+
+.subtitulo {
+    color: #b0b0b0;
+    font-size: 14px;
+    margin: 0;
+}

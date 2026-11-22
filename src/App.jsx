@@ -24,6 +24,7 @@ import Navbar from "./components/navbar/Navbar.jsx";
 import NavbarAdministrador from "./components/navbarAdministrador/NavbarAdministrador.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import "@fontsource/montserrat";
+import AgendaBarbero from "./pages/barbero/AgendaBarbero.jsx";
 
 const rutasInternas = [
     "/empleados/",
@@ -36,8 +37,9 @@ function Layout() {
     const { pathname } = useLocation();
     const { grupo } = useAuth();
     const esPortal =
-        grupo === "Administrador" &&
-        (rutasInternas.includes(pathname) || pathname.startsWith("/admin"));
+        (grupo === "Administrador" &&
+            (rutasInternas.includes(pathname) || pathname.startsWith("/admin"))) ||
+        (grupo === "Barbero" && pathname.startsWith("/barbero"));
 
     return (
         <div
@@ -105,6 +107,7 @@ function App() {
                         </Route>
                         <Route element={<RutaPorGrupo grupoPermitido="Barbero" />}>
                             <Route path="/home-barbero" element={<HomeBarber />} />
+                            <Route path="/barbero/agenda" element={<AgendaBarbero />} />
                         </Route>
                         <Route
                             path="/empleados/"
