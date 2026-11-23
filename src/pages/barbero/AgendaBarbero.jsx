@@ -49,20 +49,21 @@ export default function AgendaBarbero() {
     };
 
     return (
-        <section data-bs-theme="dark">
-            <div className="mb-4">
-                <p className={styles.etiqueta}>PANEL DEL BARBERO</p>
-                <h1 className={styles.titulo}>Mi agenda</h1>
-                <p className={styles.subtitulo}>Consultá tus turnos y registrá nuevos.</p>
-            </div>
+    <section data-bs-theme="dark">
+        {/* Banner con la imagen y las frases adentro */}
+        <div className={`${styles.banner} mb-4`}>
+            <p className={styles.etiqueta}>PANEL DEL BARBERO</p>
+            <h1 className={styles.titulo}>Mi agenda</h1>
+            <p className={styles.subtitulo}>Consultá tus turnos y registrá nuevos.</p>
+        </div>
 
-            <CardAgendaTurno
-                barbero={barbero}
-                fecha={fecha}
-                onCambiarDia={cambiarDia}
-                onRegistrar={registrarTurno}
-                onIniciar={iniciarServicio}
-            />
-        </section>
+        <CardAgendaTurno
+            barbero={barbero}
+            fecha={fecha}
+            onCambiarDia={cambiarDia}
+            onRegistrar={registrarTurno}
+            onIniciar={iniciarServicio}
+        />
+    </section>
     );
 }

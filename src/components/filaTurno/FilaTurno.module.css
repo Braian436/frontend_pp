@@ -1,38 +1,105 @@
-.fondo {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    display: flex;
-    padding: 16px;
-    background-color: rgba(0, 0, 0, 0.75);
-    overflow-y: auto;
+.turno {
+    display: grid;
+    grid-template-columns: 62px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    color: #fff;
+    background-color: #0a0a0a;
+    border: 1px solid #262626;
+    border-left: 4px solid #8a8a8a;
+    padding: 13px 16px;
 }
 
-.formulario {
-    width: 100%;
-    max-width: 520px;
-    margin: auto;
-    background-color: #151515;
-    border: 1px solid rgba(201, 162, 77, 0.45);
-    border-radius: 12px;
-    padding: 20px;
-}
-
-.botonDorado {
-    background: transparent;
-    border: 1px solid #c9a24d;
-    color: #c9a24d;
-    border-radius: 999px;
-    padding: 8px 24px;
-    font-size: 13px;
+.horaInicio {
+    color: #fff;
+    font-size: 18px;
     font-weight: 500;
 }
 
-.botonDorado:hover:not(:disabled) {
-    background-color: #c9a24d;
+.horaFin {
+    color: #8a8a8a;
+    font-size: 12px;
+}
+
+.cliente {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.servicio {
+    color: #b0b0b0;
+    font-size: 13px;
+}
+
+.acciones {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.estado {
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid #9a9a9a;
+    color: #b0b0b0;
+}
+
+/* Estados */
+.finalizado {
+    border-left-color: #4caf7a;
+}
+
+.finalizado .estado {
+    border-color: #4caf7a;
+    color: #4caf7a;
+}
+
+.enCurso {
+    background-color: #ead19b17;
+    border-color: rgba(202, 188, 157,0.45);
+    border-left-color: #e6c777;
+}
+
+.enCurso .estado {
+    background-color: #d9c493;
+    border-color: #d9c493;
+    color: #000;
+    font-weight: 500;
+}
+
+.pendiente {
+    border-left-color: #8a8a8a;
+}
+
+.botonIniciar {
+    background: transparent;
+    border: 1px solid #d9c493;
+    color: #d9c493;
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.botonIniciar:hover {
+    background-color: #d9c493;
     color: #000;
 }
 
-.botonDorado:disabled {
-    opacity: 0.4;
+/* Celular */
+@media (max-width: 575.98px) {
+    .turno {
+        grid-template-columns: 62px 1fr;
+    }
+
+    .acciones {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
 }

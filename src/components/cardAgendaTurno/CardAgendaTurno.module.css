@@ -1,6 +1,6 @@
 .card {
     background-color: #0e0e0e;
-    border: 1px solid rgba(201, 162, 77, 0.35);
+    border: 3px solid rgba(211, 200, 177, 0.35);
     border-radius: 12px;
     padding: 20px;
 }
@@ -9,10 +9,10 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    border: 2px solid #c9a24d;
+    border: 2px solid #d9c493;
     background-color: #111;
-    color: #c9a24d;
-    font-size: 18px;
+    color: #d9c493;
+    font-size: 20px;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -29,7 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid rgba(201, 162, 77, 0.35);
+    border: 1px solid rgba(243, 242, 241, 0.35);
     border-radius: 10px;
     padding: 8px 12px;
     margin-bottom: 12px;
@@ -50,7 +50,7 @@
 .flecha {
     background: none;
     border: none;
-    color: #c9a24d;
+    color: #d9c493;
     font-size: 22px;
     display: flex;
     padding: 0;
@@ -61,7 +61,7 @@
     font-size: 12px;
     padding: 3px 12px;
     border-radius: 999px;
-    border: 1px solid;
+    border: 1px solid #d9c493;
 }
 
 .resumenFinalizado {
@@ -70,13 +70,13 @@
 }
 
 .resumenEnCurso {
-    border-color: #e6c777;
-    color: #e6c777;
+    border-color: #d9c493;
+    color: #d9c493;
 }
 
 .resumenPendiente {
-    border-color: #9a9a9a;
-    color: #9a9a9a;
+    border-color: #c6c2c2;
+    color: #aaa6a6;
 }
 
 .vacio {
@@ -87,8 +87,8 @@
 
 .botonDorado {
     background: transparent;
-    border: 1px solid #c9a24d;
-    color: #c9a24d;
+    border: 1px solid #a18e65;
+    color: #d9c493;
     border-radius: 999px;
     padding: 8px 24px;
     font-size: 13px;
@@ -96,6 +96,6 @@
 }
 
 .botonDorado:hover {
-    background-color: #c9a24d;
+    background-color: #d9c493;
     color: #000;
 }
