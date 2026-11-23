@@ -19,6 +19,7 @@ function Layout() {
     const { pathname } = useLocation();
     const esPortal = pathname.startsWith("/admin") ||
         pathname.startsWith("/barbero") ||
+        pathname.startsWith("/home-barbero") ||
         pathname.startsWith("/empleados") ||
         pathname.startsWith("/liquidaciones") ||
         pathname.startsWith("/turnos/disponibilidad") ||

@@ -2,6 +2,7 @@ import { useState } from "react";
 import CardAgendaTurno from "../../components/cardAgendaTurno/CardAgendaTurno.jsx";
 import styles from "./AgendaBarbero.module.css";
 
+
 // Convierte una fecha en texto "2026-11-22" para comparar días
 const clave = (fecha) => fecha.toLocaleDateString("en-CA");
 

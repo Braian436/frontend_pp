@@ -6,9 +6,24 @@ import styles from "./CardAgendaTurno.module.css";
 
 export default function CardAgendaTurno({ barbero, fecha, onCambiarDia, onRegistrar, onIniciar }) {
     const [formAbierto, setFormAbierto] = useState(false);
+    const [filtro, setFiltro] = useState("todos");
 
     const contar = (estado) =>
         barbero.turnos.filter((t) => t.estado === estado).length;
+
+    // Botones del resumen: cada uno filtra por su estado
+    const filtros = [
+        { clave: "todos", texto: "todos", clase: styles.resumenTodos, cantidad: barbero.turnos.length },
+        { clave: "finalizado", texto: "finalizado", clase: styles.resumenFinalizado, cantidad: contar("finalizado") },
+        { clave: "en_curso", texto: "en curso", clase: styles.resumenEnCurso, cantidad: contar("en_curso") },
+        { clave: "pendiente", texto: "pendiente", clase: styles.resumenPendiente, cantidad: contar("pendiente") },
+    ];
+
+    // Lista que se muestra según el filtro elegido
+    const turnosMostrados =
+        filtro === "todos"
+            ? barbero.turnos
+            : barbero.turnos.filter((t) => t.estado === filtro);
 
     const fechaTexto = fecha.toLocaleDateString("es-AR", {
         weekday: "long",
@@ -47,26 +62,27 @@ export default function CardAgendaTurno({ barbero, fecha, onCambiarDia, onRegist
                 </button>
             </div>
 
-            {/* Resumen */}
+            {/* Resumen: cada botón filtra la lista */}
             <div className="d-flex flex-wrap gap-2 mb-3">
-                <span className={`${styles.resumen} ${styles.resumenFinalizado}`}>
-                    {contar("finalizado")} finalizado
-                </span>
-                <span className={`${styles.resumen} ${styles.resumenEnCurso}`}>
-                    {contar("en_curso")} en curso
-                </span>
-                <span className={`${styles.resumen} ${styles.resumenPendiente}`}>
-                    {contar("pendiente")} pendiente
-                </span>
+                {filtros.map((f) => (
+                    <button
+                        key={f.clave}
+                        type="button"
+                        className={`${styles.resumen} ${f.clase} ${filtro === f.clave ? styles.activo : ""}`}
+                        onClick={() => setFiltro(f.clave)}
+                    >
+                        {f.cantidad} {f.texto}
+                    </button>
+                ))}
             </div>
 
             {/* Turnos */}
             <div className="d-flex flex-column gap-2">
-                {barbero.turnos.length === 0 && (
-                    <p className={styles.vacio}>No hay turnos para este día.</p>
+                {turnosMostrados.length === 0 && (
+                    <p className={styles.vacio}>No hay turnos para mostrar.</p>
                 )}
 
-                {barbero.turnos.map((turno) => (
+                {turnosMostrados.map((turno) => (
                     <FilaTurno key={turno.id} turno={turno} onIniciar={onIniciar} />
                 ))}
             </div>

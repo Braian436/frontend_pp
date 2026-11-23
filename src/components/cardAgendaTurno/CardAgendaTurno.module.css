@@ -56,12 +56,18 @@
     padding: 0;
 }
 
-/* Resumen */
+/* Resumen (botones que filtran) */
 .resumen {
     font-size: 12px;
     padding: 3px 12px;
     border-radius: 999px;
     border: 1px solid #d9c493;
+    background: transparent;
+}
+
+.resumenTodos {
+    border-color: #a18e65;
+    color: #d9c493;
 }
 
 .resumenFinalizado {
@@ -79,6 +85,27 @@
     color: #aaa6a6;
 }
 
+/* Botón elegido: se rellena con su color */
+.activo.resumenTodos {
+    background-color: #d9c493;
+    color: #000;
+}
+
+.activo.resumenFinalizado {
+    background-color: #4caf7a;
+    color: #000;
+}
+
+.activo.resumenEnCurso {
+    background-color: #d9c493;
+    color: #000;
+}
+
+.activo.resumenPendiente {
+    background-color: #c6c2c2;
+    color: #000;
+}
+
 .vacio {
     color: #8a8a8a;
     text-align: center;
@@ -87,12 +114,14 @@
 
 .botonDorado {
     background: transparent;
-    border: 1px solid #a18e65;
+    border: 2px solid #a18e65;
     color: #d9c493;
     border-radius: 999px;
     padding: 8px 24px;
     font-size: 13px;
     font-weight: 500;
+    font-family: 'Montserrat',
+
 }
 
 .botonDorado:hover {

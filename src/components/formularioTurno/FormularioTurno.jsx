@@ -27,8 +27,8 @@ export default function FormularioTurno({ onGuardar, onCerrar }) {
                     <div className="col-12">
                         <input
                             type="text"
-                            className="form-control"
-                            placeholder="Cliente"
+                            className={styles.campo}
+                            placeholder="Nombre y Apellido del cliente"
                             value={cliente}
                             onChange={(e) => setCliente(e.target.value)}
                             required
@@ -41,7 +41,7 @@ export default function FormularioTurno({ onGuardar, onCerrar }) {
                         <label className="form-label text-white-50 small">Desde</label>
                         <input
                             type="time"
-                            className="form-control"
+                            className={styles.campo}
                             value={horaInicio}
                             onChange={(e) => setHoraInicio(e.target.value)}
                             required
@@ -51,7 +51,7 @@ export default function FormularioTurno({ onGuardar, onCerrar }) {
                         <label className="form-label text-white-50 small">Hasta</label>
                         <input
                             type="time"
-                            className="form-control"
+                            className={styles.campo}
                             value={horaFin}
                             onChange={(e) => setHoraFin(e.target.value)}
                             required
@@ -59,11 +59,11 @@ export default function FormularioTurno({ onGuardar, onCerrar }) {
                     </div>
                 </div>
 
-                <div className="d-flex gap-2 mt-4">
+                <div className="d-flex justify-content-center gap-3 gap-2 mt-4">
                     <button type="submit" className={styles.botonDorado} disabled={!servicio}>
                         GUARDAR TURNO
                     </button>
-                    <button type="button" className="btn btn-outline-secondary" onClick={onCerrar}>
+                    <button type="button" className={`btn btn-outline-secondary ${styles.botonCerrar}`} onClick={onCerrar}>
                         Cerrar
                     </button>
                 </div>
