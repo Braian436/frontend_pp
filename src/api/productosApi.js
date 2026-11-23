@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = axios.create({
+export const api = axios.create({
     baseURL: (import.meta.env?.VITE_API_URL || "http://localhost:8000/api").replace(/\/+$/, ""),
     timeout: 10000,
 });
@@ -12,7 +12,7 @@ const obtenerError = (error) => {
     return new Error(mensaje, { cause: error });
 };
 
-const solicitar = async (peticion) => {
+export const solicitar = async (peticion) => {
     try {
         return (await peticion).data;
     } catch (error) {
@@ -31,6 +31,7 @@ export async function cargarDatosProductos(signal) {
     return { productos, marcas, categorias, descuentos, precios };
 }
 
+export const cargarProductosApi = (signal) => solicitar(api.get("/productos/", { signal }));
 export const crearProductoApi = (producto) => solicitar(api.post("/productos/", producto));
 export const editarProductoApi = (id, producto) => solicitar(api.patch(`/productos/${id}/`, producto));
 export const eliminarProductoApi = (id) => solicitar(api.delete(`/productos/${id}/`));

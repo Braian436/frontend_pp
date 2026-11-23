@@ -1,13 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { LuBell, LuCircleAlert, LuDollarSign, LuDoorClosed, LuHouse, LuPackage, LuScissors, LuTicket, LuUserSearch, LuUsers, LuWallet } from "react-icons/lu";
 import styles from "./NavbarAdministrador.module.css";
 import Logo from "../../assets/LOGO-BARBER.png";
-
-const avisosStock = [
-    { producto: "Cera mate", stock: 2, minimo: 5 },
-    { producto: "Aceite para barba", stock: 3, minimo: 4 },
-];
+import { cargarProductosApi } from "../../api/productosApi.js";
+import { obtenerAvisosStock } from "./stockNotifications.js";
 
 const menuAdministrador = [
     { type: "link", label: "Inicio", to: "/admin", icon: "home" },
@@ -16,6 +13,7 @@ const menuAdministrador = [
     { type: "link", label: "Caja", icon: "dollar", disabled: true },
     { type: "link", label: "Empleados", to: "/admin/empleados", icon: "users" },
     { type: "link", label: "Productos", to: "/admin/productos", icon: "package" },
+    { type: "link", label: "Compras", to: "/admin/compras", icon: "ticket" },
     { type: "link", label: "Servicios", to: "/admin/servicios", icon: "scissors" },
     { type: "link", label: "Clientes", icon: "userSearch", disabled: true },
 ];
@@ -49,6 +47,7 @@ const iconos = {
 
 export default function NavbarAdministrador() {
     const [avisosAbiertos, setAvisosAbiertos] = useState(false);
+    const [avisosStock, setAvisosStock] = useState([]);
     const { pathname } = useLocation();
     
     const esCajero = pathname === "/cajero" || pathname.startsWith("/cajero/");
@@ -58,6 +57,28 @@ export default function NavbarAdministrador() {
     const rutaInicio = esCajero ? "/cajero" : esBarbero ? "/home-barbero" : "/admin";
     const ariaNav = esCajero ? "Navegación de caja" : esBarbero ? "Navegación de barbero" : "Navegación de administrador";
     const ariaLogo = esCajero ? "Inicio de caja" : esBarbero ? "Inicio de barbero" : "Inicio de administración";
+
+    useEffect(() => {
+        if (esCajero || esBarbero) return undefined;
+
+        const controller = new AbortController();
+        const actualizarAvisos = () => {
+            cargarProductosApi(controller.signal)
+                .then((respuesta) => setAvisosStock(
+                    obtenerAvisosStock(Array.isArray(respuesta) ? respuesta : respuesta.results ?? [])
+                ))
+                .catch((fallo) => {
+                    if (fallo.name !== "AbortError") setAvisosStock([]);
+                });
+        };
+
+        actualizarAvisos();
+        const intervalo = window.setInterval(actualizarAvisos, 60000);
+        return () => {
+            controller.abort();
+            window.clearInterval(intervalo);
+        };
+    }, [esCajero, esBarbero, pathname]);
 
     return (
         <>
@@ -129,13 +150,16 @@ export default function NavbarAdministrador() {
                             onClick={() => setAvisosAbiertos((abiertos) => !abiertos)}
                         >
                             <LuBell aria-hidden="true" />
-                            <span className={`position-absolute top-0 start-100 translate-middle badge rounded-pill ${styles.contador}`}>
-                                {avisosStock.length}
-                            </span>
+                            {avisosStock.length > 0 && (
+                                <span className={`position-absolute top-0 start-100 translate-middle badge rounded-pill ${styles.contador}`}>
+                                    {avisosStock.length}
+                                </span>
+                            )}
                         </button>
                         {avisosAbiertos && (
                             <div id="avisos-stock" className={`position-absolute top-100 end-0 mt-2 p-3 shadow ${styles.panelAvisos}`}>
                                 <h2 className="mb-3">Avisos de stock</h2>
+                                {avisosStock.length === 0 && <p className="text-white mb-0">No hay productos con bajo stock.</p>}
                                 {avisosStock.map((aviso) => (
                                     <div key={aviso.producto} className={`d-flex align-items-start gap-2 py-2 ${styles.aviso}`}>
                                         <LuCircleAlert aria-hidden="true" />
