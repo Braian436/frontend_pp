@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { apiRequest } from "../../auth/auth.js";
+
 import { demo } from "./cajaDemo.js";
 import {
     calcularResumen,

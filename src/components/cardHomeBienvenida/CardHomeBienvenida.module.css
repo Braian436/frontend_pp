@@ -1,0 +1,59 @@
+.etiqueta {
+    color: #d9c493;
+    font-size: 8px;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+.titulo {
+    color: #e9dec4;
+    font-size: 26px;
+    font-weight: 500;
+    margin: 2px 0 4px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.subtitulo {
+    color: #f5f2f2;
+    font-size: 15px;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+.etiqueta {
+    margin: 0 0 0.65rem;
+    font-family: 'Montserrat', sans-serif;
+    color: #0c0a04;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.banner {
+    min-height: 220px;
+    padding: 32px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("../../assets/facha4.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.etiqueta {
+    color: #d9c493;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    margin: 5;
+}
+
+.titulo {
+    color: #fff;
+    font-size: 26px;
+    font-weight: 500;
+    margin: 2px 0 4px;
+}
+

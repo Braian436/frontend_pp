@@ -51,12 +51,16 @@ function App() {
     return (
         <Routes>
             <Route element={<Layout />}>
+                <Route path="/" element={<Home/>}/>
                 <Route path="/admin" element={<HomeAdministrador />} />
                 <Route path="/admin/empleados" element={<Empleados />} />
                 <Route path="/admin/productos" element={<GestionProductos />} />
                 <Route path="/admin/servicios" element={<Servicios administracion />} />
+
+                {/*Paginas de Barberos */}
                 <Route path="/home-barbero" element={<HomeBarber />} />
                 <Route path="/home-barbero/agenda" element={<AgendaBarbero />} />
+
                 <Route path="/cajero" element={<HomeCajero />} />
                 <Route path="/cajero/caja" element={<CajaCajero />} />
                 <Route path="/cajero/tickets" element={<TicketsCajero />} />

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CardAgendaTurno from "../../components/cardAgendaTurno/CardAgendaTurno.jsx";
 import styles from "./AgendaBarbero.module.css";
-
+import CardHomeBienvenida from "../../components/cardHomeBienvenida/CardHomeBienvenida.jsx";
 
 // Convierte una fecha en texto "2026-11-22" para comparar días
 const clave = (fecha) => fecha.toLocaleDateString("en-CA");
@@ -52,11 +52,11 @@ export default function AgendaBarbero() {
     return (
     <section data-bs-theme="dark">
         {/* Banner con la imagen y las frases adentro */}
-        <div className={`${styles.banner} mb-4`}>
-            <p className={styles.etiqueta}>PANEL DEL BARBERO</p>
-            <h1 className={styles.titulo}>Mi agenda</h1>
-            <p className={styles.subtitulo}>Consultá tus turnos y registrá nuevos.</p>
-        </div>
+        <CardHomeBienvenida 
+            titulo={"PANEL DEL BARBERO"}
+            descripcion={"Mi agenda"}
+            detalle={"Consultá tus turnos y registrá nuevos"}
+        />
 
         <CardAgendaTurno
             barbero={barbero}

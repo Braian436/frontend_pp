@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { LuBell, LuCircleAlert, LuDollarSign, LuHouse, LuPackage, LuScissors, LuTicket, LuUserSearch, LuUsers, LuWallet, } from "react-icons/lu";
+import { LuBell, LuCircleAlert, LuDollarSign, LuDoorClosed, LuHouse, LuPackage, LuScissors, LuTicket, LuUserSearch, LuUsers, LuWallet } from "react-icons/lu";
 import styles from "./NavbarAdministrador.module.css";
 import Logo from "../../assets/LOGO-BARBER.png";
 
@@ -27,6 +27,13 @@ const menuCajero = [
     { type: "link", label: "Servicios", to: "/cajero/servicios", icon: "scissors" },
 ];
 
+const menuBarbero = [
+    { type: "link", label: "Inicio", to: "/home-barbero", icon: "home", end: true },
+    { type: "link", label: "Agenda", to: "/home-barbero/agenda", icon: "wallet" },
+    { type: "link", label: "Servicios", to: "/home-barbero/servicios", icon: "scissors" },
+    { type: "link", label: "Salir", to: "/home-cliente", icon: "door" },
+];
+
 const iconos = {
     home: LuHouse,
     scissors: LuScissors,
@@ -36,18 +43,26 @@ const iconos = {
     userSearch: LuUserSearch,
     wallet: LuWallet,
     ticket: LuTicket,
+    door: LuDoorClosed,
+
 };
 
 export default function NavbarAdministrador() {
     const [avisosAbiertos, setAvisosAbiertos] = useState(false);
     const { pathname } = useLocation();
+    
     const esCajero = pathname === "/cajero" || pathname.startsWith("/cajero/");
-    const items = esCajero ? menuCajero : menuAdministrador;
+    const esBarbero = pathname === "/home-barbero" || pathname.startsWith("/home-barbero/");
+    
+    const items = esCajero ? menuCajero : esBarbero ? menuBarbero : menuAdministrador;
+    const rutaInicio = esCajero ? "/cajero" : esBarbero ? "/home-barbero" : "/admin";
+    const ariaNav = esCajero ? "Navegación de caja" : esBarbero ? "Navegación de barbero" : "Navegación de administrador";
+    const ariaLogo = esCajero ? "Inicio de caja" : esBarbero ? "Inicio de barbero" : "Inicio de administración";
 
     return (
         <>
             <aside className={styles.sidebar}>
-                <nav className={`nav flex-column gap-2 ${styles.enlaces}`} aria-label={esCajero ? "Navegación de caja" : "Navegación de administrador"}>
+                <nav className={`nav flex-column gap-2 ${styles.enlaces}`} aria-label={ariaNav}>
                     {items.map((item) => {
                         if (item.type === "heading") {
                             return (
@@ -91,42 +106,48 @@ export default function NavbarAdministrador() {
             </aside>
 
             <header className={`d-flex align-items-center gap-3 ${styles.cabecera}`}>
-                <NavLink to={esCajero ? "/cajero" : "/admin"} className={styles.logoCaja} aria-label={esCajero ? "Inicio de caja" : "Inicio de administración"}>
+                <NavLink to={rutaInicio} className={styles.logoCaja} aria-label={ariaLogo}>
                     <img src={Logo} alt="Barbería Clase A" />
                 </NavLink>
                 <p className={styles.saludo}>
-                    {esCajero ? <>Panel de <strong>caja</strong></> : <>Barbería <strong>Clase A</strong></>}
-                </p>
-                {!esCajero && (
-                <div className="position-relative ms-auto">
-                    <button
-                        type="button"
-                        className={`btn d-inline-flex align-items-center justify-content-center position-relative ${styles.botonAvisos}`}
-                        aria-label={`${avisosStock.length} avisos de bajo stock`}
-                        aria-expanded={avisosAbiertos}
-                        aria-controls="avisos-stock"
-                        onClick={() => setAvisosAbiertos((abiertos) => !abiertos)}
-                    >
-                        <LuBell aria-hidden="true" />
-                        <span className={`position-absolute top-0 start-100 translate-middle badge rounded-pill ${styles.contador}`}>
-                            {avisosStock.length}
-                        </span>
-                    </button>
-                    {avisosAbiertos && (
-                        <div id="avisos-stock" className={`position-absolute top-100 end-0 mt-2 p-3 shadow ${styles.panelAvisos}`}>
-                            <h2 className="mb-3">Avisos de stock</h2>
-                            {avisosStock.map((aviso) => (
-                                <div key={aviso.producto} className={`d-flex align-items-start gap-2 py-2 ${styles.aviso}`}>
-                                    <LuCircleAlert aria-hidden="true" />
-                                    <p className="d-grid gap-1 mb-0">
-                                        <strong>{aviso.producto}</strong>
-                                        <span>{aviso.stock} unidades · mínimo {aviso.minimo}</span>
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
+                    {esCajero ? (
+                        <>Panel de <strong>caja</strong></>
+                    ) : esBarbero ? (
+                        <>Panel de <strong>barbero</strong></>
+                    ) : (
+                        <>Barbería <strong>Clase A</strong></>
                     )}
-                </div>
+                </p>
+                {!esCajero && !esBarbero && (
+                    <div className="position-relative ms-auto">
+                        <button
+                            type="button"
+                            className={`btn d-inline-flex align-items-center justify-content-center position-relative ${styles.botonAvisos}`}
+                            aria-label={`${avisosStock.length} avisos de bajo stock`}
+                            aria-expanded={avisosAbiertos}
+                            aria-controls="avisos-stock"
+                            onClick={() => setAvisosAbiertos((abiertos) => !abiertos)}
+                        >
+                            <LuBell aria-hidden="true" />
+                            <span className={`position-absolute top-0 start-100 translate-middle badge rounded-pill ${styles.contador}`}>
+                                {avisosStock.length}
+                            </span>
+                        </button>
+                        {avisosAbiertos && (
+                            <div id="avisos-stock" className={`position-absolute top-100 end-0 mt-2 p-3 shadow ${styles.panelAvisos}`}>
+                                <h2 className="mb-3">Avisos de stock</h2>
+                                {avisosStock.map((aviso) => (
+                                    <div key={aviso.producto} className={`d-flex align-items-start gap-2 py-2 ${styles.aviso}`}>
+                                        <LuCircleAlert aria-hidden="true" />
+                                        <p className="d-grid gap-1 mb-0">
+                                            <strong>{aviso.producto}</strong>
+                                            <span>{aviso.stock} unidades · mínimo {aviso.minimo}</span>
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 )}
             </header>
         </>

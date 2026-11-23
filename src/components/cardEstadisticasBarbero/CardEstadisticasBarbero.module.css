@@ -1,0 +1,45 @@
+.tarjetaIndicador {
+    min-width: 0;
+    border: 0;
+    border-right: 3px solid #a4a4a4;
+    border-bottom: 3px solid #a4a4a4;
+    border-radius: 12px;
+    background: transparent;
+}
+
+.indicadorResumen {
+    position: relative;
+}
+
+.cuerpoIndicador,
+.valor,
+.detalle {
+    font-family: Montserrat, sans-serif;
+}
+
+.cuerpoIndicador {
+    color: #fff;
+}
+
+.indicadorEncabezado {
+    color: #d9c493;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.indicadorEncabezado svg {
+    flex-shrink: 0;
+    color: #d9c493;
+    font-size: 1.1rem;
+}
+.cuerpoIndicador,
+.valor,
+.detalle {
+    font-family: Montserrat, sans-serif;
+}
+.detalle {
+    margin-top: auto;
+    font-size: 0.78rem;
+}
