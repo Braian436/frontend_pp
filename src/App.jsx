@@ -14,12 +14,17 @@ import NavbarAdministrador from "./components/navbarAdministrador/NavbarAdminist
 import Footer from "./components/footer/Footer.jsx";
 import "@fontsource/montserrat";
 import AgendaBarbero from "./pages/barbero/AgendaBarbero.jsx";
+import HomeCajero from "./pages/cajero/HomeCajero.jsx";
+import CajaCajero from "./pages/cajero/CajaCajero.jsx";
+import TicketsCajero from "./pages/cajero/TicketsCajero.jsx";
+import ServiciosCajero from "./pages/cajero/ServiciosCajero.jsx";
 
 function Layout() {
     const { pathname } = useLocation();
     const esPortal = pathname.startsWith("/admin") ||
         pathname.startsWith("/barbero") ||
         pathname.startsWith("/home-barbero") ||
+        pathname.startsWith("/cajero") ||
         pathname.startsWith("/empleados") ||
         pathname.startsWith("/liquidaciones") ||
         pathname.startsWith("/turnos/disponibilidad") ||
@@ -56,6 +61,10 @@ function App() {
                 <Route path="/admin/servicios" element={<Servicios administracion />} />
                 <Route path="/home-barbero" element={<HomeBarber />} />
                 <Route path="/home-barbero/agenda" element={<AgendaBarbero />} />
+                <Route path="/cajero" element={<HomeCajero />} />
+                <Route path="/cajero/caja" element={<CajaCajero />} />
+                <Route path="/cajero/tickets" element={<TicketsCajero />} />
+                <Route path="/cajero/servicios" element={<ServiciosCajero />} />
                         <Route
                             path="/empleados/"
                             element={

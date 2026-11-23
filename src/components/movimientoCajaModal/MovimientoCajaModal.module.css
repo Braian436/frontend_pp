@@ -1,0 +1,118 @@
+.campo {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.etiqueta {
+    color: #d9c493;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.monto {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0 1rem;
+    border: 1px solid #383838;
+    border-radius: 12px;
+    background: #0e0d0d;
+    color: #d9c493;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.monto:focus-within,
+.inputSimple:focus {
+    border-color: #d9c493;
+    outline: 0;
+}
+
+.monto input,
+.inputSimple {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #fff;
+}
+
+.monto input {
+    padding: 0.8rem 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color-scheme: dark;
+}
+
+.monto input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.monto input::-webkit-outer-spin-button,
+.monto input::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+}
+
+.inputSimple {
+    padding: 0.8rem 0.95rem;
+    border: 1px solid #383838;
+    border-radius: 12px;
+    background: #0e0d0d;
+    color-scheme: dark;
+    font-size: 0.95rem;
+}
+
+.inputSimple[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.inputSimple::-webkit-outer-spin-button,
+.inputSimple::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+}
+
+.ayuda {
+    margin: 0.15rem 0 0;
+    color: #8f897e;
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.vuelto {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0;
+    padding: 0.75rem 0.95rem;
+    border: 1px solid #2e2b27;
+    border-radius: 10px;
+    background: #0e0d0d;
+    font-size: 0.88rem;
+}
+
+.vuelto strong {
+    font-size: 1.05rem;
+}
+
+.vueltoOk {
+    color: #83b77f;
+}
+
+.vueltoError {
+    color: #e4897f;
+}
+
+.nota {
+    margin: 0;
+    color: #aaa49a;
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+

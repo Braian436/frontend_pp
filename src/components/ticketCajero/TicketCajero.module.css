@@ -1,0 +1,105 @@
+.ticket {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid #242220;
+}
+
+.hora {
+    flex: 0 0 58px;
+    color: #aaa49a;
+    font-size: 0.9rem;
+}
+
+.datos {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.datos strong {
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.datos span {
+    overflow: hidden;
+    color: #aaa49a;
+    font-size: 0.82rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.badge {
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.pendiente {
+    background: rgba(217, 196, 147, 0.08);
+    color: #d9c493;
+}
+
+.cobrado {
+    background: rgba(131, 183, 127, 0.08);
+    color: #83b77f;
+}
+
+.monto {
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.cobrar {
+    padding: 0.45rem 1.1rem;
+    border: 1px solid #d9c493;
+    border-radius: 8px;
+    background: #d9c493;
+    color: #151310;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.cobrar:hover:not(:disabled) {
+    background: #ebd9af;
+}
+
+.cobrar:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.listo {
+    flex: 0 0 80px;
+}
+
+@media (max-width: 575.98px) {
+    .ticket {
+        flex-wrap: wrap;
+        gap: 0.5rem 0.75rem;
+    }
+
+    .datos {
+        flex-basis: calc(100% - 74px);
+    }
+
+    .monto {
+        margin-left: auto;
+    }
+
+    .cobrar,
+    .listo {
+        flex: 0 0 100%;
+        text-align: center;
+    }
+}

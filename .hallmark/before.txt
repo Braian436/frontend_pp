@@ -1,0 +1,138 @@
+FAIL 7a src/pages/HomeAdministrador.module.css:432 pure #fff: color: #fff (.contadorAvisos) | fix: Tint the base toward the anchor hue
+FAIL 7a src/pages/HomeAdministrador.module.css:746 pure #fff: color: #fff (.botonSecundario:hover) | fix: Tint the base toward the anchor hue
+FAIL 7a src/pages/HomeAdministrador.module.css:827 pure #fff: color: #fff (.valor) | fix: Tint the base toward the anchor hue
+FAIL 10a src/pages/HomeAdministrador.module.css:36 transitioning width on .sidebar | fix: Animate transform or opacity instead
+FAIL 19 src/pages/HomeAdministrador.jsx:463 dash "–" in copy | fix: A comma, a colon, a full stop or parentheses; never a dash
+FAIL 27 src/pages/HomeAdministrador.module.css:1519 motion present, no prefers-reduced-motion block | fix: Add a prefers-reduced-motion fallback
+FAIL 34 src/pages/HomeAdministrador.module.css:448 width: min(320px, calc(100vw - 2re… on .panelAvisos (scrollbar overflow) | fix: width: 100% with container padding
+FAIL 48 src/pages/HomeAdministrador.module.css:2 colour literal #151413 outside tokens (--fondo on .dashboard) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:3 colour literal #1b1916 outside tokens (--fondo-panel on .dashboard) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:4 colour literal #201d19 outside tokens (--fondo-elevado on .dashboard) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:5 colour literal #302d29 outside tokens (--borde on .dashboard) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:6 colour literal rgba(217, 196, 147, 0.16) outside tokens (--borde-suave on .dashboard) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:7 colour literal #d9c493 outside tokens (--dorado on .dashboard) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:8 colour literal #f5f1e8 outside tokens (--texto on .dashboard) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:9 colour literal #a39e93 outside tokens (--texto-suave on .dashboard) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:10 colour literal #7f7a71 outside tokens (--texto-tenue on .dashboard) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:11 colour literal #83b77f outside tokens (--verde on .dashboard) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:12 colour literal #e07a68 outside tokens (--rojo on .dashboard) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:35 colour literal #121110 outside tokens (background on .sidebar) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:92 font-family literal "Baskerville, "Baskerville Old Face"…" on .marcaTexto strong | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:124 colour literal #3b352d outside tokens (scrollbar-color on .navegacion) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:134 colour literal #3b352d outside tokens (background on .navegacion::-webkit-scrollba…) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:146 colour literal #6f6a61 outside tokens (color on .tituloGrupo) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:175 colour literal rgba(217, 196, 147, 0.07) outside tokens (background on .enlaceNavegacion:hover, .enl…) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:181 colour literal rgba(217, 196, 147, 0.12) outside tokens (background on .enlaceActivo) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:188 colour literal rgba(217, 196, 147, 0.16) outside tokens (background on .enlaceActivo:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:199 colour literal rgba(217, 196, 147, 0.6) outside tokens (outline on .enlaceNavegacion:focus-visib…) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:222 colour literal rgba(217, 196, 147, 0.16) outside tokens (background on .insigniaNavegacion) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:248 colour literal rgba(169, 67, 53, 0.35) outside tokens (border-color on .enlaceSalir:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:249 colour literal rgba(169, 67, 53, 0.12) outside tokens (background on .enlaceSalir:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:308 colour literal rgba(21, 20, 19, 0.92) outside tokens (background on .topbar) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:385 colour literal #8d887f outside tokens (color on .botonBuscar) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:410 colour literal rgba(255, 255, 255, 0.03) outside tokens (background on .botonBuscar kbd) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:431 colour literal #a94335 outside tokens (background on .contadorAvisos) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:432 colour literal #fff outside tokens (color on .contadorAvisos) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:450 colour literal #3b352d outside tokens (border on .panelAvisos) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:453 colour literal rgba(0, 0, 0, 0.55) outside tokens (box-shadow on .panelAvisos) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:469 font-family literal "Baskerville, "Baskerville Old Face"…" on .panelAvisosEncabezado h2 | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:489 colour literal rgba(255, 255, 255, 0.06) outside tokens (background on .botonCerrar:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:516 colour literal rgba(196, 85, 63, 0.14) outside tokens (background on .avisoIcono) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:522 colour literal rgba(217, 196, 147, 0.12) outside tokens (background on .avisoAtencion) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:562 colour literal rgba(217, 196, 147, 0.1) outside tokens (background on .enlaceAvisos:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:578 colour literal rgba(217, 196, 147, 0.4) outside tokens (border on .avatar) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:580 colour literal #d9c493 outside tokens (background on .avatar) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:580 colour literal #a98b4f outside tokens (background on .avatar) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:581 colour literal #1a1712 outside tokens (color on .avatar) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:626 colour literal #3a332a outside tokens (border on .hero) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:643 colour literal rgba(217, 196, 147, 0.35) outside tokens (border on .eyebrow) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:645 colour literal rgba(18, 17, 16, 0.55) outside tokens (background on .eyebrow) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:661 font-family literal "Baskerville, "Baskerville Old Face"…" on .hero h1 | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:671 colour literal #ded8cc outside tokens (color on .heroDescripcion) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:688 colour literal rgba(255, 255, 255, 0.12) outside tokens (border on .heroMeta span) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:690 colour literal rgba(15, 14, 13, 0.5) outside tokens (background on .heroMeta span) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:691 colour literal #e4dfd5 outside tokens (color on .heroMeta span) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:726 colour literal #1a1712 outside tokens (color on .botonPrimario) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:730 colour literal #e7d3a7 outside tokens (border-color on .botonPrimario:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:731 colour literal #e7d3a7 outside tokens (background on .botonPrimario:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:732 colour literal #1a1712 outside tokens (color on .botonPrimario:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:737 colour literal rgba(217, 196, 147, 0.5) outside tokens (border on .botonSecundario) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:738 colour literal rgba(18, 17, 16, 0.55) outside tokens (background on .botonSecundario) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:739 colour literal #e9d8ae outside tokens (color on .botonSecundario) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:745 colour literal rgba(217, 196, 147, 0.12) outside tokens (background on .botonSecundario:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:746 colour literal #fff outside tokens (color on .botonSecundario:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:765 colour literal #201d19 outside tokens (background on .tarjetaIndicador) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:765 colour literal #1a1815 outside tokens (background on .tarjetaIndicador) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:784 colour literal rgba(217, 196, 147, 0.1) outside tokens (background on .indicadorIcono) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:805 colour literal rgba(131, 183, 127, 0.13) outside tokens (background on .tendenciaPositiva) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:806 colour literal #9ed09a outside tokens (color on .tendenciaPositiva) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:810 colour literal rgba(196, 85, 63, 0.14) outside tokens (background on .tendenciaAlerta) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:815 colour literal rgba(217, 196, 147, 0.13) outside tokens (background on .tendenciaPendiente) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:820 colour literal #cfc9bd outside tokens (color on .tituloIndicador) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:827 colour literal #fff outside tokens (color on .valor) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:835 colour literal #8d887f outside tokens (color on .detalleIndicador) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:852 font-family literal "Baskerville, "Baskerville Old Face"…" on .encabezadoSeccion h2 | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:876 colour literal #ecd9b0 outside tokens (color on .enlaceSeccion:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:896 colour literal #1a1815 outside tokens (background on .acceso) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:904 colour literal #221e18 outside tokens (background on .acceso:hover) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:916 colour literal rgba(217, 196, 147, 0.09) outside tokens (background on .accesoIcono) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:948 colour literal #6f6a61 outside tokens (color on .accesoColeccion) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:981 font-family literal "Baskerville, "Baskerville Old Face"…" on .panelEncabezado h2 | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1004 colour literal rgba(48, 45, 41, 0.65) outside tokens (border-bottom on .filaTurno) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1033 colour literal rgba(217, 196, 147, 0.09) outside tokens (background on .iniciales) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1090 colour literal rgba(131, 183, 127, 0.22) outside tokens (border-color on .estadoConfirmado) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1091 colour literal rgba(131, 183, 127, 0.12) outside tokens (background on .estadoConfirmado) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1092 colour literal #9ed09a outside tokens (color on .estadoConfirmado) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1097 colour literal rgba(217, 196, 147, 0.12) outside tokens (background on .estadoEnCurso) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1102 colour literal rgba(163, 158, 147, 0.2) outside tokens (border-color on .estadoPendiente) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1103 colour literal rgba(163, 158, 147, 0.1) outside tokens (background on .estadoPendiente) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1104 colour literal #b7b1a6 outside tokens (color on .estadoPendiente) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1122 colour literal rgba(131, 183, 127, 0.25) outside tokens (border on .chipPositivo) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1124 colour literal rgba(131, 183, 127, 0.12) outside tokens (background on .chipPositivo) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1125 colour literal #9ed09a outside tokens (color on .chipPositivo) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1139 colour literal rgba(196, 85, 63, 0.16) outside tokens (background on .chipAlerta) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1215 colour literal #2a2621 outside tokens (background on .barraMeta) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1222 colour literal #a98b4f outside tokens (background on .barraMeta span) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1222 colour literal #e0cba0 outside tokens (background on .barraMeta span) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1258 colour literal #26221c outside tokens (background on .imagenProducto) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1258 colour literal #171513 outside tokens (background on .imagenProducto) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1265 colour literal rgba(0, 0, 0, 0.45) outside tokens (filter on .imagenProducto img) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1273 colour literal rgba(131, 183, 127, 0.25) outside tokens (border on .etiquetaStock) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1275 colour literal rgba(20, 24, 19, 0.85) outside tokens (background on .etiquetaStock) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1276 colour literal #9ed09a outside tokens (color on .etiquetaStock) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1283 colour literal rgba(196, 85, 63, 0.35) outside tokens (border-color on .etiquetaStockBaja) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1284 colour literal rgba(42, 20, 17, 0.88) outside tokens (background on .etiquetaStockBaja) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1295 colour literal #b2a57f outside tokens (color on .categoria) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1305 font-family literal "Baskerville, "Baskerville Old Face"…" on .infoProducto h3 | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1354 colour literal rgba(8, 8, 7, 0.72) outside tokens (background on .veloBusqueda) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1362 colour literal #3b352d outside tokens (border on .paleta) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1365 colour literal rgba(0, 0, 0, 0.6) outside tokens (box-shadow on .paleta) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1396 colour literal #6f6a61 outside tokens (color on .paletaEncabezado input::plac…) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1407 colour literal #3b352d outside tokens (scrollbar-color on .paletaResultados) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1429 colour literal rgba(217, 196, 147, 0.08) outside tokens (background on .resultado:hover, .resultado:…) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1467 colour literal #6f6a61 outside tokens (color on .resultadoFlecha) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1482 colour literal #4f4a43 outside tokens (color on .sinResultados > svg) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1505 colour literal #6f6a61 outside tokens (color on .paletaPie) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1562 colour literal rgba(0, 0, 0, 0.5) outside tokens (box-shadow on .sidebar) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1607 colour literal #6f6a61 outside tokens (color on .sidebarColapsada .tituloGrupo) | fix: Lift the value into the token block
+FAIL 48 src/pages/HomeAdministrador.module.css:1627 colour literal rgba(0, 0, 0, 0.6) outside tokens (background on .fondoMenu) | fix: Lift the value into the token block
+FAIL 67 src/pages/HomeAdministrador.module.css:100 .marcaTexto small: uppercase tracked 0.11em at 10px in a label role | fix: Labels, captions, table heads, nav links and meta are the body face (or the theme's label face), a step smaller, sentence case, untracked
+FAIL 67 src/pages/HomeAdministrador.module.css:143 .tituloGrupo: uppercase tracked 0.14em at 10px in a label role | fix: Labels, captions, table heads, nav links and meta are the body face (or the theme's label face), a step smaller, sentence case, untracked
+FAIL 67 src/pages/HomeAdministrador.module.css:598 .perfilTexto small: uppercase tracked 0.1em at 10px in a label role | fix: Labels, captions, table heads, nav links and meta are the body face (or the theme's label face), a step smaller, sentence case, untracked
+FAIL 67 src/pages/HomeAdministrador.module.css:637 .eyebrow: uppercase tracked 0.16em at 10px in a label role | fix: Labels, captions, table heads, nav links and meta are the body face (or the theme's label face), a step smaller, sentence case, untracked
+FAIL 67 src/pages/HomeAdministrador.module.css:1294 .categoria: uppercase tracked 0.1em at 10px in a label role | fix: Labels, captions, table heads, nav links and meta are the body face (or the theme's label face), a step smaller, sentence case, untracked
+REFLEX 26b src/pages/HomeAdministrador.module.css:1 no :active styling anywhere | fix: All eight states; guard: not a form control, no aria-disabled anywhere
+REFLEX 26b src/pages/HomeAdministrador.module.css:1 no :disabled styling anywhere | fix: All eight states; guard: not a form control, no aria-disabled anywhere
+WARN 29 src/pages/HomeAdministrador.module.css:309 glass panel: backdrop-filter blur over a translucent black on .topbar | fix: Solid or grained surface; elevation by lightness
+WARN 29 src/pages/HomeAdministrador.module.css:651 glass panel: backdrop-filter blur over a translucent black on .eyebrow | fix: Solid or grained surface; elevation by lightness
+WARN 29 src/pages/HomeAdministrador.module.css:693 glass panel: backdrop-filter blur over a translucent black on .heroMeta span | fix: Solid or grained surface; elevation by lightness
+WARN 29 src/pages/HomeAdministrador.module.css:740 glass panel: backdrop-filter blur over a translucent black on .botonSecundario | fix: Solid or grained surface; elevation by lightness
+WARN 29 src/pages/HomeAdministrador.module.css:1279 glass panel: backdrop-filter blur over a translucent black on .etiquetaStock | fix: Solid or grained surface; elevation by lightness
+WARN 29 src/pages/HomeAdministrador.module.css:1355 glass panel: backdrop-filter blur over a translucent black on .veloBusqueda | fix: Solid or grained surface; elevation by lightness
+WARN 29 src/pages/HomeAdministrador.module.css:1628 glass panel: backdrop-filter blur over a translucent black on .fondoMenu | fix: Solid or grained surface; elevation by lightness
+WARN 58 src/pages/HomeAdministrador.jsx:452 hero paragraph runs 25 words | fix: One sentence, twelve words or fewer
+WARN F2 src/pages/HomeAdministrador.jsx:372 three-period ellipsis in prose x1 | fix: Use a true ellipsis character (…)
+WARN F3 src/pages/HomeAdministrador.module.css:466 no text-wrap: balance on any display head (4 head rule(s), e.g. .panelAvisosEncabezado h2) | fix: Add text-wrap: balance to h1/h2-level heads
+WARN F5 src/pages/HomeAdministrador.module.css:516 icon-in-coloured-circle coin: .avisoIcono | fix: Drop the tinted coin; set the icon at text size in currentColor
+WARN F7 src/pages/HomeAdministrador.module.css:221 the pill radius on 10 non-control selectors (.insigniaNavegacion, .contadorAvisos, .eyebrow,…) | fix: Pills are for controls; boxes and media take the card radius
+WARN F24 src/pages/HomeAdministrador.module.css:453 a hairline border under a wide soft shadow on .panelAvisos | fix: Commit to one: a defined edge, or elevation by shadow

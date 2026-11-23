@@ -1,0 +1,199 @@
+.pagina {
+    background: #0e0d0d;
+    color: #f5f1e8;
+}
+
+.etiqueta {
+    color: #d9c493;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+.titulo {
+    margin: 0.35rem 0 0.4rem;
+    color: #f5f1e8;
+    font-family: Baskerville, "Baskerville Old Face", "Palatino Linotype", Georgia, serif;
+    font-size: clamp(2rem, 3.4vw, 2.8rem);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.descripcion {
+    margin: 0;
+    color: #aaa49a;
+    font-size: 0.95rem;
+}
+
+.estado {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid rgba(131, 183, 127, 0.55);
+    border-radius: 999px;
+    background: rgba(30, 58, 28, 0.55);
+    color: #a9d6a4;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.estado span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.estado.cerrada {
+    border-color: rgba(194, 86, 74, 0.55);
+    background: rgba(70, 25, 20, 0.55);
+    color: #f0b5ad;
+}
+
+.error {
+    margin: 0 0 1rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid rgba(194, 86, 74, 0.45);
+    border-radius: 10px;
+    background: rgba(194, 86, 74, 0.12);
+    color: #e4897f;
+    font-size: 0.85rem;
+}
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.buscador {
+    display: flex;
+    flex: 1 1 280px;
+    align-items: center;
+    gap: 0.6rem;
+    max-width: 420px;
+    padding: 0 0.9rem;
+    border: 1px solid #2e2b27;
+    border-radius: 10px;
+    background: #141312;
+    color: #aaa49a;
+}
+
+.buscador:focus-within {
+    border-color: #d9c493;
+}
+
+.buscador input {
+    width: 100%;
+    padding: 0.65rem 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #f5f1e8;
+    font-size: 0.88rem;
+}
+
+.filtro {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid #2e2b27;
+    border-radius: 999px;
+    background: transparent;
+    color: #aaa49a;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.filtro span {
+    margin-left: 0.25rem;
+}
+
+.filtro:hover {
+    border-color: #4a453d;
+}
+
+.filtro.activo {
+    border-color: #d9c493;
+    background: #d9c493;
+    color: #151310;
+}
+
+.panel {
+    overflow: hidden;
+    border: 1px solid #2e2b27;
+    border-radius: 18px;
+    background: #141312;
+}
+
+.panelCabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #2e2b27;
+}
+
+.panelCabecera h2 {
+    margin: 0;
+    color: #f5f1e8;
+    font-family: Montserrat, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.panelCabecera span {
+    color: #b2a57f;
+    font-size: 0.82rem;
+}
+
+.vacio {
+    margin: 0;
+    padding: 2.25rem 1.25rem;
+    color: #aaa49a;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.pie {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid #2e2b27;
+    background: #171615;
+}
+
+.pie p {
+    margin: 0;
+    color: #aaa49a;
+    font-size: 0.86rem;
+}
+
+.pie strong {
+    margin-left: 0.4rem;
+    color: #d9c493;
+}
+
+@media (max-width: 575.98px) {
+    .buscador {
+        flex-basis: 100%;
+        max-width: none;
+    }
+
+    .panelCabecera,
+    .pie {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+}

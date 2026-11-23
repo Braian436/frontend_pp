@@ -1,0 +1,39 @@
+.campo {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.etiqueta {
+    color: #d9c493;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.opciones {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.opcion {
+    padding: 0.7rem 0.5rem;
+    border: 1px solid #383838;
+    border-radius: 10px;
+    background: #0e0d0d;
+    color: #aaa49a;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.opcion:hover {
+    border-color: #4a453d;
+    color: #f5f1e8;
+}
+
+.activo {
+    border-color: #d9c493;
+    background: rgba(217, 196, 147, 0.12);
+    color: #d9c493;
+}
