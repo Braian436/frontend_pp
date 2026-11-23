@@ -64,8 +64,12 @@ export const construirEmpleado = (datos) => {
 export const construirProducto = (datos) => ({
     nombre: datos.nombre?.trim(),
     descripcion: datos.descripcion?.trim() ?? "",
-    precio: Number(datos.precio),
-    activo: datos.activo === "true" || datos.activo === true,
+    stock_actual: Number(datos.stock_actual),
+    stock_minimo: datos.stock_minimo === "" ? null : Number(datos.stock_minimo),
+    estado: datos.estado === "true" || datos.estado === true,
+    id_marca: Number(datos.id_marca),
+    id_categoria: Number(datos.id_categoria),
+    id_descuento: Number(datos.id_descuento),
 });
 
 export const construirServicio = (datos) => ({

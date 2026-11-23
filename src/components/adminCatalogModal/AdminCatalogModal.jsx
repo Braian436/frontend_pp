@@ -39,7 +39,12 @@ export default function AdminCatalogModal({ titulo, item, campos, guardar, cerra
                                     <label className="form-label" htmlFor={`catalogo-${campo.name}`}>{campo.label}</label>
                                     {campo.options ? (
                                         <select id={`catalogo-${campo.name}`} className={`form-select ${styles.input}`} value={form[campo.name]} onChange={(e) => setForm({ ...form, [campo.name]: e.target.value })}>
-                                            {campo.options.map((option) => <option key={option} value={option}>{option}</option>)}
+                                            <option value="">Seleccionar...</option>
+                                            {campo.options.map((option) => (
+                                                <option key={typeof option === "object" ? option.value : option} value={typeof option === "object" ? option.value : option}>
+                                                    {typeof option === "object" ? option.label : option}
+                                                </option>
+                                            ))}
                                         </select>
                                     ) : (
                                         <input id={`catalogo-${campo.name}`} className={`form-control ${styles.input}`} type={campo.type || "text"} min={campo.min} value={form[campo.name]} onChange={(e) => setForm({ ...form, [campo.name]: e.target.value })} required={campo.required} />
