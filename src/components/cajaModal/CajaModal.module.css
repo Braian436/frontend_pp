@@ -1,0 +1,137 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(5, 5, 5, 0.82);
+    backdrop-filter: blur(4px);
+}
+
+.modal {
+    width: 100%;
+    max-width: 580px;
+}
+
+.dialogo {
+    width: 100%;
+    margin: 0;
+}
+
+.contenido {
+    overflow: hidden;
+    border: 1px solid rgba(217, 196, 147, 0.35);
+    border-radius: 18px;
+    background: #161515;
+    color: #f5f1e8;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.65);
+}
+
+.header,
+.footer {
+    border-color: #2e2b27;
+    background: #161515;
+}
+
+.header {
+    align-items: flex-start;
+    padding: 1.35rem 1.65rem;
+}
+
+.encabezado {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+}
+
+.encabezado > svg {
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    color: #d9c493;
+    font-size: 1.55rem;
+}
+
+.titulo {
+    margin: 0;
+    color: #d9c493;
+    font-family: Baskerville, "Baskerville Old Face", "Palatino Linotype", Georgia, serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.descripcion {
+    margin: 0.35rem 0 0;
+    color: #aaa49a;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.cuerpo {
+    display: grid;
+    gap: 1.15rem;
+    padding: 1.5rem 1.65rem;
+}
+
+.footer {
+    gap: 0.7rem;
+    padding: 1.1rem 1.65rem 1.35rem;
+}
+
+.cancelar,
+.confirmar,
+.peligro {
+    padding: 0.7rem 1.3rem;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.cancelar {
+    border: 1px solid #555;
+    color: #ddd;
+}
+
+.cancelar:hover {
+    background: #333;
+    color: #fff;
+}
+
+.confirmar,
+.peligro {
+    border: 1px solid #d9c493;
+}
+
+.confirmar {
+    background: #d9c493;
+    color: #111;
+}
+
+.confirmar:hover {
+    background: #ebd9af;
+    color: #111;
+}
+
+.peligro {
+    border-color: #c2564a;
+    background: #c2564a;
+    color: #fff;
+}
+
+.peligro:hover {
+    border-color: #d3695c;
+    background: #d3695c;
+    color: #fff;
+}
+
+.error {
+    margin: 0;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid rgba(194, 86, 74, 0.4);
+    border-radius: 10px;
+    background: rgba(194, 86, 74, 0.12);
+    color: #e4897f;
+    font-size: 0.85rem;
+}

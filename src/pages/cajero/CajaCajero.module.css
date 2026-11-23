@@ -1,0 +1,111 @@
+.pagina {
+    background: #0e0d0d;
+    color: #f5f1e8;
+}
+
+.etiqueta {
+    color: #d9c493;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+.titulo {
+    margin: 0.35rem 0 0.4rem;
+    color: #f5f1e8;
+    font-family: Baskerville, "Baskerville Old Face", "Palatino Linotype", Georgia, serif;
+    font-size: clamp(2rem, 3.4vw, 2.8rem);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.descripcion {
+    margin: 0;
+    color: #aaa49a;
+    font-size: 0.95rem;
+}
+
+.estado {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid rgba(131, 183, 127, 0.55);
+    border-radius: 999px;
+    background: rgba(30, 58, 28, 0.55);
+    color: #a9d6a4;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.estado span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.estado.cerrada {
+    border-color: rgba(194, 86, 74, 0.55);
+    background: rgba(70, 25, 20, 0.55);
+    color: #f0b5ad;
+}
+
+.error {
+    margin: 0 0 1rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid rgba(194, 86, 74, 0.45);
+    border-radius: 10px;
+    background: rgba(194, 86, 74, 0.12);
+    color: #e4897f;
+    font-size: 0.85rem;
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+}
+
+.boton,
+.cerrar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    border: 1px solid #2e2b27;
+    border-radius: 12px;
+    background: transparent;
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.boton {
+    color: #f5f1e8;
+}
+
+.boton:hover {
+    border-color: #4a453d;
+    background: #1e1e1e;
+}
+
+.cerrar {
+    border-color: rgba(194, 86, 74, 0.5);
+    color: #e4897f;
+}
+
+.cerrar:hover {
+    background: rgba(194, 86, 74, 0.12);
+}
+
+@media (max-width: 575.98px) {
+    .acciones button {
+        flex: 1 1 100%;
+    }
+}

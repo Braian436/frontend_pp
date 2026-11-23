@@ -1,0 +1,114 @@
+.resumen {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid #2e2b27;
+    border-radius: 12px;
+    background: #0e0d0d;
+}
+
+.cliente {
+    display: grid;
+    gap: 0.2rem;
+}
+
+.cliente strong {
+    color: #f5f1e8;
+    font-size: 1rem;
+}
+
+.cliente span {
+    color: #aaa49a;
+    font-size: 0.82rem;
+}
+
+.total {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid #2e2b27;
+}
+
+.total span {
+    color: #aaa49a;
+    font-size: 0.82rem;
+}
+
+.total strong {
+    color: #d9c493;
+    font-size: 1.35rem;
+}
+
+.campo {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.etiqueta {
+    color: #d9c493;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.input {
+    width: 100%;
+    padding: 0.8rem 0.95rem;
+    border: 1px solid #383838;
+    border-radius: 12px;
+    outline: 0;
+    background: #0e0d0d;
+    color: #fff;
+    color-scheme: dark;
+    font-size: 1rem;
+}
+
+.input:focus {
+    border-color: #d9c493;
+}
+
+.input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+}
+
+.vuelto {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0;
+    padding: 0.75rem 0.95rem;
+    border: 1px solid #2e2b27;
+    border-radius: 10px;
+    background: #0e0d0d;
+    font-size: 0.88rem;
+}
+
+.vuelto strong {
+    font-size: 1.05rem;
+}
+
+.vueltoOk {
+    color: #83b77f;
+}
+
+.vueltoError {
+    color: #e4897f;
+}
+
+.nota {
+    margin: 0;
+    color: #aaa49a;
+    font-size: 0.82rem;
+    line-height: 1.5;
+}

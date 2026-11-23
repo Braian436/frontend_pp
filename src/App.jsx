@@ -14,11 +14,17 @@ import NavbarAdministrador from "./components/navbarAdministrador/NavbarAdminist
 import Footer from "./components/footer/Footer.jsx";
 import "@fontsource/montserrat";
 import AgendaBarbero from "./pages/barbero/AgendaBarbero.jsx";
+import HomeCajero from "./pages/cajero/HomeCajero.jsx";
+import CajaCajero from "./pages/cajero/CajaCajero.jsx";
+import TicketsCajero from "./pages/cajero/TicketsCajero.jsx";
+import ServiciosCajero from "./pages/cajero/ServiciosCajero.jsx";
 
 function Layout() {
     const { pathname } = useLocation();
     const esPortal = pathname.startsWith("/admin") ||
         pathname.startsWith("/barbero") ||
+        pathname.startsWith("/home-barbero") ||
+        pathname.startsWith("/cajero") ||
         pathname.startsWith("/empleados") ||
         pathname.startsWith("/liquidaciones") ||
         pathname.startsWith("/turnos/disponibilidad") ||
@@ -49,53 +55,53 @@ function App() {
                 <Route path="/admin/empleados" element={<Empleados />} />
                 <Route path="/admin/productos" element={<GestionProductos />} />
                 <Route path="/admin/servicios" element={<Servicios administracion />} />
-                <Route
-                    path="/empleados/"
-                    element={
-                        <ApiDataPage
-                            title="Empleados"
-                            description="Consulta el equipo registrado en la barbería."
-                            endpoint="/empleados/"
-                        />
-                    }
-                />
-                <Route path="/" element={<Home />} />
-                <Route path="/servicios" element={<Servicios />} />
-                <Route path="/registrar-turno" element={<ListaBarberos />} />
-                <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
                 <Route path="/home-barbero" element={<HomeBarber />} />
                 <Route path="/home-barbero/agenda" element={<AgendaBarbero />} />
-                <Route
-                    path="/liquidaciones/"
-                    element={
-                        <ApiDataPage
-                            title="Liquidaciones"
-                            description="Consulta las liquidaciones disponibles."
-                            endpoint="/liquidaciones/"
+                <Route path="/cajero" element={<HomeCajero />} />
+                <Route path="/cajero/caja" element={<CajaCajero />} />
+                <Route path="/cajero/tickets" element={<TicketsCajero />} />
+                <Route path="/cajero/servicios" element={<ServiciosCajero />} />
+                        <Route
+                            path="/empleados/"
+                            element={
+                                <ApiDataPage
+                                    title="Empleados"
+                                    description="Consulta el equipo registrado en la barbería."
+                                    endpoint="/empleados/"
+                                />
+                            }
                         />
-                    }
-                />
-                <Route
-                    path="/turnos/disponibilidad/"
-                    element={
-                        <ApiDataPage
-                            title="Disponibilidad de turnos"
-                            description="Consulta los horarios disponibles de un empleado."
-                            endpoint="/turnos/disponibilidad/"
-                            requiereFiltros
+                        <Route
+                            path="/liquidaciones/"
+                            element={
+                                <ApiDataPage
+                                    title="Liquidaciones"
+                                    description="Consulta las liquidaciones disponibles."
+                                    endpoint="/liquidaciones/"
+                                />
+                            }
                         />
-                    }
-                />
-                <Route
-                    path="/turnos/reservas/"
-                    element={
-                        <ApiDataPage
-                            title="Reservas"
-                            description="Consulta las reservas registradas."
-                            endpoint="/turnos/reservas/"
+                        <Route
+                            path="/turnos/disponibilidad/"
+                            element={
+                                <ApiDataPage
+                                    title="Disponibilidad de turnos"
+                                    description="Consulta los horarios disponibles de un empleado."
+                                    endpoint="/turnos/disponibilidad/"
+                                    requiereFiltros
+                                />
+                            }
                         />
-                    }
-                />
+                        <Route
+                            path="/turnos/reservas/"
+                            element={
+                                <ApiDataPage
+                                    title="Reservas"
+                                    description="Consulta las reservas registradas."
+                                    endpoint="/turnos/reservas/"
+                                />
+                            }
+                        />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

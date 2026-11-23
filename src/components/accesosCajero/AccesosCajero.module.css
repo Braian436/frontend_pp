@@ -1,0 +1,41 @@
+.titulo {
+    margin: 0 0 0.85rem;
+    color: #f5f1e8;
+    font-family: Montserrat, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.accion {
+    display: inline-flex;
+    min-height: 54px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid #2e2b27;
+    border-radius: 12px;
+    background: #161514;
+    color: #f5f1e8;
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.accion:hover:not(:disabled) {
+    border-color: #4a453d;
+    background: #1e1e1e;
+}
+
+.accion.primaria {
+    border-color: #d9c493;
+    background: #d9c493;
+    color: #151310;
+}
+
+.accion.primaria:hover:not(:disabled) {
+    background: #ebd9af;
+}
+
+.accion:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}

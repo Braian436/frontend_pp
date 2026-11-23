@@ -6,7 +6,9 @@
     color: #fff;
     background-color: #0a0a0a;
     border: 1px solid #262626;
-    border-left: 4px solid #8a8a8a;
+    border-left: 3px solid #8a8a8a;
+    border-bottom: 3px solid #8a8a8a;
+    border-radius: 12px;
     padding: 13px 16px;
 }
 
@@ -34,7 +36,7 @@
 
 .acciones {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-end;
     gap: 8px;
 }
@@ -48,9 +50,10 @@
     color: #b0b0b0;
 }
 
-/* Estados */
+/* Estados: el color del costado y del borde inferior van juntos */
 .finalizado {
     border-left-color: #4caf7a;
+    border-bottom-color: #4caf7a;
 }
 
 .finalizado .estado {
@@ -59,9 +62,9 @@
 }
 
 .enCurso {
-    background-color: #ead19b17;
-    border-color: rgba(202, 188, 157,0.45);
-    border-left-color: #e6c777;
+    background-color: rgba(233, 228, 219, 0.09);
+    border-left-color: #d9c493;
+    border-bottom-color: #d9c493;
 }
 
 .enCurso .estado {
@@ -73,6 +76,7 @@
 
 .pendiente {
     border-left-color: #8a8a8a;
+    border-bottom-color: #8a8a8a;
 }
 
 .botonIniciar {

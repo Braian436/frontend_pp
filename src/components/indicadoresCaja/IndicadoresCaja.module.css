@@ -1,0 +1,58 @@
+.indicador {
+    position: relative;
+}
+
+.tarjeta {
+    min-width: 0;
+    border: 0;
+    border-right: 3px solid #a4a4a4;
+    border-bottom: 3px solid #a4a4a4;
+    border-radius: 12px;
+    background: transparent;
+}
+
+.cuerpo {
+    color: #fff;
+    font-family: Montserrat, sans-serif;
+}
+
+.encabezado {
+    color: #d9c493;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.encabezado svg {
+    flex-shrink: 0;
+    font-size: 1.1rem;
+}
+
+.valor {
+    color: #fff;
+    font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+    line-height: 1.1;
+}
+
+.detalle {
+    margin-top: auto;
+    color: #aaa49a;
+    font-size: 0.78rem;
+}
+
+.verde {
+    color: #83b77f;
+}
+
+.rojo {
+    color: #e4897f;
+}
+
+.barra {
+    display: block;
+    width: 62%;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #d9c493, rgba(217, 196, 147, 0.12));
+}

@@ -1,0 +1,91 @@
+{
+ "v": 1,
+ "at": "2026-11-18T00:43:33.992Z",
+ "scope": "page",
+ "summary": {
+  "fails": 123,
+  "reflex": 2,
+  "warns": 13
+ },
+ "files": {
+  "src/pages/HomeAdministrador.jsx": {
+   "handlers": [
+    "onChange={(evento) => setConsulta(evento.target.value)}",
+    "onClick={() => irA(resultado.ruta)}",
+    "onClick={() => setAvisosAbiertos((valor) => !valor)}",
+    "onClick={() => setAvisosAbiertos(false)}",
+    "onClick={() => setBusquedaAbierta(false)}",
+    "onClick={() => setMenuMovil(false)}",
+    "onClick={() => setMenuMovil(true)}",
+    "onClick={() => setSidebarColapsada((valor) => !valor)}",
+    "onClick={abrirBusqueda}",
+    "onClick={cerrarSesion}",
+    "onClick={onNavegar}",
+    "onMouseDown={(evento) => { if (evento.target === evento.currentTarget) setBusquedaAbierta(false); }}",
+    "onNavegar={() => setMenuMovil(false)}"
+   ],
+   "links": [
+    "/",
+    "/admin",
+    "/admin/productos",
+    "/registrar-turno",
+    "/turnos-disponibles",
+    "{item.ruta}",
+    "{ruta}"
+   ],
+   "fields": [],
+   "hooks": [],
+   "ids": [
+    "accesos-titulo",
+    "alertas-titulo",
+    "bienvenida-titulo",
+    "caja",
+    "caja-titulo",
+    "productos",
+    "productos-titulo",
+    "turnos-titulo"
+   ],
+   "scripts": []
+  }
+ },
+ "wiring": {
+  "handlers": [
+   "onChange={(evento) => setConsulta(evento.target.value)}",
+   "onClick={() => irA(resultado.ruta)}",
+   "onClick={() => setAvisosAbiertos((valor) => !valor)}",
+   "onClick={() => setAvisosAbiertos(false)}",
+   "onClick={() => setBusquedaAbierta(false)}",
+   "onClick={() => setMenuMovil(false)}",
+   "onClick={() => setMenuMovil(true)}",
+   "onClick={() => setSidebarColapsada((valor) => !valor)}",
+   "onClick={abrirBusqueda}",
+   "onClick={cerrarSesion}",
+   "onClick={onNavegar}",
+   "onMouseDown={(evento) => { if (evento.target === evento.currentTarget) setBusquedaAbierta(false); }}",
+   "onNavegar={() => setMenuMovil(false)}"
+  ],
+  "links": [
+   "/",
+   "/admin",
+   "/admin/productos",
+   "/registrar-turno",
+   "/turnos-disponibles",
+   "{item.ruta}",
+   "{ruta}"
+  ],
+  "fields": [],
+  "hooks": [],
+  "ids": [
+   "accesos-titulo",
+   "alertas-titulo",
+   "bienvenida-titulo",
+   "caja",
+   "caja-titulo",
+   "productos",
+   "productos-titulo",
+   "turnos-titulo"
+  ]
+ },
+ "scripts": {},
+ "pages": {}
+}

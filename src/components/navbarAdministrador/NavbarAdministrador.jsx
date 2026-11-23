@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { LuBell, LuCircleAlert, LuDollarSign, LuHouse, LuPackage, LuScissors, LuUserSearch, LuUsers, } from "react-icons/lu";
+import { NavLink, useLocation } from "react-router-dom";
+import { LuBell, LuCircleAlert, LuDollarSign, LuHouse, LuPackage, LuScissors, LuTicket, LuUserSearch, LuUsers, LuWallet, } from "react-icons/lu";
 import styles from "./NavbarAdministrador.module.css";
 import Logo from "../../assets/LOGO-BARBER.png";
 
@@ -9,7 +9,7 @@ const avisosStock = [
     { producto: "Aceite para barba", stock: 3, minimo: 4 },
 ];
 
-const itemsNavbarAdministrador = [
+const menuAdministrador = [
     { type: "link", label: "Inicio", to: "/admin", icon: "home" },
     { type: "link", label: "Nuevo Turno", icon: "scissors", disabled: true },
     { type: "heading", label: "Gestion" },
@@ -20,6 +20,13 @@ const itemsNavbarAdministrador = [
     { type: "link", label: "Clientes", icon: "userSearch", disabled: true },
 ];
 
+const menuCajero = [
+    { type: "link", label: "Inicio", to: "/cajero", icon: "home", end: true },
+    { type: "link", label: "Caja", to: "/cajero/caja", icon: "wallet" },
+    { type: "link", label: "Tickets", to: "/cajero/tickets", icon: "ticket" },
+    { type: "link", label: "Servicios", to: "/cajero/servicios", icon: "scissors" },
+];
+
 const iconos = {
     home: LuHouse,
     scissors: LuScissors,
@@ -27,16 +34,21 @@ const iconos = {
     users: LuUsers,
     package: LuPackage,
     userSearch: LuUserSearch,
+    wallet: LuWallet,
+    ticket: LuTicket,
 };
 
 export default function NavbarAdministrador() {
     const [avisosAbiertos, setAvisosAbiertos] = useState(false);
+    const { pathname } = useLocation();
+    const esCajero = pathname === "/cajero" || pathname.startsWith("/cajero/");
+    const items = esCajero ? menuCajero : menuAdministrador;
 
     return (
         <>
             <aside className={styles.sidebar}>
-                <nav className={`nav flex-column gap-2 ${styles.enlaces}`} aria-label="Navegación de administrador">
-                    {itemsNavbarAdministrador.map((item) => {
+                <nav className={`nav flex-column gap-2 ${styles.enlaces}`} aria-label={esCajero ? "Navegación de caja" : "Navegación de administrador"}>
+                    {items.map((item) => {
                         if (item.type === "heading") {
                             return (
                                 <h3 className={styles.titulo} key={item.label}>
@@ -64,6 +76,7 @@ export default function NavbarAdministrador() {
                         return (
                             <NavLink
                                 to={item.to}
+                                end={item.end}
                                 className={({ isActive }) =>
                                     `nav-link ${styles.enlace} ${isActive ? styles.activo : ""}`
                                 }
@@ -78,10 +91,13 @@ export default function NavbarAdministrador() {
             </aside>
 
             <header className={`d-flex align-items-center gap-3 ${styles.cabecera}`}>
-                <NavLink to="/admin" className={styles.logoCaja} aria-label="Inicio de administración">
+                <NavLink to={esCajero ? "/cajero" : "/admin"} className={styles.logoCaja} aria-label={esCajero ? "Inicio de caja" : "Inicio de administración"}>
                     <img src={Logo} alt="Barbería Clase A" />
                 </NavLink>
-                <p className={styles.saludo}>Barbería <strong>Clase A</strong></p>
+                <p className={styles.saludo}>
+                    {esCajero ? <>Panel de <strong>caja</strong></> : <>Barbería <strong>Clase A</strong></>}
+                </p>
+                {!esCajero && (
                 <div className="position-relative ms-auto">
                     <button
                         type="button"
@@ -111,6 +127,7 @@ export default function NavbarAdministrador() {
                         </div>
                     )}
                 </div>
+                )}
             </header>
         </>
     );
