@@ -62,18 +62,40 @@
     margin: 0 0 8px;
 }
 
-.precioContenedor {
-    margin-bottom: 16px;
+.detalles,
+.precios {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 12px;
 }
 
-.precio {
-    display: inline-block;
-    padding: 8px 16px;
-    color: #212529;
-    font-size: 0.85rem;
-    font-weight: 700;
-    background-color: #6c757d;
-    border-radius: 50rem;
+.detalles p,
+.precios p {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.detalles span,
+.precios span {
+    color: #aaa49a;
+}
+
+.detalles strong,
+.precios strong {
+    overflow-wrap: anywhere;
+    text-align: right;
+}
+
+.precios {
+    padding-top: 10px;
+    border-top: 1px solid #ffffff26;
+}
+
+.precios strong {
+    color: #D9C493;
 }
 
 .acciones {

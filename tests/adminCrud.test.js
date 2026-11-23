@@ -102,17 +102,6 @@ test("normaliza el contrato de empleados del backend y su cuenta sin contraseña
 });
 
 test("construye payloads de catálogo y rutas detalle REST", () => {
-    assert.deepEqual(construirProducto({
-        nombre: "Cera",
-        descripcion: "Fijación",
-        precio: "8500",
-        activo: "true",
-    }), {
-        nombre: "Cera",
-        descripcion: "Fijación",
-        precio: 8500,
-        activo: true,
-    });
     assert.deepEqual(construirServicio({
         nombre: "Corte",
         descripcion: "Corte clásico",
@@ -123,4 +112,26 @@ test("construye payloads de catálogo y rutas detalle REST", () => {
         precio: 11000,
     });
     assert.equal(rutaDetalle("/productos/", "12"), "/productos/12/");
+});
+
+test("construye payload de producto con stock, estado y relaciones", () => {
+    assert.deepEqual(construirProducto({
+        nombre: " Cera ",
+        descripcion: "Fijación",
+        stock_actual: "12",
+        stock_minimo: "",
+        estado: "true",
+        id_marca: "2",
+        id_categoria: "4",
+        id_descuento: "5",
+    }), {
+        nombre: "Cera",
+        descripcion: "Fijación",
+        stock_actual: 12,
+        stock_minimo: null,
+        estado: true,
+        id_marca: 2,
+        id_categoria: 4,
+        id_descuento: 5,
+    });
 });
