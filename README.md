@@ -8,13 +8,8 @@ La aplicación usa `http://localhost:8000/api` de forma predeterminada. Se puede
 configurar otra URL base con `VITE_API_URL` (por ejemplo,
 `VITE_API_URL=http://localhost:8000/api`).
 
-El inicio de sesión usa `/auth/token/` y `/auth/me/`, y la salida usa
-`/auth/logout/`; el token vive solo en memoria, por lo que hay que volver a
-iniciar sesión al recargar la página. Las rutas disponibles en el panel son `/empleados/`, `/liquidaciones/`,
-`/turnos/disponibilidad/` y `/turnos/reservas/`. Clientes, servicios, ventas,
-cajas, movimientos de caja y productos/stock se muestran como pendientes hasta
-que exista su API. Los menús por grupo son solo navegación: Django debe validar
-los permisos de cada petición.
+La aplicación no usa inicio de sesión, sesiones, tokens ni permisos por usuario.
+Las rutas disponibles son públicas y se pueden consultar directamente.
 
 ## Verificación
 

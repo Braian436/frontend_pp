@@ -1,70 +1,66 @@
 import { useState } from "react";
 import CardProducto from "../../components/cardProducto/CardProducto";
-import fondo from "../../assets/adminproductos2.jpg";
+import AdminCatalogModal from "../../components/adminCatalogModal/AdminCatalogModal";
+import styles from "./Empleados.module.css";
+import { construirProducto, normalizarActivo, obtenerId, obtenerTexto, useCrudApi } from "./adminCrud";
 
-const iniciales = [
-    { id: 1, nombre: "CERA FUERTE", descripcion: "Fijación extrema", precio: "8.500", activo: true },
-    { id: 2, nombre: "ACEITE BARBA-BIGOTE", descripcion: "Gotero 30ml", precio: "17.500", activo: true },
-    { id: 3, nombre: "SHAMPOO NEUTRO", descripcion: "Frasco 400ml", precio: "15.000", activo: false },
-];
+const normalizar = (item) => ({
+    id: obtenerId(item),
+    nombre: obtenerTexto(item, ["nombre", "name"]),
+    descripcion: obtenerTexto(item, ["descripcion", "description"]),
+    precio: obtenerTexto(item, ["precio", "price"], ""),
+    activo: normalizarActivo(item?.activo ?? item?.active ?? item?.is_active ?? true),
+});
 
 export default function GestionProductos() {
-    const [productos, setProductos] = useState(() => JSON.parse(localStorage.getItem("productos") || "null") || iniciales);
-    const guardar = (lista) => { localStorage.setItem("productos", JSON.stringify(lista)); setProductos(lista); };
-    const nuevo = () => {
-        const nombre = prompt("Nombre del producto:");
-        const descripcion = nombre && prompt("Descripción:");
-        const precio = descripcion && prompt("Precio:");
-        if (!nombre || !descripcion || precio === null || !Number.isFinite(Number(precio)) || Number(precio) < 0) return alert("Completá nombre, descripción y precio válido.");
-        guardar([...productos, { id: Date.now(), nombre, descripcion, precio, activo: true }]);
-    };
-    const editar = (producto) => {
-        const nombre = prompt("Nombre:", producto.nombre);
-        const descripcion = nombre && prompt("Descripción:", producto.descripcion);
-        const precio = descripcion && prompt("Precio:", producto.precio);
-        if (!nombre || !descripcion || precio === null || !Number.isFinite(Number(precio)) || Number(precio) < 0) return alert("Completá nombre, descripción y precio válido.");
-        guardar(productos.map((item) => item.id === producto.id ? { ...item, nombre, descripcion, precio } : item));
+    const crud = useCrudApi("/productos/", "productos");
+    const [producto, setProducto] = useState(null);
+    const [abierto, setAbierto] = useState(false);
+    const productos = crud.items.map(normalizar);
+    const campos = [
+        { name: "nombre", label: "Nombre", required: true, value: "" },
+        { name: "descripcion", label: "Descripción", value: "" },
+        { name: "precio", label: "Precio", type: "number", min: 0, required: true, value: "" },
+        { name: "activo", label: "Estado", options: ["true", "false"], value: "true" },
+    ];
+    const guardar = async (body) => {
+        const payload = construirProducto(body);
+        const ok = producto ? await crud.editar(producto, payload) : await crud.crear(payload);
+        if (ok) setAbierto(false);
     };
 
     return (
-        <section 
-            className="container-fluid py-5 text-white" 
-            style={{ 
-                backgroundImage: `url(${fondo})`, 
-                backgroundSize: 'cover', 
-                backgroundPosition: 'center',
-                backgroundColor: 'rgba(0,0,0,0.7)',
-                backgroundBlendMode: 'overlay',
-                minHeight: '100vh', 
-                display: 'flex',
-                alignItems: 'center'
-            }}
-        >
+        <section className={`container-fluid py-4 text-white ${styles.pagina}`}>
             <div className="container">
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h2 className="fw-bold" style={{ color: '#D9C493' }}>Gestión de Productos</h2>
-                    <button className="btn btn-outline-light rounded-pill px-4" onClick={nuevo}>
+                    <div>
+                        <p className={styles.subtitulo}>— PANEL DE ADMINISTRACIÓN</p>
+                        <h1 className={styles.titulo}>Gestión de Productos</h1>
+                    </div>
+                    <button className={`btn ${styles.botonNuevo}`} onClick={() => { setProducto(null); setAbierto(true); }}>
                         + Nuevo Producto
                     </button>
                 </div>
-                
+                {crud.loading && <p className="text-secondary text-center py-4">Cargando productos...</p>}
+                {crud.error && <p className="text-danger text-center" role="alert">{crud.error}</p>}
                 <div className="row g-4">
                     {productos.map((prod) => (
                         <div className="col-12 col-md-6 col-lg-4" key={prod.id}>
-                            {/* CAMBIO: antes era <CardProducto producto={prod} /> */}
                             <CardProducto
                                 nombre={prod.nombre}
                                 descripcion={prod.descripcion}
                                 precio={prod.precio}
                                 activo={prod.activo}
-                                onEditar={() => editar(prod)}
-                                onEliminar={() => guardar(productos.filter((item) => item.id !== prod.id))}
-                                onCambioEstado={(activo) => guardar(productos.map((item) => item.id === prod.id ? { ...item, activo } : item))}
+                                onEditar={() => { setProducto(prod); setAbierto(true); }}
+                                onEliminar={() => window.confirm(`¿Eliminar ${prod.nombre}?`) && crud.eliminar(prod)}
+                                onCambioEstado={(activo) => crud.editar(prod, { activo })}
                             />
                         </div>
                     ))}
                 </div>
+                {!crud.loading && !productos.length && <p className="text-center text-secondary py-5">No hay productos.</p>}
             </div>
+            {abierto && <AdminCatalogModal titulo={producto ? "Editar producto" : "Nuevo producto"} item={producto} campos={campos} guardar={guardar} cerrar={() => setAbierto(false)} saving={crud.saving} error={crud.error} />}
         </section>
     );
 }

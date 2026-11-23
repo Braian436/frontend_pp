@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaCheckCircle, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useAuth } from "../../auth/AuthContext.jsx";
+import { apiRequest } from "../../auth/auth.js";
 import fondo from "../../assets/facha1.png";
 import styles from "./TurnosDisponibles.module.css";
 
@@ -11,7 +11,7 @@ const formularioInicial = { nombre: "", apellido: "", telefono: "", correo: "" }
 const fechaLocal = (fecha) => `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, "0")}-${String(fecha.getDate()).padStart(2, "0")}`;
 
 export default function TurnosDisponibles() {
-    const { request } = useAuth();
+    const request = apiRequest;
     const [params] = useSearchParams();
     const [inicio, setInicio] = useState(() => { const hoy = new Date(); hoy.setHours(12, 0, 0, 0); return hoy; });
     const [seleccion, setSeleccion] = useState(null);

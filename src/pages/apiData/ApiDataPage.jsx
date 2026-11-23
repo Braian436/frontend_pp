@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../auth/AuthContext.jsx";
+import { apiRequest } from "../../auth/auth.js";
 import styles from "./ApiDataPage.module.css";
 
 const horas = Array.from({ length: 13 }, (_, index) =>
@@ -32,7 +32,7 @@ export default function ApiDataPage({
     endpoint,
     requiereFiltros = false,
 }) {
-    const { request } = useAuth();
+    const request = apiRequest;
     const [filas, setFilas] = useState([]);
     const [cargando, setCargando] = useState(!requiereFiltros);
     const [error, setError] = useState("");

@@ -3,43 +3,11 @@ import EmpleadoCard from "../../components/empleadoCard/EmpleadoCard";
 import EmpleadoFiltros from "../../components/empleadoFiltro/EmpleadoFiltro";
 import EmpleadoModal from "../../components/empleadoModal/EmpleadoModal";
 import styles from "./Empleados.module.css";
-
-
-const empleadosIniciales = [
-  {
-    id: 1,
-    nombre: "Enzo Figueroa",
-    dni: "30123456",
-    rol: "Barbero",
-    estado: "activo",
-    comision: 15,
-    fechaAlta: "12/03/2024",
-    foto: null,
-  },
-  {
-    id: 2,
-    nombre: "Martín Acosta",
-    dni: "28555111",
-    rol: "Barbero",
-    estado: "suspendido",
-    comision: 10,
-    fechaAlta: "20/01/2025",
-    foto: null,
-  },
-  {
-    id: 3,
-    nombre: "Lucas Herrera",
-    dni: "35777888",
-    rol: "Barbero",
-    estado: "inactivo",
-    comision: 20,
-    fechaAlta: "05/08/2023",
-    foto: null,
-  },
-];
+import { construirEmpleado, normalizarEmpleado, useCrudApi } from "./adminCrud.js";
 
 export default function Empleados() {
-  const [empleados, setEmpleados] = useState(empleadosIniciales);
+  const crud = useCrudApi("/empleados/", "empleados");
+  const empleados = crud.items.map(normalizarEmpleado);
 
   const [busqueda, setBusqueda] = useState("");
   const [filtro, setFiltro] = useState("todos");
@@ -51,8 +19,8 @@ export default function Empleados() {
     const texto = busqueda.toLowerCase().trim();
 
     const coincideBusqueda =
-      empleado.nombre.toLowerCase().includes(texto) ||
-      empleado.dni.includes(texto);
+      String(empleado.nombre).toLowerCase().includes(texto) ||
+      String(empleado.dni).includes(texto);
 
     const coincideEstado =
       filtro === "todos" || empleado.estado === filtro;
@@ -75,37 +43,14 @@ export default function Empleados() {
     setEmpleadoEditar(null);
   };
 
-  const guardarEmpleado = (datos) => {
-    // Datos de demostración: no se envían a Django.
-    const { password, archivoFoto, ...empleadoDatos } = datos;
-
-    // En una API real, la contraseña se enviaría
-    // de forma segura al backend, no al estado.
-    void password;
+  const guardarEmpleado = async (datos) => {
+    const { archivoFoto, ...body } = datos;
     void archivoFoto;
-
-    if (empleadoEditar) {
-      setEmpleados((anteriores) =>
-        anteriores.map((empleado) =>
-          empleado.id === empleadoEditar.id
-            ? {
-                ...empleado,
-                ...empleadoDatos,
-              }
-            : empleado
-        )
-      );
-    } else {
-      const nuevo = {
-        ...empleadoDatos,
-        id: crypto.randomUUID(),
-        fechaAlta: new Date().toLocaleDateString("es-AR"),
-      };
-
-      setEmpleados((anteriores) => [...anteriores, nuevo]);
-    }
-
-    cerrarModal();
+    const payload = construirEmpleado(body, Boolean(empleadoEditar));
+    const ok = empleadoEditar
+      ? await crud.editar(empleadoEditar, payload)
+      : await crud.crear(payload);
+    if (ok) cerrarModal();
   };
 
   const eliminarEmpleado = (empleado) => {
@@ -115,9 +60,7 @@ export default function Empleados() {
 
     if (!confirmar) return;
 
-    setEmpleados((anteriores) =>
-      anteriores.filter((e) => e.id !== empleado.id)
-    );
+    crud.eliminar(empleado);
   };
 
   return (
@@ -163,6 +106,9 @@ export default function Empleados() {
           empleados={empleados}
         />
 
+        {crud.loading && <p className="text-secondary text-center py-4" role="status">Cargando empleados...</p>}
+        {crud.error && <p className="text-danger text-center py-2" role="alert">{crud.error}</p>}
+
         {/* CANTIDAD */}
         <p className={styles.cantidad}>
           {empleadosFiltrados.length} EMPLEADOS
@@ -200,6 +146,8 @@ export default function Empleados() {
           empleado={empleadoEditar}
           cerrar={cerrarModal}
           guardar={guardarEmpleado}
+          saving={crud.saving}
+          error={crud.error}
         />
       )}
 

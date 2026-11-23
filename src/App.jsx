@@ -1,45 +1,28 @@
-import { useEffect } from "react";
-import {
-    Navigate,
-    Outlet,
-    Route,
-    Routes,
-    useLocation,
-    useNavigate,
-} from "react-router-dom";
+import { Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import styles from "./App.module.css";
 import Home from "./pages/cliente/Home.jsx";
 import ListaBarberos from "./pages/cliente/ListaBarberos.jsx";
 import TurnosDisponibles from "./pages/cliente/TurnosDisponibles.jsx";
 import Servicios from "./pages/administrador/Servicios";
-import Login from "./pages/Login.jsx";
 import Empleados from "./pages/administrador/Empleados.jsx";
 import GestionProductos from "./pages/administrador/GestionProductos.jsx";
 import HomeAdministrador from "./pages/administrador/HomeAdministrador.jsx";
 import HomeBarber from "./pages/barbero/HomeBarber.jsx";
 import ApiDataPage from "./pages/apiData/ApiDataPage.jsx";
-import { useAuth } from "./auth/AuthContext.jsx";
-import { rutaInicialPorGrupo } from "./auth/roles.js";
 import Navbar from "./components/navbar/Navbar.jsx";
 import NavbarAdministrador from "./components/navbarAdministrador/NavbarAdministrador.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import "@fontsource/montserrat";
 import AgendaBarbero from "./pages/barbero/AgendaBarbero.jsx";
 
-const rutasInternas = [
-    "/empleados/",
-    "/liquidaciones/",
-    "/turnos/disponibilidad/",
-    "/turnos/reservas/",
-];
-
 function Layout() {
     const { pathname } = useLocation();
-    const { grupo } = useAuth();
-    const esPortal =
-        (grupo === "Administrador" &&
-            (rutasInternas.includes(pathname) || pathname.startsWith("/admin"))) ||
-        (grupo === "Barbero" && pathname.startsWith("/barbero"));
+    const esPortal = pathname.startsWith("/admin") ||
+        pathname.startsWith("/barbero") ||
+        pathname.startsWith("/empleados") ||
+        pathname.startsWith("/liquidaciones") ||
+        pathname.startsWith("/turnos/disponibilidad") ||
+        pathname.startsWith("/turnos/reservas");
 
     return (
         <div
@@ -58,57 +41,20 @@ function Layout() {
     );
 }
 
-function RutaPrivada() {
-    const { autenticado } = useAuth();
-    return autenticado ? <Outlet /> : <Navigate to="/login" replace />;
-}
-
-function RutaPorGrupo({ grupoPermitido }) {
-    const { grupo } = useAuth();
-    return grupo === grupoPermitido
-        ? <Outlet />
-        : <Navigate to={rutaInicialPorGrupo[grupo] ?? "/"} replace />;
-}
-
-function RedireccionSesionExpirada() {
-    const { sesionExpirada } = useAuth();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (sesionExpirada) navigate("/login", { replace: true });
-    }, [navigate, sesionExpirada]);
-
-    return null;
-}
-
 function App() {
     return (
-        <>
-            <RedireccionSesionExpirada />
-            <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route element={<Layout />}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/servicios" element={<Servicios />} />
-                    <Route path="/registrar-turno" element={<ListaBarberos />} />
-                    <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
-                </Route>
-
-                <Route element={<RutaPrivada />}>
-                    <Route element={<Layout />}>
-                        <Route element={<RutaPorGrupo grupoPermitido="Administrador" />}>
-                            <Route path="/admin" element={<HomeAdministrador />} />
-                            <Route path="/admin/empleados" element={<Empleados />} />
-                            <Route path="/admin/productos" element={<GestionProductos />} />
-                            <Route
-                                path="/admin/servicios"
-                                element={<Servicios administracion />}
-                            />
-                        </Route>
-                        <Route element={<RutaPorGrupo grupoPermitido="Barbero" />}>
-                            <Route path="/home-barbero" element={<HomeBarber />} />
-                            <Route path="/barbero/agenda" element={<AgendaBarbero />} />
-                        </Route>
+        <Routes>
+            <Route element={<Layout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/servicios" element={<Servicios />} />
+                <Route path="/registrar-turno" element={<ListaBarberos />} />
+                <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
+                <Route path="/admin" element={<HomeAdministrador />} />
+                <Route path="/admin/empleados" element={<Empleados />} />
+                <Route path="/admin/productos" element={<GestionProductos />} />
+                <Route path="/admin/servicios" element={<Servicios administracion />} />
+                <Route path="/home-barbero" element={<HomeBarber />} />
+                <Route path="/home-barbero/agenda" element={<AgendaBarbero />} />
                         <Route
                             path="/empleados/"
                             element={
@@ -150,12 +96,9 @@ function App() {
                                 />
                             }
                         />
-                    </Route>
-                </Route>
-
-                <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-        </>
+            </Route>
+            <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
     );
 }
 

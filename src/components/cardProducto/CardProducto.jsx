@@ -1,9 +1,6 @@
-import { useState } from 'react'
 import styles from './CardProducto.module.css'
 
 export default function CardProducto({ nombre, descripcion, precio, activo, onEditar, onEliminar, onCambioEstado }) {
-  const [estaActivo, setEstaActivo] = useState(activo)
-
   const handleEditar = () => {
     onEditar ? onEditar() : alert(`Editando: ${nombre}`)
   }
@@ -13,9 +10,7 @@ export default function CardProducto({ nombre, descripcion, precio, activo, onEd
   }
 
   const handleToggleActivo = () => {
-    const nuevoEstado = !estaActivo
-    setEstaActivo(nuevoEstado)
-    onCambioEstado?.(nuevoEstado)
+    onCambioEstado?.(!activo)
   }
 
   return (
@@ -27,7 +22,7 @@ export default function CardProducto({ nombre, descripcion, precio, activo, onEd
         <div className={styles.cuerpo}>
             <div className={styles.encabezado}>
                 <h5 className={styles.nombre}>{nombre}</h5>
-                <span className={`${styles.indicador} ${estaActivo ? styles.indicadorActivo : ''}`}></span>
+                <span className={`${styles.indicador} ${activo ? styles.indicadorActivo : ''}`}></span>
             </div>
 
             <p className={styles.descripcion}>{descripcion}</p>
@@ -50,11 +45,11 @@ export default function CardProducto({ nombre, descripcion, precio, activo, onEd
                     <input
                         className={styles.switch}
                         type="checkbox"
-                        checked={estaActivo}
+                        checked={Boolean(activo)}
                         onChange={handleToggleActivo}
                     />
-                    <span className={`${styles.estadoTexto} ${estaActivo ? styles.estadoTextoActivo : ''}`}>
-                        {estaActivo ? 'ACTIVO' : 'INACTIVO'}
+                    <span className={`${styles.estadoTexto} ${activo ? styles.estadoTextoActivo : ''}`}>
+                        {activo ? 'ACTIVO' : 'INACTIVO'}
                     </span>
                 </div>
             </div>

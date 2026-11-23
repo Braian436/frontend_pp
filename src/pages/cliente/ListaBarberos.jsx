@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import CardBarbero from "../../components/cardBarbero/CardBarbero";
-import { useAuth } from "../../auth/AuthContext.jsx";
+import { apiRequest } from "../../auth/auth.js";
 import styles from "./ListaBarberos.module.css";
 
 export default function ListaBarberos() {
-    const { request } = useAuth();
+    const request = apiRequest;
     const [barberos, setBarberos] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState("");

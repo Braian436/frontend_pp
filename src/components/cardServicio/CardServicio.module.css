@@ -2,9 +2,11 @@
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
-    background-color: #1a1a1a;
-    border: 1px solid #6c757d;
-    border-radius: 20px;
+    background: #161515;
+    border: 1px solid #ffffff26;
+    border-right: 3px solid #a4a4a4;
+    border-bottom: 3px solid #a4a4a4;
+    border-radius: 12px;
 }
 
 .imagen {
@@ -14,11 +16,11 @@
     flex: 0 0 auto;
     width: 41.66%;
     min-height: 200px;
-    background-color: #2a2a2a;
+    background: #0e0d0d;
 }
 
 .imagenTexto {
-    color: #6c757d;
+    color: #aaa49a;
 }
 
 .contenido {
@@ -36,7 +38,7 @@
 }
 
 .descripcion {
-    color: #6c757d;
+    color: #b7b1a4;
     line-height: 1.6;
     margin: 0 0 24px;
 }
@@ -67,6 +69,21 @@
 .boton:hover {
     background-color: #b7a47c;
     color: #000;
+}
+
+.adminAcciones {
+    display: flex;
+    gap: 8px;
+}
+
+.adminAcciones .boton {
+    border: 0;
+}
+
+.botonEliminar {
+    color: #ff7777;
+    background: transparent;
+    border: 1px solid #803030 !important;
 }
 
 /* En pantallas chicas la imagen ocupa todo el ancho (como col-md-5 de Bootstrap) */

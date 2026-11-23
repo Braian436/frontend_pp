@@ -1,0 +1,11 @@
+.overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,.85); }
+.modal { z-index: 2001; padding: 15px 0; }
+.contenido { background: #161515; color: #fff; border: 1px solid #d9c49366; border-right: 3px solid #a4a4a4; border-bottom: 3px solid #a4a4a4; border-radius: 12px; }
+.header, .footer { background: #161515; border-color: #333; }
+.input { background: #0e0d0d; border: 1px solid #383838; color: #fff; color-scheme: dark; }
+.input:focus { background: #0e0d0d; border-color: #d9c493; color: #fff; box-shadow: none; }
+.error { color: #d8897d; margin: 0; }
+.cancelar { border: 1px solid #555; color: #ddd; }
+.cancelar:hover { background: #333; color: #fff; }
+.guardar { background: #d9c493; border: 1px solid #d9c493; color: #111; font-weight: 700; }
+.guardar:hover { background: #ebd9af; color: #111; }

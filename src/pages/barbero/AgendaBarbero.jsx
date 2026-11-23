@@ -1,13 +1,11 @@
 import { useState } from "react";
 import CardAgendaTurno from "../../components/cardAgendaTurno/CardAgendaTurno.jsx";
-import { useAuth } from "../../auth/AuthContext.jsx";
 import styles from "./AgendaBarbero.module.css";
 
 // Convierte una fecha en texto "2026-11-22" para comparar días
 const clave = (fecha) => fecha.toLocaleDateString("en-CA");
 
 export default function AgendaBarbero() {
-    const { usuario } = useAuth();
     const [fecha, setFecha] = useState(new Date());
 
     const [turnos, setTurnos] = useState([
@@ -45,7 +43,7 @@ export default function AgendaBarbero() {
         .sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
 
     const barbero = {
-        nombre: usuario || "Barbero",
+        nombre: "Barbero",
         especialidad: "Barbero profesional",
         turnos: turnosDelDia,
     };

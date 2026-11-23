@@ -1,7 +1,8 @@
 import styles from './EmpleadoCard.module.css'
 
 export default function EmpleadoCard( { empleado, onEditar, onEliminar } ) {
-    const iniciales = empleado.nombre
+    const nombreSeguro = String(empleado.nombre ?? "Empleado");
+    const iniciales = nombreSeguro
     .trim()
     .split(/\s+/)
     .slice(0, 2)

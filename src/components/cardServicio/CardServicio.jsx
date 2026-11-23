@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import styles from './CardServicio.module.css'
 
-export default function CardServicio({ nombre, descripcion, precio }) {
+export default function CardServicio({ nombre, descripcion, precio, administracion, onEditar, onEliminar }) {
   return (
     <div className={styles.card}>
         <div className={styles.imagen}>
@@ -15,9 +15,14 @@ export default function CardServicio({ nombre, descripcion, precio }) {
             <div className={styles.footer}>
                 <span className={styles.precio}>${precio}</span>
 
-                <Link to="/registrar-turno" className={styles.boton}>
-                    Registrar Turno
-                </Link>
+                {administracion ? (
+                    <div className={styles.adminAcciones}>
+                        <button type="button" className={styles.boton} onClick={onEditar}>Editar</button>
+                        <button type="button" className={`${styles.boton} ${styles.botonEliminar}`} onClick={onEliminar}>Eliminar</button>
+                    </div>
+                ) : (
+                    <Link to="/registrar-turno" className={styles.boton}>Registrar Turno</Link>
+                )}
             </div>
         </div>
     </div>

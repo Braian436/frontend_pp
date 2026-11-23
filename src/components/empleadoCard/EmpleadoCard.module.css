@@ -1,7 +1,9 @@
 .card {
-    background-color: #191919;
-    border: 1px solid #494338;
-    border-radius: 14px;
+    background: #161515;
+    border: 1px solid #ffffff26;
+    border-right: 3px solid #a4a4a4;
+    border-bottom: 3px solid #a4a4a4;
+    border-radius: 12px;
     overflow: hidden;
     color: white;
 }

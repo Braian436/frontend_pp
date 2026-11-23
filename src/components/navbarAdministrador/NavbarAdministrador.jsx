@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { LuBell, LuCircleAlert, LuDollarSign, LuHouse, LuLogOut, LuPackage, LuScissors, LuUserSearch, LuUsers, } from "react-icons/lu";
+import { LuBell, LuCircleAlert, LuDollarSign, LuHouse, LuPackage, LuScissors, LuUserSearch, LuUsers, } from "react-icons/lu";
 import styles from "./NavbarAdministrador.module.css";
 import Logo from "../../assets/LOGO-BARBER.png";
-import { useAuth } from "../../auth/AuthContext.jsx";
 
 const avisosStock = [
     { producto: "Cera mate", stock: 2, minimo: 5 },
@@ -32,7 +31,6 @@ const iconos = {
 
 export default function NavbarAdministrador() {
     const [avisosAbiertos, setAvisosAbiertos] = useState(false);
-    const { usuario, cerrarSesion } = useAuth();
 
     return (
         <>
@@ -77,16 +75,13 @@ export default function NavbarAdministrador() {
                         );
                     })}
                 </nav>
-                <button type="button" className={`btn d-flex align-items-center gap-2 ${styles.cerrarSesion}`} onClick={cerrarSesion}>
-                    <LuLogOut aria-hidden="true" /> Cerrar sesión
-                </button>
             </aside>
 
             <header className={`d-flex align-items-center gap-3 ${styles.cabecera}`}>
                 <NavLink to="/admin" className={styles.logoCaja} aria-label="Inicio de administración">
                     <img src={Logo} alt="Barbería Clase A" />
                 </NavLink>
-                <p className={styles.saludo}>Bienvenido, <strong>{usuario}</strong></p>
+                <p className={styles.saludo}>Barbería <strong>Clase A</strong></p>
                 <div className="position-relative ms-auto">
                     <button
                         type="button"

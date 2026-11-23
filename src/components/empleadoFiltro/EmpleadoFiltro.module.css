@@ -1,17 +1,19 @@
 .filtros {
     padding: 12px;
     margin: 0;
-    background-color: #191919;
-    border: 1px solid #333;
+    background: #161515;
+    border: 1px solid #ffffff26;
+    border-right: 3px solid #a4a4a4;
+    border-bottom: 3px solid #a4a4a4;
     border-radius: 12px;
     align-items: center;
 }
 
 .buscador {
     width: 450px;
-    background-color: #101010;
-    border: 1px solid #383838;
-    border-radius: 20px;
+    background: #0e0d0d;
+    border: 1px solid #d9c49366;
+    border-radius: 8px;
     color: white;
     padding: 10px 12px;
 }

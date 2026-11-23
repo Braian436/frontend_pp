@@ -4,9 +4,11 @@
     height: 100%;
     overflow: hidden;
     color: #ffffff;
-    background-color: #212529;
-    border: 1px solid #6c757d;
-    border-radius: 20px;
+    background: #161515;
+    border: 1px solid #ffffff26;
+    border-right: 3px solid #a4a4a4;
+    border-bottom: 3px solid #a4a4a4;
+    border-radius: 12px;
 }
 
 .foto {
@@ -14,11 +16,11 @@
     align-items: center;
     justify-content: center;
     min-height: 120px;
-    background-color: #2a2a2a;
+    background: #0e0d0d;
 }
 
 .fotoTexto {
-    color: #6c757d;
+    color: #aaa49a;
 }
 
 .cuerpo {
@@ -55,7 +57,7 @@
 }
 
 .descripcion {
-    color: #6c757d;
+    color: #b7b1a4;
     font-size: 0.8rem;
     margin: 0 0 8px;
 }

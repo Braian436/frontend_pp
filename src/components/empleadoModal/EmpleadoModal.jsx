@@ -2,12 +2,11 @@
 import { useState } from "react";
 import styles from "./EmpleadoModal.module.css";
 
-export default function EmpleadoModal({ empleado, cerrar, guardar }) {
+export default function EmpleadoModal({ empleado, cerrar, guardar, saving, error: apiError }) {
     const [form, setForm] = useState({
         nombre: empleado?.nombre || "",
         dni: empleado?.dni || "",
         rol: empleado?.rol || "Barbero",
-        password: "",
         estado: empleado?.estado || "activo",
         comision: empleado?.comision ?? 15,
         foto: empleado?.foto || null,
@@ -15,11 +14,12 @@ export default function EmpleadoModal({ empleado, cerrar, guardar }) {
 
     const [archivoFoto, setArchivoFoto] = useState(null);
     const [preview, setPreview] = useState(empleado?.foto || null);
-    const [mostrarPassword, setMostrarPassword] = useState(false);
     const [errorFoto, setErrorFoto] = useState("");
+    const [errorFormulario, setErrorFormulario] = useState("");
 
     const cambiar = (e) => {
         const { name, value } = e.target;
+        setErrorFormulario("");
 
         setForm((anterior) => ({
         ...anterior,
@@ -61,6 +61,10 @@ export default function EmpleadoModal({ empleado, cerrar, guardar }) {
 
     const enviar = (e) => {
         e.preventDefault();
+        if (!empleado && !form.nombre.trim()) {
+            setErrorFormulario("Completá el nombre del empleado.");
+            return;
+        }
 
         guardar({
         ...form,
@@ -220,7 +224,7 @@ export default function EmpleadoModal({ empleado, cerrar, guardar }) {
                         htmlFor="rolEmpleado"
                         className="form-label"
                         >
-                            Rol *
+                            Grupo (Rol) *
                         </label>
 
                         <select
@@ -237,58 +241,6 @@ export default function EmpleadoModal({ empleado, cerrar, guardar }) {
                             Administrador
                         </option>
                         </select>
-                    </div>
-
-                    {/* CONTRASEÑA */}
-                    <div className="col-12 col-md-6">
-                        <label
-                        htmlFor="passwordEmpleado"
-                        className="form-label"
-                        >
-                        {empleado
-                            ? "Nueva contraseña"
-                            : "Contraseña *"}
-                        </label>
-
-                        <div className="input-group">
-                        <input
-                            id="passwordEmpleado"
-                            type={mostrarPassword ? "text" : "password"}
-                            name="password"
-                            className={`form-control ${styles.input}`}
-                            placeholder={
-                            empleado
-                                ? "Sin cambios"
-                                : "Mínimo 8 caracteres"
-                            }
-                            value={form.password}
-                            onChange={cambiar}
-                            minLength={8}
-                            required={!empleado}
-                            autoComplete="new-password"
-                        />
-
-                        <button
-                            type="button"
-                            className={`btn ${styles.botonPassword}`}
-                            onClick={() =>
-                            setMostrarPassword(!mostrarPassword)
-                            }
-                            aria-label={
-                            mostrarPassword
-                                ? "Ocultar contraseña"
-                                : "Mostrar contraseña"
-                            }
-                        >
-                            {mostrarPassword ? "Ocultar" : "Ver"}
-                        </button>
-                        </div>
-
-                        {empleado && (
-                        <small className="text-secondary">
-                            Dejá vacío para conservar la contraseña.
-                        </small>
-                        )}
                     </div>
 
                     {/* ESTADO */}
@@ -388,6 +340,8 @@ export default function EmpleadoModal({ empleado, cerrar, guardar }) {
                     </div>
                 </div>
 
+                {(errorFormulario || apiError) && <p className="text-danger px-4 mb-0" role="alert">{errorFormulario || apiError}</p>}
+
                 {/* BOTONES INFERIORES */}
                 <div className={`modal-footer ${styles.footerBotones}`}>
 
@@ -402,8 +356,9 @@ export default function EmpleadoModal({ empleado, cerrar, guardar }) {
                     <button
                     type="submit"
                     className={`btn ${styles.botonGuardar}`}
+                    disabled={saving}
                     >
-                    {empleado
+                    {saving ? "Guardando..." : empleado
                         ? "Guardar cambios"
                         : "Crear empleado"}
                     </button>

@@ -11,10 +11,6 @@ export class ApiError extends Error {
     }
 }
 
-export function sesionExpiradaPorError(error, token) {
-    return Boolean(token) && error?.status === 401;
-}
-
 async function leerRespuesta(response) {
     const texto = await response.text();
 
@@ -27,11 +23,26 @@ async function leerRespuesta(response) {
     }
 }
 
-export async function apiRequest(path, token, options = {}) {
+export function mensajeErrorRespuesta(data, status) {
+    if (status === 401) return "No autorizado.";
+    if (status === 403) return "Acceso denegado.";
+    if (status === 404) return "La ruta solicitada no existe.";
+    if (typeof data?.detail === "string" && !data.detail.trim().startsWith("<")) return data.detail;
+    if (typeof data?.message === "string") return data.message;
+
+    const campo = data && typeof data === "object"
+        ? Object.entries(data).find(([, valor]) => Array.isArray(valor) || typeof valor === "string")
+        : null;
+    if (campo) {
+        const [nombre, valor] = campo;
+        return `${nombre}: ${Array.isArray(valor) ? valor.join(", ") : valor}`;
+    }
+    return "No se pudo completar la solicitud.";
+}
+
+export async function apiRequest(path, options = {}) {
     const headers = new Headers(options.headers);
     headers.set("Accept", "application/json");
-
-    if (token) headers.set("Authorization", `Token ${token}`);
 
     let body = options.body;
     if (
@@ -56,82 +67,10 @@ export async function apiRequest(path, token, options = {}) {
 
     const data = await leerRespuesta(response);
     if (!response.ok) {
-        const mensaje =
-            response.status === 401
-                ? token
-                    ? "La sesión expiró. Iniciá sesión nuevamente."
-                    : data?.detail || data?.message || "No se pudo completar la solicitud."
-                : response.status === 403
-                  ? "Acceso denegado."
-                  : data?.detail || data?.message || "No se pudo completar la solicitud.";
+        const mensaje = mensajeErrorRespuesta(data, response.status);
         throw new ApiError(mensaje, response.status, data);
     }
 
     return data;
 }
 
-function normalizarGrupo(grupo) {
-    const nombre = typeof grupo === "string" ? grupo : grupo?.name;
-    const clave = nombre?.trim().toLocaleLowerCase("es");
-
-    return {
-        administrador: "Administrador",
-        cajero: "Cajero",
-        barbero: "Barbero",
-    }[clave];
-}
-
-export function obtenerGrupo(data) {
-    const usuario = data?.user ?? data?.usuario ?? data;
-    const grupos =
-        data?.group ??
-        data?.grupo ??
-        data?.role ??
-        data?.rol ??
-        usuario?.group ??
-        usuario?.grupo ??
-        usuario?.groups ??
-        usuario?.grupos;
-    const lista = Array.isArray(grupos) ? grupos : [grupos];
-
-    return lista.map(normalizarGrupo).find(Boolean) ?? null;
-}
-
-function obtenerNombreUsuario(data) {
-    const usuario = data?.user ?? data?.usuario ?? data;
-    return (
-        usuario?.username ??
-        usuario?.nombre_usuario ??
-        usuario?.nombre ??
-        usuario?.name ??
-        "Usuario"
-    );
-}
-
-export async function login({ username, password }) {
-    const respuesta = await apiRequest("/auth/token/", null, {
-        method: "POST",
-        body: { username, password },
-    });
-
-    if (typeof respuesta?.token !== "string" || !respuesta.token) {
-        throw new Error("La respuesta de autenticación no contiene un token válido.");
-    }
-
-    const usuario = await apiRequest("/auth/me/", respuesta.token);
-    const grupo = obtenerGrupo(usuario);
-
-    if (!grupo) {
-        throw new Error("Tu usuario no pertenece a un grupo habilitado.");
-    }
-
-    return {
-        token: respuesta.token,
-        usuario: obtenerNombreUsuario(usuario),
-        grupo,
-    };
-}
-
-export function logout(token) {
-    return apiRequest("/auth/logout/", token, { method: "POST" });
-}
