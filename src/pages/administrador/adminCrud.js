@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { apiRequest } from "../../auth/auth.js";
+import { apiRequest } from "../../api/apiRequest.js";
 import { extraerFilas, obtenerId, rutaDetalle } from "./adminCrudHelpers.js";
 
 export { construirEmpleado, construirProducto, construirServicio, extraerFilas, normalizarActivo, normalizarEmpleado, obtenerId, obtenerTexto, rutaDetalle, validarCatalogo } from "./adminCrudHelpers.js";

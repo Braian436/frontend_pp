@@ -1,15 +1,28 @@
 
 import { useState } from "react";
+import { validarCuentaEmpleado } from "../../pages/administrador/adminCrudHelpers.js";
 import styles from "./EmpleadoModal.module.css";
 
-export default function EmpleadoModal({ empleado, cerrar, guardar, saving, error: apiError }) {
+export default function EmpleadoModal({
+    empleado,
+    cerrar,
+    guardar,
+    saving,
+    error: apiError,
+    roles = [],
+    grupos = [],
+}) {
     const [form, setForm] = useState({
         nombre: empleado?.nombre || "",
+        apellido: empleado?.apellido || "",
         dni: empleado?.dni || "",
-        rol: empleado?.rol || "Barbero",
+        id_rol: empleado?.rolId || "",
         estado: empleado?.estado || "activo",
         comision: empleado?.comision ?? 15,
         foto: empleado?.foto || null,
+        usuario: empleado?.usuario || "",
+        contrasena: "",
+        grupoUsuario: empleado?.grupoUsuario || "",
     });
 
     const [archivoFoto, setArchivoFoto] = useState(null);
@@ -66,13 +79,30 @@ export default function EmpleadoModal({ empleado, cerrar, guardar, saving, error
             return;
         }
 
+        const errorCuenta = validarCuentaEmpleado(form, empleado?.tieneCuenta);
+        if (errorCuenta) {
+            setErrorFormulario(errorCuenta);
+            return;
+        }
+
+        const idRol = form.id_rol || String(roles[0]?.id_rol ?? "");
+        if (!idRol) {
+            setErrorFormulario("Seleccioná el rol laboral del empleado.");
+            return;
+        }
+
         guardar({
         ...form,
+        id_rol: idRol,
         comision: Number(form.comision),
         archivoFoto,
         foto: preview,
         });
     };
+
+    const requiereCuenta = Boolean(
+        form.usuario.trim() || form.contrasena || form.grupoUsuario.trim()
+    );
 
     return (
         <div className={styles.overlay}>
@@ -175,7 +205,7 @@ export default function EmpleadoModal({ empleado, cerrar, guardar, saving, error
                         htmlFor="nombreEmpleado"
                         className="form-label"
                         >
-                        Nombre y apellido *
+                        Nombre *
                         </label>
 
                         <input
@@ -183,8 +213,28 @@ export default function EmpleadoModal({ empleado, cerrar, guardar, saving, error
                         type="text"
                         name="nombre"
                         className={`form-control ${styles.input}`}
-                        placeholder="Ej. Enzo Figueroa"
+                        placeholder="Ej. Enzo"
                         value={form.nombre}
+                        onChange={cambiar}
+                        required
+                        />
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                        <label
+                        htmlFor="apellidoEmpleado"
+                        className="form-label"
+                        >
+                        Apellido *
+                        </label>
+
+                        <input
+                        id="apellidoEmpleado"
+                        type="text"
+                        name="apellido"
+                        className={`form-control ${styles.input}`}
+                        placeholder="Ej. Figueroa"
+                        value={form.apellido}
                         onChange={cambiar}
                         required
                         />
@@ -220,27 +270,97 @@ export default function EmpleadoModal({ empleado, cerrar, guardar, saving, error
 
                     {/* ROL */}
                     <div className="col-12 col-md-6">
-                        <label
-                        htmlFor="rolEmpleado"
-                        className="form-label"
-                        >
-                            Grupo (Rol) *
+                        <label htmlFor="rolEmpleado" className="form-label">
+                            Rol laboral *
                         </label>
 
                         <select
                         id="rolEmpleado"
-                        name="rol"
+                        name="id_rol"
                         className={`form-select ${styles.input}`}
-                        value={form.rol}
+                        value={form.id_rol || String(roles[0]?.id_rol ?? "")}
                         onChange={cambiar}
                         required
                         >
-                        <option value="Barbero">Barbero</option>
-                        <option value="Cajero">Cajero</option>
-                        <option value="Administrador">
-                            Administrador
-                        </option>
+                        <option value="">Seleccioná un rol laboral</option>
+                        {roles.map((rol) => (
+                            <option key={rol.id_rol} value={rol.id_rol}>
+                                {rol.nombre}
+                            </option>
+                        ))}
                         </select>
+                    </div>
+
+                    <div className={`col-12 ${styles.cuentaZona}`}>
+                        <div>
+                            <h6 className={styles.cuentaTitulo}>Acceso al sistema (opcional)</h6>
+                            <p className={styles.cuentaAyuda}>
+                                {empleado?.tieneCuenta
+                                    ? "Dejá vacíos los datos que no quieras modificar."
+                                    : "Dejá estos campos vacíos si el empleado no necesita una cuenta."}
+                            </p>
+                        </div>
+
+                        <div className="row g-3">
+                            <div className="col-12 col-md-6">
+                                <label htmlFor="usuarioEmpleado" className="form-label">
+                                    Usuario
+                                </label>
+                                <input
+                                    id="usuarioEmpleado"
+                                    type="text"
+                                    name="usuario"
+                                    autoComplete="username"
+                                    className={`form-control ${styles.input}`}
+                                    value={form.usuario}
+                                    onChange={cambiar}
+                                    required={requiereCuenta && !empleado?.tieneCuenta}
+                                />
+                            </div>
+
+                            <div className="col-12 col-md-6">
+                                <label htmlFor="contrasenaEmpleado" className="form-label">
+                                    {empleado?.tieneCuenta ? "Nueva contraseña" : "Contraseña"}
+                                </label>
+                                <input
+                                    id="contrasenaEmpleado"
+                                    type="password"
+                                    name="contrasena"
+                                    autoComplete="new-password"
+                                    className={`form-control ${styles.input}`}
+                                    placeholder={empleado?.tieneCuenta ? "Dejar vacía para conservarla" : ""}
+                                    value={form.contrasena}
+                                    onChange={cambiar}
+                                    required={requiereCuenta && !empleado?.tieneCuenta}
+                                />
+                            </div>
+
+                            <div className="col-12 col-md-6">
+                                <label htmlFor="grupoUsuarioEmpleado" className="form-label">
+                                    Grupo de acceso
+                                </label>
+                                <select
+                                    id="grupoUsuarioEmpleado"
+                                    name="grupoUsuario"
+                                    className={`form-select ${styles.input}`}
+                                    value={form.grupoUsuario}
+                                    onChange={cambiar}
+                                    required={requiereCuenta && !empleado?.tieneCuenta}
+                                >
+                                    <option value="">Seleccioná un grupo</option>
+                                    {grupos.map((grupo) => (
+                                        <option key={grupo.id} value={grupo.name}>
+                                            {grupo.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                {grupos.length === 0 && (
+                                    <small className={styles.cuentaAyuda}>
+                                        No hay grupos de Django disponibles.
+                                    </small>
+                                )}
+                            </div>
+                        </div>
                     </div>
 
                     {/* ESTADO */}

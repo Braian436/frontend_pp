@@ -57,6 +57,7 @@ export async function apiRequest(path, options = {}) {
     try {
         response = await fetch(`${API_URL}${path}`, {
             ...options,
+            credentials: "omit",
             headers,
             body,
         });
@@ -73,4 +74,3 @@ export async function apiRequest(path, options = {}) {
 
     return data;
 }
-

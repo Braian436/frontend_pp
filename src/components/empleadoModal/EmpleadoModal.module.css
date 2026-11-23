@@ -139,6 +139,26 @@
     color: white;
 }
 
+.cuentaZona {
+    padding: 1.25rem;
+    border: 1px solid #635740;
+    border-radius: 10px;
+    background: #1c1b19;
+}
+
+.cuentaTitulo {
+    margin-bottom: 0.25rem;
+    color: #D9C493;
+    font-weight: 700;
+}
+
+.cuentaAyuda {
+    display: block;
+    margin: 0;
+    color: #aaa49a;
+    font-size: 0.8rem;
+}
+
 .botonPassword {
     background-color: #252525;
     border: 1px solid #383838;

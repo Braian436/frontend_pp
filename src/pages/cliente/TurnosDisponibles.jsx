@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaCheckCircle, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { apiRequest } from "../../auth/auth.js";
+import { apiRequest } from "../../api/apiRequest.js";
 import fondo from "../../assets/facha1.png";
 import styles from "./TurnosDisponibles.module.css";
 

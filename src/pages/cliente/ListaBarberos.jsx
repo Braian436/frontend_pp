@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CardBarbero from "../../components/cardBarbero/CardBarbero";
-import { apiRequest } from "../../auth/auth.js";
+import { apiRequest } from "../../api/apiRequest.js";
 import styles from "./ListaBarberos.module.css";
 
 export default function ListaBarberos() {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { apiRequest } from "../../auth/auth.js";
+import { apiRequest } from "../../api/apiRequest.js";
 import styles from "./ApiDataPage.module.css";
 
 const horas = Array.from({ length: 13 }, (_, index) =>

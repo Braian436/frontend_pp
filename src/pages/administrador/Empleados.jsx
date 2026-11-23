@@ -1,25 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmpleadoCard from "../../components/empleadoCard/EmpleadoCard";
 import EmpleadoFiltros from "../../components/empleadoFiltro/EmpleadoFiltro";
 import EmpleadoModal from "../../components/empleadoModal/EmpleadoModal";
+import { apiRequest } from "../../api/apiRequest.js";
 import styles from "./Empleados.module.css";
-import { construirEmpleado, normalizarEmpleado, useCrudApi } from "./adminCrud.js";
+import { construirEmpleado, extraerFilas, normalizarEmpleado, useCrudApi } from "./adminCrud.js";
 
 export default function Empleados() {
   const crud = useCrudApi("/empleados/", "empleados");
   const empleados = crud.items.map(normalizarEmpleado);
 
+  const [roles, setRoles] = useState([]);
+  const [gruposUsuario, setGruposUsuario] = useState([]);
+  const [errorOpciones, setErrorOpciones] = useState("");
   const [busqueda, setBusqueda] = useState("");
   const [filtro, setFiltro] = useState("todos");
 
   const [mostrarModal, setMostrarModal] = useState(false);
   const [empleadoEditar, setEmpleadoEditar] = useState(null);
 
+  useEffect(() => {
+    let activo = true;
+    const cargarOpciones = async () => {
+      try {
+        const [rolesData, gruposData] = await Promise.all([
+          apiRequest("/roles/"),
+          apiRequest("/grupos/"),
+        ]);
+        if (!activo) return;
+        setRoles(extraerFilas(rolesData, "roles"));
+        setGruposUsuario(extraerFilas(gruposData, "groups"));
+      } catch (fallo) {
+        if (activo) setErrorOpciones(fallo.message);
+      }
+    };
+
+    void cargarOpciones();
+    return () => {
+      activo = false;
+    };
+  }, []);
+
   const empleadosFiltrados = empleados.filter((empleado) => {
     const texto = busqueda.toLowerCase().trim();
 
-    const coincideBusqueda =
-      String(empleado.nombre).toLowerCase().includes(texto) ||
+    const nombreCompleto = `${empleado.nombre} ${empleado.apellido}`.toLowerCase();
+    const coincideBusqueda = nombreCompleto.includes(texto) ||
       String(empleado.dni).includes(texto);
 
     const coincideEstado =
@@ -46,7 +72,7 @@ export default function Empleados() {
   const guardarEmpleado = async (datos) => {
     const { archivoFoto, ...body } = datos;
     void archivoFoto;
-    const payload = construirEmpleado(body, Boolean(empleadoEditar));
+    const payload = construirEmpleado(body);
     const ok = empleadoEditar
       ? await crud.editar(empleadoEditar, payload)
       : await crud.crear(payload);
@@ -54,8 +80,9 @@ export default function Empleados() {
   };
 
   const eliminarEmpleado = (empleado) => {
+    const nombreCompleto = `${empleado.nombre} ${empleado.apellido}`.trim();
     const confirmar = window.confirm(
-      `¿Seguro que querés eliminar a ${empleado.nombre}?`
+      `¿Seguro que querés eliminar a ${nombreCompleto}?`
     );
 
     if (!confirmar) return;
@@ -106,6 +133,7 @@ export default function Empleados() {
           empleados={empleados}
         />
 
+        {errorOpciones && <p className="text-danger text-center" role="alert">{errorOpciones}</p>}
         {crud.loading && <p className="text-secondary text-center py-4" role="status">Cargando empleados...</p>}
         {crud.error && <p className="text-danger text-center py-2" role="alert">{crud.error}</p>}
 
@@ -148,6 +176,8 @@ export default function Empleados() {
           guardar={guardarEmpleado}
           saving={crud.saving}
           error={crud.error}
+          roles={roles}
+          grupos={gruposUsuario}
         />
       )}
 

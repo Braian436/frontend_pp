@@ -2,13 +2,13 @@ import styles from './EmpleadoCard.module.css'
 
 export default function EmpleadoCard( { empleado, onEditar, onEliminar } ) {
     const nombreSeguro = String(empleado.nombre ?? "Empleado");
-    const iniciales = nombreSeguro
-    .trim()
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((palabra) => palabra[0])
-    .join("")
-    .toUpperCase();
+    const nombreCompleto = `${nombreSeguro} ${empleado.apellido ?? ""}`.trim();
+    const iniciales = nombreCompleto
+        .split(/\s+/)
+        .slice(0, 2)
+        .map((palabra) => palabra[0])
+        .join("")
+        .toUpperCase();
 
     const estadoClase = {
     activo: styles.activo,
@@ -26,7 +26,7 @@ export default function EmpleadoCard( { empleado, onEditar, onEliminar } ) {
 
                 <div className={styles.avatar}>
                 {empleado.foto ? (
-                    <img src={empleado.foto} alt={empleado.nombre} className="w-100 h-100" />
+                    <img src={empleado.foto} alt={nombreCompleto} className="w-100 h-100" />
                 ) : (
                     <span>{iniciales}</span>
                 )}
@@ -40,7 +40,7 @@ export default function EmpleadoCard( { empleado, onEditar, onEliminar } ) {
             <div className="card-body d-flex flex-column">
 
                 <h5 className={styles.nombre}>
-                    {empleado.nombre}
+                    {nombreCompleto}
                 </h5>
 
                 <p className={styles.rol}>
@@ -60,6 +60,16 @@ export default function EmpleadoCard( { empleado, onEditar, onEliminar } ) {
                         <div className={styles.dato}>
                             <small>ALTA</small>
                             <strong>{empleado.fechaAlta}</strong>
+                        </div>
+                    </div>
+                    <div className="col-12">
+                        <div className={styles.dato}>
+                            <small>ACCESO</small>
+                            <strong>
+                                {empleado.tieneCuenta
+                                    ? [empleado.usuario, empleado.grupoUsuario].filter(Boolean).join(" · ")
+                                    : "Sin usuario"}
+                            </strong>
                         </div>
                     </div>
 

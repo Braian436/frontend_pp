@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { LuCalendarPlus, LuCircleDollarSign, LuReceipt, LuScissors, LuTicket, LuUsers } from "react-icons/lu";
-import { apiRequest } from "../../auth/auth.js";
+import { apiRequest } from "../../api/apiRequest.js";
 import fondoAdministrador from "../../assets/fachero3.png";
 import styles from "./HomeAdministrador.module.css";
 import {
