@@ -1,49 +1,7 @@
-.point {
-    pointer-events: none;
-}
-
-.carouselImg {
-    height: 600px;
-}
-
-.georgia {
-    font-family: Baskerville, 'Baskerville Old Face', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
-    font-size: 35px;
-}
-
-.dorado {
-    color: #D9C493;
-}
-
-.subtitulo {
-    font-family: Baskerville, 'Baskerville Old Face', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
-    font-size: 20px;
-}
-
-.seccionOscura {
-    background-color: #100f0f;
-}
-
-.boton {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 10px;
-    margin: 10px;
-    min-height: 37px;
-    color: #D9C493;
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: none;
-    background-color: transparent;
-    border: 1px solid #D9C493;
-    border-radius: 9px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.boton:hover {
-    background-color: #ffffff;
-    color: #1a1a1a;
+.contenedorPrincipal {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  margin-left: 10px;
 }

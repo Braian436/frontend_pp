@@ -134,7 +134,7 @@ export default function NavbarAdministrador() {
                     {esCajero ? (
                         <>Panel de <strong>caja</strong></>
                     ) : esBarbero ? (
-                        <>Panel de <strong>barbero</strong></>
+                        <>Panel de <strong>Barbero</strong></>
                     ) : (
                         <>Barbería <strong>Clase A</strong></>
                     )}
