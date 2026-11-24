@@ -1,0 +1,97 @@
+.compra {
+    color: #f5f1e8;
+    background: #1e1e1e;
+    border-radius: 20px;
+
+}
+
+.tituloCompra {
+    margin: 0;
+    color: #d9c493;
+    font-size: 1.1rem;
+}
+
+.fecha {
+    color: #aaa49a;
+    font-size: 0.85rem;
+}
+
+.detalle {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid #383838;
+    padding-top: 0.5rem;
+}
+
+.modal {
+    color: #f5f1e8;
+    background: #161515;
+    border: 1px solid #d9c49366;
+    border-radius: 30px;
+}
+
+.modal :global(.modal-header),
+.modal :global(.modal-footer) {
+    border-color: #383838;
+}
+
+.modal :global(.modal-title),
+.modal :global(.form-label),
+.modal :global(.btn-close) {
+    color: #ffffff;
+}
+
+.modal :global(.form-control),
+.modal :global(.form-select) {
+    color: #fff;
+    background-color: #0e0d0d;
+    border-color: #383838;
+    border-radius: 12px;
+}
+
+.modal :global(.form-control):focus,
+.modal :global(.form-select):focus {
+    border-color: #d9c493;
+}
+
+.boton {
+    color: #d9c493;
+    background: transparent;
+    border: 1px solid #d9c493;
+    border-radius: 16px;
+    font-weight: 700;
+}
+
+.boton:hover,
+.boton:focus-visible {
+    color: #111;
+    background: #ebd9af;
+    border-color: #ebd9af;
+}
+
+.botonSecundario {
+    color: #d9c493;
+    background: transparent;
+    border: 1px solid #d9c493;
+    border-radius: 16px;
+}
+
+.botonSecundario:hover,
+.botonSecundario:focus-visible,
+.botonSecundario:disabled {
+    color: #000000;
+    background: #d9c493;;
+}
+
+.botonCancelar{
+    color: #ff0000;
+    border: 1px solid #ff0000;
+    border-radius: 16px;
+}
+
+.botonCancelar:hover{
+    color: #ffffff;
+    background-color: #ff0000;
+    border-radius: 16px;
+}

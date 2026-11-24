@@ -246,9 +246,9 @@
 
 .botonCancelar {
     background-color: transparent;
-    color: #ddd;
-    border: 1px solid #555;
-    border-radius: 7px;
+    color: #ff0000;
+    border: 1px solid #ff0000;
+    border-radius: 16px;
 
     padding: 10px 20px;
     font-size: 13px;
@@ -256,16 +256,16 @@
 }
 
 .botonCancelar:hover {
-    background-color: #333;
+    background-color: #ff0000;
     border-color: #777;
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 .botonGuardar {
-    background-color: #D9C493;
-    color: #111;
+    background-color: transparent;
+    color: #ffffff;
     border: 1px solid #D9C493;
-    border-radius: 7px;
+    border-radius: 16px;
 
     padding: 10px 20px;
     font-size: 13px;
@@ -273,7 +273,6 @@
 }
 
 .botonGuardar:hover {
-    background-color: #ebd8aa;
-    border-color: #ebd8aa;
-    color: #111;
+    background-color: #D9C493;
+    color: #000000;
 }

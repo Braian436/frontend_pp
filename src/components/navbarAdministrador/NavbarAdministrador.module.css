@@ -13,6 +13,8 @@
     overflow-y: auto;
     background: #1e1e1e;
     border-radius: 30px;
+    width: 225px;
+    min-width: 225px;
 
 }
 

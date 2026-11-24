@@ -97,7 +97,7 @@ export default function GestionProductos() {
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <p className={styles.subtitulo}>— PANEL DE ADMINISTRACIÓN</p>
-                        <h1 className={styles.titulo}>Gestión de Productos</h1>
+                        <h1 className={styles.titulo}>Productos</h1>
                     </div>
                     <button className={`btn ${styles.botonNuevo}`} onClick={() => { setProducto(null); setAbierto(true); }}>
                         + Nuevo Producto
