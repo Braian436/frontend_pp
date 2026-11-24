@@ -50,21 +50,23 @@ export default function AgendaBarbero() {
     };
 
     return (
-    <section data-bs-theme="dark">
-        {/* Banner con la imagen y las frases adentro */}
-        <CardHomeBienvenida 
-            titulo={"PANEL DEL BARBERO"}
-            descripcion={"Mi agenda"}
-            detalle={"Consultá tus turnos y registrá nuevos"}
-        />
+        <div>
+        <section className={styles.contenedorPrincipal} data-bs-theme="dark">
+            {/* Banner con la imagen y las frases adentro */}
+            <CardHomeBienvenida 
+                titulo={"PANEL DEL BARBERO"}
+                descripcion={"Mi agenda"}
+                detalle={"Consultá tus turnos y registrá nuevos"}
+            />
 
-        <CardAgendaTurno
-            barbero={barbero}
-            fecha={fecha}
-            onCambiarDia={cambiarDia}
-            onRegistrar={registrarTurno}
-            onIniciar={iniciarServicio}
-        />
-    </section>
+            <CardAgendaTurno
+                barbero={barbero}
+                fecha={fecha}
+                onCambiarDia={cambiarDia}
+                onRegistrar={registrarTurno}
+                onIniciar={iniciarServicio}
+            />
+        </section>
+        </div>
     );
 }
