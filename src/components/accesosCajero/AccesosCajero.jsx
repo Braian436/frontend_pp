@@ -1,19 +1,7 @@
-import {
-    LuArrowDownToLine,
-    LuArrowUpFromLine,
-    LuLock,
-    LuPlus,
-    LuWallet,
-} from "react-icons/lu";
+import { LuArrowDownToLine,  LuArrowUpFromLine, LuLock, LuPlus, LuWallet,} from "react-icons/lu";
 import styles from "./AccesosCajero.module.css";
 
-export default function AccesosCajero({
-    cerrada,
-    onTickets,
-    onIngreso,
-    onEgreso,
-    onCaja,
-}) {
+export default function AccesosCajero({cerrada, onTickets, onIngreso, onEgreso, onCaja,}) {
     return (
         <section>
             <h2 className={styles.titulo}>Accesos rápidos</h2>
