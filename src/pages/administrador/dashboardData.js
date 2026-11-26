@@ -1,3 +1,12 @@
+export const construirUrlDashboard = ({ fechaCaja, fechaBarberos, fechaCortes }) => {
+    const parametros = new URLSearchParams({
+        fecha_caja: fechaCaja,
+        fecha_barberos: fechaBarberos,
+        fecha_cortes: fechaCortes,
+    });
+    return `/dashboard/administrador/?${parametros}`;
+};
+
 export const normalizarFilas = (data, claves = []) => {
     if (Array.isArray(data)) return data;
     for (const clave of [...claves, "results", "data"]) {

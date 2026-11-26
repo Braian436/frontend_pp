@@ -4,15 +4,7 @@ import { apiRequest } from "../../api/apiRequest.js";
 import fondoAdministrador from "../../assets/fachero3.png";
 import styles from "./HomeAdministrador.module.css";
 import {
-    esCancelado,
-    esCompletado,
-    esPendiente,
-    estadoFila,
-    fechaFila,
-    idEmpleado,
-    nombreEmpleado,
-    normalizarFilas,
-    sumarMonto,
+    construirUrlDashboard,
 } from "./dashboardData.js";
 
 const hoy = () => {
@@ -20,21 +12,20 @@ const hoy = () => {
     return `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, "0")}-${String(fecha.getDate()).padStart(2, "0")}`;
 };
 
-function useDatos(endpoint, claves, fecha = "") {
-    const request = apiRequest;
-    const claveRespuesta = claves.join("|");
-    const [datos, setDatos] = useState([]);
+function useResumenDashboard(url) {
+    const [resumen, setResumen] = useState(null);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
         const controller = new AbortController();
         const cargar = async () => {
-            setCargando(true); setError("");
+            setCargando(true);
+            setError("");
+            setResumen(null);
             try {
-                const consulta = fecha ? `?desde=${fecha}&hasta=${fecha}` : "";
-                const respuesta = await request(`${endpoint}${consulta}`, { signal: controller.signal });
-                setDatos(normalizarFilas(respuesta, claveRespuesta ? claveRespuesta.split("|") : []));
+                const respuesta = await apiRequest(url, { signal: controller.signal });
+                setResumen(respuesta);
             } catch (fallo) {
                 if (fallo.name !== "AbortError") setError(fallo.message);
             } finally {
@@ -43,9 +34,9 @@ function useDatos(endpoint, claves, fecha = "") {
         };
         cargar();
         return () => controller.abort();
-    }, [claveRespuesta, endpoint, fecha, request]);
+    }, [url]);
 
-    return { datos, cargando, error };
+    return { resumen, cargando, error };
 }
 
 function Filtro({ fecha, setFecha, id }) {
@@ -58,45 +49,32 @@ function Filtro({ fecha, setFecha, id }) {
     );
 }
 
+const moneda = (importe) =>
+    new Intl.NumberFormat("es-AR", {
+        style: "currency",
+        currency: "ARS",
+        maximumFractionDigits: 0,
+    }).format(Number(importe));
+
 export default function HomeAdministrador() {
     const fechaHoy = hoy();
     const [fechaCaja, setFechaCaja] = useState(fechaHoy);
     const [fechaBarberos, setFechaBarberos] = useState(fechaHoy);
     const [fechaCortes, setFechaCortes] = useState(fechaHoy);
 
-    const reservasHoy = useDatos("/turnos/reservas/", ["reservas"], fechaHoy);
-    const liquidacionesHoy = useDatos("/liquidaciones/", ["liquidaciones"], fechaHoy);
-    const empleados = useDatos("/empleados/", ["empleados"]);
-    const caja = useDatos("/liquidaciones/", ["liquidaciones"], fechaCaja);
-    const reservasBarberos = useDatos("/turnos/reservas/", ["reservas"], fechaBarberos);
-    const reservasCortes = useDatos("/turnos/reservas/", ["reservas"], fechaCortes);
-
-    const reservasTurnoHoy = reservasHoy.datos.filter((fila) => !fechaFila(fila) || fechaFila(fila) === fechaHoy);
-    const liquidacionesDia = liquidacionesHoy.datos.filter((fila) => !fechaFila(fila) || fechaFila(fila) === fechaHoy);
-    const reservasPendientes = reservasTurnoHoy.filter((fila) => esPendiente(estadoFila(fila))).length;
-    const liquidacionesPendientes = liquidacionesDia.filter((fila) => esPendiente(estadoFila(fila))).length;
-    const ingresoHoy = liquidacionesDia.reduce((total, fila) => total + sumarMonto(fila), 0);
-
-    const liquidacionesCaja = caja.datos.filter((fila) => !fechaFila(fila) || fechaFila(fila) === fechaCaja);
-    const ingresoCaja = liquidacionesCaja.reduce((total, fila) => total + sumarMonto(fila), 0);
-    const listaBarberos = empleados.datos.filter((empleado) => {
-        const grupo = String(empleado?.rol ?? empleado?.role ?? empleado?.grupo ?? "").toLowerCase();
-        return !grupo || grupo.includes("barber");
+    const urlDashboard = construirUrlDashboard({
+        fechaCaja,
+        fechaBarberos,
+        fechaCortes,
     });
-    const presentes = reservasBarberos.datos.filter((fila) =>
-        esCompletado(estadoFila(fila)) && !esCancelado(estadoFila(fila))
-    );
-    const presentesIds = new Set(presentes.flatMap((fila) => [idEmpleado(fila), nombreEmpleado(fila)].filter(Boolean)));
-    const asistentes = listaBarberos.filter((empleado) =>
-        presentesIds.has(String(empleado.id ?? empleado.pk ?? "")) || presentesIds.has(nombreEmpleado(empleado))
-    ).length;
-    const cortes = reservasCortes.datos.filter((fila) => esCompletado(estadoFila(fila)) && !esCancelado(estadoFila(fila))).length;
+    const { resumen, cargando, error } = useResumenDashboard(urlDashboard);
+    const disponible = Boolean(resumen) && !error;
 
     const indicadores = [
-        { titulo: "Turnos de hoy", valor: reservasHoy.cargando ? "..." : reservasTurnoHoy.length, detalle: `${reservasPendientes} pendientes`, icono: LuCalendarPlus, color: "verde" },
-        { titulo: "Caja del día", valor: liquidacionesHoy.cargando ? "..." : new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(ingresoHoy), icono: LuCircleDollarSign, color: "verde", id: "caja" },
-        { titulo: "Tickets abiertos", valor: reservasHoy.cargando ? "..." : reservasPendientes, icono: LuTicket },
-        { titulo: "Liquidaciones pendientes", valor: liquidacionesHoy.cargando ? "..." : liquidacionesPendientes, icono: LuReceipt, color: "ambar", id: "liquidaciones" },
+        { titulo: "Turnos de hoy", valor: cargando ? "..." : error ? "—" : resumen.turnos_hoy.total, detalle: disponible ? `${resumen.turnos_hoy.pendientes} pendientes` : null, icono: LuCalendarPlus, color: "verde" },
+        { titulo: "Caja del día", valor: disponible ? moneda(resumen.caja_hoy) : error ? "—" : "...", icono: LuCircleDollarSign, color: "verde", id: "caja" },
+        { titulo: "Tickets abiertos", valor: disponible ? resumen.tickets_abiertos : error ? "—" : "...", icono: LuTicket },
+        { titulo: "Liquidaciones pendientes", valor: disponible ? resumen.liquidaciones_pendientes : error ? "—" : "...", icono: LuReceipt, color: "ambar", id: "liquidaciones" },
     ];
 
     const estiloFondo = { backgroundImage: `linear-gradient(90deg, rgba(12,12,12,.78), rgba(12,12,12,.25)), url("${fondoAdministrador}")` };
@@ -114,7 +92,7 @@ export default function HomeAdministrador() {
             </div>
 
             <section className="container-fluid px-3 px-lg-5 py-4" aria-label="Estadísticas">
-                {(reservasHoy.error || liquidacionesHoy.error) && <p className={styles.error} role="alert">{reservasHoy.error || liquidacionesHoy.error}</p>}
+                {error && <p className={styles.error} role="alert">{error}</p>}
                 <div className="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 mb-4">
                     {indicadores.map(({ titulo, valor, detalle, icono: Icono, color, id }) => (
                         <article className={`col ${styles.indicadorResumen}`} id={id} key={titulo}>
@@ -133,20 +111,19 @@ export default function HomeAdministrador() {
 
                 <h2 className={styles.tituloSeccion}>Estadísticas</h2>
                 <div className="row row-cols-1 row-cols-lg-3 g-3">
-                    <article className="col"><Grafico titulo="Ingresos de caja" icono={LuCircleDollarSign} filtro={<Filtro id="fecha-caja" fecha={fechaCaja} setFecha={setFechaCaja} />} cargando={caja.cargando} error={caja.error}>
-                        <strong className={styles.valorGrafico}>{new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(ingresoCaja)}</strong>
-                        <div className={styles.barraIngreso}><span style={{ width: ingresoCaja > 0 ? "100%" : "0%" }} /></div>
+                    <article className="col"><Grafico titulo="Ingresos de caja" icono={LuCircleDollarSign} filtro={<Filtro id="fecha-caja" fecha={fechaCaja} setFecha={setFechaCaja} />} cargando={cargando} disponible={disponible}>
+                        <strong className={styles.valorGrafico}>{moneda(resumen?.caja.ingresos)}</strong>
+                        <div className={styles.barraIngreso}><span style={{ width: Number(resumen?.caja.ingresos) > 0 ? "100%" : "0%" }} /></div>
                     </Grafico></article>
-                    <article className="col"><Grafico titulo="Asistencia de barberos" icono={LuUsers} filtro={<Filtro id="fecha-barberos" fecha={fechaBarberos} setFecha={setFechaBarberos} />} cargando={empleados.cargando || reservasBarberos.cargando} error={empleados.error || reservasBarberos.error}>
-                        <strong className={styles.valorGrafico}>{asistentes} / {listaBarberos.length}</strong>
-                        <div className={styles.barras}>{listaBarberos.slice(0, 6).map((empleado) => {
-                            const presente = presentesIds.has(String(empleado.id ?? empleado.pk ?? "")) || presentesIds.has(nombreEmpleado(empleado));
-                            return <div className={styles.barraBarbero} key={empleado.id ?? empleado.pk ?? nombreEmpleado(empleado)}><span>{nombreEmpleado(empleado)}</span><i className={presente ? styles.presente : styles.ausente} /></div>;
+                    <article className="col"><Grafico titulo="Asistencia de barberos" icono={LuUsers} filtro={<Filtro id="fecha-barberos" fecha={fechaBarberos} setFecha={setFechaBarberos} />} cargando={cargando} disponible={disponible}>
+                        <strong className={styles.valorGrafico}>{resumen?.asistencia.presentes ?? 0} / {resumen?.asistencia.total ?? 0}</strong>
+                        <div className={styles.barras}>{(resumen?.asistencia.barberos ?? []).slice(0, 6).map((barbero) => {
+                            return <div className={styles.barraBarbero} key={barbero.id}><span>{barbero.nombre}</span><i className={barbero.presente ? styles.presente : styles.ausente} /></div>;
                         })}</div>
                     </Grafico></article>
-                    <article className="col"><Grafico titulo="Cortes realizados" icono={LuScissors} filtro={<Filtro id="fecha-cortes" fecha={fechaCortes} setFecha={setFechaCortes} />} cargando={reservasCortes.cargando} error={reservasCortes.error}>
-                        <strong className={styles.valorGrafico}>{cortes}</strong>
-                        <div className={styles.graficoVertical}><span style={{ height: cortes ? "100%" : "12%" }} /></div>
+                    <article className="col"><Grafico titulo="Cortes realizados" icono={LuScissors} filtro={<Filtro id="fecha-cortes" fecha={fechaCortes} setFecha={setFechaCortes} />} cargando={cargando} disponible={disponible}>
+                        <strong className={styles.valorGrafico}>{resumen?.cortes.realizados ?? 0}</strong>
+                        <div className={styles.graficoVertical}><span style={{ height: resumen?.cortes.realizados ? "100%" : "12%" }} /></div>
                     </Grafico></article>
                 </div>
             </section>
@@ -154,13 +131,13 @@ export default function HomeAdministrador() {
     );
 }
 
-function Grafico({ titulo, icono: Icono, filtro, cargando, error, children }) {
+function Grafico({ titulo, icono: Icono, filtro, cargando, disponible, children }) {
     return (
         <div className={`card h-100 ${styles.tarjetaGrafico}`}>
             <div className={styles.encabezadoGrafico}>
                 <div><Icono aria-hidden="true" /><h3>{titulo}</h3></div>{filtro}
             </div>
-            {cargando ? <p className={styles.estado}>Cargando...</p> : error ? <p className={styles.error} role="alert">{error}</p> : <div className={styles.contenidoGrafico}>{children}</div>}
+            {cargando ? <p className={styles.estado}>Cargando...</p> : !disponible ? <p className={styles.estado}>Datos no disponibles.</p> : <div className={styles.contenidoGrafico}>{children}</div>}
         </div>
     );
 }
