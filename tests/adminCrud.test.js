@@ -15,6 +15,7 @@ import {
 test("extrae filas de respuestas directas o paginadas", () => {
     assert.deepEqual(extraerFilas({ results: [{ id: 1 }] }, "productos"), [{ id: 1 }]);
     assert.deepEqual(extraerFilas([{ id: 2 }], "productos"), [{ id: 2 }]);
+    assert.deepEqual(extraerFilas([{ id: 3, name: "Barberos" }], "groups"), [{ id: 3, name: "Barberos" }]);
 });
 
 test("obtiene el id de variantes comunes", () => {
@@ -32,7 +33,6 @@ test("crea empleados sin campos de cuenta cuando no se solicitan", () => {
     assert.deepEqual(construirEmpleado({
         nombre: "Ana",
         apellido: "Pérez",
-        id_rol: "2",
         dni: "12345678",
         comision: "15",
         usuario: "",
@@ -41,7 +41,6 @@ test("crea empleados sin campos de cuenta cuando no se solicitan", () => {
     }), {
         nombre: "Ana",
         apellido: "Pérez",
-        id_rol: 2,
         dni: "12345678",
         porcentaje_comision: 15,
     });
@@ -51,7 +50,6 @@ test("incluye solo los datos de cuenta proporcionados en una edición parcial", 
     assert.deepEqual(construirEmpleado({
         nombre: "Ana",
         apellido: "Pérez",
-        id_rol: 2,
         dni: "12345678",
         comision: 15,
         usuario: "ana",
@@ -60,12 +58,27 @@ test("incluye solo los datos de cuenta proporcionados en una edición parcial", 
     }), {
         nombre: "Ana",
         apellido: "Pérez",
-        id_rol: 2,
         dni: "12345678",
         porcentaje_comision: 15,
         usuario: "ana",
         grupo_usuario: "Barberos",
     });
+});
+
+test("omite la cuenta cuando no hay cambios informados", () => {
+    const payload = construirEmpleado({
+        nombre: "Ana",
+        apellido: "Pérez",
+        dni: "12345678",
+        comision: 15,
+        usuario: "",
+        contrasena: "",
+        grupoUsuario: "",
+    });
+
+    assert.equal("usuario" in payload, false);
+    assert.equal("contrasena" in payload, false);
+    assert.equal("grupo_usuario" in payload, false);
 });
 
 test("exige el conjunto completo de cuenta solo cuando el empleado aún no tiene cuenta", () => {
@@ -77,6 +90,8 @@ test("exige el conjunto completo de cuenta solo cuando el empleado aún no tiene
         grupoUsuario: "Barberos",
     }), "");
     assert.equal(validarCuentaEmpleado({ usuario: "ana" }, true), "");
+    assert.equal(validarCuentaEmpleado({ contrasena: "Nueva!123" }, true), "");
+    assert.equal(validarCuentaEmpleado({ grupoUsuario: "Barberos" }, true), "");
 });
 
 test("normaliza el contrato de empleados del backend y su cuenta sin contraseña", () => {
@@ -84,8 +99,6 @@ test("normaliza el contrato de empleados del backend y su cuenta sin contraseña
         id_empleado: 4,
         nombre: "Ana",
         apellido: "Lovelace",
-        id_rol: 2,
-        rol_laboral: "Barbero",
         porcentaje_comision: "15.00",
         cuenta: { usuario: "ana", grupo: "Barberos" },
     });
@@ -93,12 +106,28 @@ test("normaliza el contrato de empleados del backend y su cuenta sin contraseña
     assert.equal(empleado.id, "4");
     assert.equal(empleado.nombre, "Ana");
     assert.equal(empleado.apellido, "Lovelace");
-    assert.equal(empleado.rolId, "2");
-    assert.equal(empleado.rol, "Barbero");
     assert.equal(empleado.usuario, "ana");
     assert.equal(empleado.grupoUsuario, "Barberos");
     assert.equal(empleado.tieneCuenta, true);
     assert.equal("contrasena" in empleado, false);
+});
+
+test("normaliza empleados sin cuenta sin inventar datos de cuenta", () => {
+    const empleado = normalizarEmpleado({
+        id_empleado: 5,
+        nombre: "Grace",
+        apellido: "Hopper",
+        dni: "12345678",
+        foto_empleado: "/grace.jpg",
+        porcentaje_comision: "12.5",
+        cuenta: null,
+    });
+
+    assert.equal(empleado.usuario, "");
+    assert.equal(empleado.grupoUsuario, "");
+    assert.equal(empleado.tieneCuenta, false);
+    assert.equal("id_user" in empleado, false);
+    assert.equal("rolId" in empleado, false);
 });
 
 test("construye payloads de catálogo y rutas detalle REST", () => {
