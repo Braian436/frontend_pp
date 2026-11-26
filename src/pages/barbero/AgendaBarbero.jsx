@@ -1,5 +1,5 @@
 import CardHomeBienvenida from "../../components/cardHomeBienvenida/CardHomeBienvenida.jsx";
-import ListaTurno from "../../components/c.listaTurno/ListaTurno.jsx";
+import ListaTurno from "../../components/C.ListaTurno/ListaTurno.jsx";
 import styles from "./AgendaBarbero.module.css";
 
 export default function AgendaBarbero() {

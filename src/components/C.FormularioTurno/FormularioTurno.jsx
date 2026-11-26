@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import SelectorServicio from "../c.selectorServicio/SelectorServicio";
+import SelectorServicio from "../C.SelectorServicio/SelectorServicio";
 import styles from "./FormularioTurno.module.css";
 
 export default function FormularioTurno({ fechaTexto, onGuardar, onCerrar }) {

@@ -1,8 +1,8 @@
-import React from 'react'
 import { useEffect, useState } from "react";
 import { apiRequest } from "../../api/apiRequest.js";
-import { LuCalendarPlus, LuCircleDollarSign, LuReceipt, LuScissors, LuTicket, LuUsers } from "react-icons/lu";
+import { LuCalendarPlus, LuCircleDollarSign, LuReceipt } from "react-icons/lu";
 import CardEstadisticasBarbero from '../../components/cardEstadisticasBarbero/CardEstadisticasBarbero.jsx';
+import { esPendiente, estadoFila, fechaFila, normalizarFilas, sumarMonto } from "../administrador/dashboardData.js";
 
 const hoy = () => {
     const fecha = new Date();
@@ -59,9 +59,9 @@ const indicadores = [
 ];
 return (
 <div className="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 mb-4">
-    {indicadores.map(({key, titulo, valor, detalle, icono: Icono, color, id }) => (
+    {indicadores.map(({ titulo, valor, detalle, icono: Icono, color, id }, indice) => (
         <CardEstadisticasBarbero
-            key={titulo}
+            key={`${titulo}-${indice}`}
             id={id}
             titulo={titulo}
             valor={valor}

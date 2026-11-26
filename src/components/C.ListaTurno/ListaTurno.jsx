@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import CardTurno from "../c.cardTurno/CardTurno";
-import FormularioTurno from "../c.formularioTurno/FormularioTurno";
+import { useState } from "react";
+import CardTurno from "../C.CardTurno/CardTurno";
+import FormularioTurno from "../C.FormularioTurno/FormularioTurno";
 import styles from "./ListaTurno.module.css";
 
 // Convierte una fecha a texto "2026-11-24" para poder comparar días

@@ -1,7 +1,6 @@
 
 import ListCardStats from "./ListCardStats"
 import CardHomeBienvenida from "../../components/cardHomeBienvenida/CardHomeBienvenida.jsx";
-import ListaTurno from "../../components/C.ListaTurno/ListaTurno.jsx"
 import styles from "./HomeBarber.module.css"
 export default function HomeBarber() {
   return (

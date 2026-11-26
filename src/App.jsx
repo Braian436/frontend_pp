@@ -8,6 +8,7 @@ import Empleados from "./pages/administrador/Empleados.jsx";
 import Clientes from "./pages/administrador/Clientes.jsx";
 import Compras from "./pages/administrador/Compras.jsx";
 import GestionProductos from "./pages/administrador/GestionProductos.jsx";
+import CatalogoProductos from "./pages/administrador/CatalogoProductos.jsx";
 import HomeAdministrador from "./pages/administrador/HomeAdministrador.jsx";
 import HomeBarber from "./pages/barbero/HomeBarber.jsx";
 import ApiDataPage from "./pages/apiData/ApiDataPage.jsx";
@@ -61,6 +62,9 @@ function App() {
                 <Route path="/admin/caja" element={<CajaCajero />} />
                 <Route path="/admin/empleados" element={<Empleados />} />
                 <Route path="/admin/productos" element={<GestionProductos />} />
+                <Route path="/admin/marcas" element={<CatalogoProductos key="marcas" tipo="marcas" />} />
+                <Route path="/admin/categorias" element={<CatalogoProductos key="categorias" tipo="categorias" />} />
+                <Route path="/admin/descuentos" element={<CatalogoProductos key="descuentos" tipo="descuentos" />} />
                 <Route path="/admin/compras" element={<Compras />} />
                 <Route path="/admin/servicios" element={<Servicios administracion />} />
                 <Route path="/admin/clientes" element={<Clientes />} />

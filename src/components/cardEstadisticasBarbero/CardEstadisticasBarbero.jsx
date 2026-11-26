@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from "./CardEstadisticasBarbero.module.css";
 
 export default function CardEstadisticasBarbero({id,titulo,valor,detalle,Icono,color}) {

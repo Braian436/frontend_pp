@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { cargarProductosCompraApi, crearCompraApi, listarComprasApi } from "../../api/comprasApi.js";
-import styles from "./Empleados.module.css";
-import comprasStyles from "./Compras.module.css";
+import styles from "./Administrador.module.css";
 
 const nuevaLinea = () => ({ id_producto: "", cantidad: "1", precio_unitario: "" });
 const dinero = (importe) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(importe);
@@ -104,16 +103,16 @@ export default function Compras() {
                 <div className="row g-3">
                     {compras.map((compra) => (
                         <div className="col-12 col-lg-6" key={compra.id_compra}>
-                            <article className={`card h-100 ${comprasStyles.compra}`}>
+                            <article className={`card h-100 ${styles.compra}`}>
                                 <div className="card-body">
                                     <div className="d-flex justify-content-between gap-3 mb-3">
-                                        <h2 className={comprasStyles.tituloCompra}>Compra #{compra.id_compra}</h2>
+                                        <h2 className={styles.tituloCompra}>Compra #{compra.id_compra}</h2>
                                         <strong>{dinero(Number(compra.total))}</strong>
                                     </div>
-                                    <p className={comprasStyles.fecha}>{new Date(compra.fecha).toLocaleString("es-AR")}</p>
+                                    <p className={styles.fecha}>{new Date(compra.fecha).toLocaleString("es-AR")}</p>
                                     <div className="d-grid gap-2">
                                         {compra.detalles?.map((detalle) => (
-                                            <div className={comprasStyles.detalle} key={detalle.id_detalle_compra}>
+                                            <div className={styles.detalle} key={detalle.id_detalle_compra}>
                                                 <span>{detalle.producto_nombre} · {detalle.cantidad} unidades</span>
                                                 <span>{dinero(Number(detalle.precio_unitario))} c/u</span>
                                             </div>
@@ -133,7 +132,7 @@ export default function Compras() {
                 )}
             </div>
 
-            <Modal show={abierto} onHide={() => setAbierto(false)} centered size="lg" contentClassName={comprasStyles.modal}>
+            <Modal show={abierto} onHide={() => setAbierto(false)} centered size="lg" contentClassName={styles.modal}>
                 <form onSubmit={registrar}>
                     <Modal.Header closeButton closeVariant="white">
                         <Modal.Title>Registrar compra</Modal.Title>
@@ -157,17 +156,17 @@ export default function Compras() {
                                     <input id={`precio-${indice}`} className="form-control" type="number" min="0" step="0.01" value={linea.precio_unitario} onChange={(evento) => actualizarLinea(indice, "precio_unitario", evento.target.value)} required />
                                 </div>
                                 <div className="col-12 col-md-2">
-                                    <button type="button" className={`btn w-100 ${comprasStyles.botonCancelar}`} disabled={lineas.length === 1} onClick={() => setLineas((actuales) => actuales.filter((_, posicion) => posicion !== indice))}>Quitar</button>
+                                    <button type="button" className={`btn w-100 ${styles.botonCancelar}`} disabled={lineas.length === 1} onClick={() => setLineas((actuales) => actuales.filter((_, posicion) => posicion !== indice))}>Quitar</button>
                                 </div>
                             </div>
                         ))}
-                        <button type="button" className={`btn ${comprasStyles.botonSecundario}`} onClick={() => setLineas((actuales) => [...actuales, nuevaLinea()])}>+ Agregar producto</button>
+                        <button type="button" className={`btn ${styles.botonSecundario}`} onClick={() => setLineas((actuales) => [...actuales, nuevaLinea()])}>+ Agregar producto</button>
                         <div className="text-end fs-5 mt-3">Total: <strong>{dinero(total)}</strong></div>
                         {error && <p className="text-danger mt-3 mb-0" role="alert">{error}</p>}
                     </Modal.Body>
                     <Modal.Footer>
-                        <button type="button" className={`btn ${comprasStyles.botonCancelar}`} onClick={() => setAbierto(false)}>Cancelar</button>
-                        <button type="submit" className={`btn ${comprasStyles.boton}`} disabled={guardando}>{guardando ? "Guardando..." : "Guardar compra"}</button>
+                        <button type="button" className={`btn ${styles.botonCancelar}`} onClick={() => setAbierto(false)}>Cancelar</button>
+                        <button type="submit" className={`btn ${styles.boton}`} disabled={guardando}>{guardando ? "Guardando..." : "Guardar compra"}</button>
                     </Modal.Footer>
                 </form>
             </Modal>

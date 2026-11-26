@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { cargarDatosProductos, crearProductoApi, editarProductoApi, eliminarProductoApi } from "../../api/productosApi.js";
 import CardProducto from "../../components/cardProducto/CardProducto";
 import AdminCatalogModal from "../../components/adminCatalogModal/AdminCatalogModal";
-import styles from "./Empleados.module.css";
+import styles from "./Administrador.module.css";
 import { construirProducto } from "./adminCrud";
 
 export default function GestionProductos() {

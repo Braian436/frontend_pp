@@ -2,14 +2,19 @@
     min-height: 100vh;
     background: #0e0d0d;
     color: #f5f1e8;
+    font-family: Montserrat, sans-serif;
     padding: 24px 0 80px;
 }
 
 .subtitulo {
+    display: block;
+    margin: 0 0 0.65rem;
     color: #d9c493;
+    font-family: Montserrat, sans-serif;
     font-size: 11px;
-    font-weight: bold;
+    font-weight: 700;
     letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .titulo {
@@ -24,7 +29,7 @@
     background: #d9c493;
     color: #111;
     border: 1px solid #d9c493;
-    border-radius: 20px;
+    border-radius: 8px;
     padding: 13px 22px;
     font-family: Montserrat, sans-serif;
     font-size: 13px;
@@ -38,6 +43,26 @@
     color: #111;
 }
 
+.cantidad {
+    color: #b7b1a4;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 25px 0 15px;
+}
+
+.estado,
+.error {
+    color: #b7b1a4;
+    font-size: 0.85rem;
+}
+
+.error {
+    color: #d8897d;
+}
+
+/* Filtros */
 .filtros {
     padding: 12px;
     background: #161515;
@@ -67,15 +92,7 @@
     box-shadow: none;
 }
 
-.cantidad {
-    color: #b7b1a4;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin: 25px 0 15px;
-}
-
+/* Cards de personas (Clientes) */
 .card {
     background: #161515;
     border: 1px solid #ffffff26;
@@ -155,4 +172,105 @@
 .botonEliminar:hover {
     background: #ff0000;
     color: #fff;
+}
+
+/* Compras y modal */
+.compra {
+    color: #f5f1e8;
+    background: #161515;
+    border: 1px solid #ffffff26;
+    border-right: 3px solid #a4a4a4;
+    border-bottom: 3px solid #a4a4a4;
+    border-radius: 12px;
+}
+
+.tituloCompra {
+    margin: 0;
+    color: #d9c493;
+    font-size: 1.1rem;
+}
+
+.fecha {
+    color: #b7b1a4;
+    font-size: 0.85rem;
+}
+
+.detalle {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid #ffffff26;
+    padding-top: 0.5rem;
+}
+
+.modal {
+    color: #f5f1e8;
+    background: #161515;
+    border: 1px solid #d9c49366;
+    border-radius: 20px;
+}
+
+.modal :global(.modal-header),
+.modal :global(.modal-footer) {
+    border-color: #ffffff26;
+}
+
+.modal :global(.modal-title),
+.modal :global(.form-label),
+.modal :global(.btn-close) {
+    color: #ffffff;
+}
+
+.modal :global(.form-control),
+.modal :global(.form-select) {
+    color: #fff;
+    background-color: #0e0d0d;
+    border-color: #383838;
+    border-radius: 12px;
+}
+
+.modal :global(.form-control):focus,
+.modal :global(.form-select):focus {
+    border-color: #d9c493;
+}
+
+.boton {
+    color: #d9c493;
+    background: transparent;
+    border: 1px solid #d9c493;
+    border-radius: 16px;
+    font-weight: 700;
+}
+
+.boton:hover,
+.boton:focus-visible {
+    color: #111;
+    background: #ebd9af;
+    border-color: #ebd9af;
+}
+
+.botonSecundario {
+    color: #d9c493;
+    background: transparent;
+    border: 1px solid #d9c493;
+    border-radius: 16px;
+}
+
+.botonSecundario:hover,
+.botonSecundario:focus-visible,
+.botonSecundario:disabled {
+    color: #000000;
+    background: #d9c493;
+}
+
+.botonCancelar {
+    color: #ff0000;
+    border: 1px solid #ff0000;
+    border-radius: 16px;
+}
+
+.botonCancelar:hover {
+    color: #ffffff;
+    background-color: #ff0000;
+    border-radius: 16px;
 }

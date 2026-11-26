@@ -3,7 +3,7 @@ import EmpleadoCard from "../../components/empleadoCard/EmpleadoCard";
 import EmpleadoFiltros from "../../components/empleadoFiltro/EmpleadoFiltro";
 import EmpleadoModal from "../../components/empleadoModal/EmpleadoModal";
 import { apiRequest } from "../../api/apiRequest.js";
-import styles from "./Empleados.module.css";
+import styles from "./Administrador.module.css";
 import { construirEmpleado, extraerFilas, normalizarEmpleado, useCrudApi } from "./adminCrud.js";
 
 export default function Empleados() {

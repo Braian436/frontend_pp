@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./CardTurno.module.css";
 
 const TEXTO_ESTADO = {
