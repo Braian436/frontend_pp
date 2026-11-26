@@ -1,0 +1,133 @@
+.cardTurno {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 16px;
+  background: #0d0d0d;
+  color: #fff;
+  border-bottom-width: 2px;
+  border-left-width: 3px;
+  border-radius: 6px;
+  border-left: 3px solid #a4a4a4;
+  border-bottom: 3px solid #a4a4a4;
+}
+
+/* color del borde según el estado */
+.finalizado {
+  border-color: #3fb67f;
+}
+
+.enCurso {
+  border-color: #d9c08a;
+  background: #1a1a1a;
+}
+
+.pendiente {
+  border-color: #3a3a3a;
+}
+
+.horario {
+  display: flex;
+  flex-direction: column;
+  min-width: 48px;
+}
+
+.horaInicio {
+  font-size: 1rem;
+}
+
+.horaFin {
+  font-size: 0.9rem;
+  color: #bab7b7;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cliente {
+  font-size: 1.2rem;
+}
+
+.servicio {
+  font-size: 1rem;
+  color: #aaa;
+}
+
+.acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+}
+
+.etiqueta {
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1.5px solid;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.etiqueta_finalizado {
+  color: #3fb67f;
+  border-color: #3fb67f;
+  font-weight: 600;
+  font-family: Montserrat;
+}
+
+.etiqueta_enCurso {
+  background: #d9c08a;
+  border-color: #d9c08a;
+  color: #111;
+  font-weight: 700;
+  font-family: Montserrat;
+}
+
+.etiqueta_pendiente {
+  color: #ccc;
+  border-color: #666;
+  font-weight: 600;
+  font-family: Montserrat;
+  border: 1.5px solid;
+}
+
+.botonIniciar {
+  padding: 3px 12px;
+  border-radius: 20px;
+  border: 1px solid #d9c08a;
+  background: transparent;
+  color: #d9c08a;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: Montserrat;
+}
+
+.botonIniciar:hover {
+  background: #d9c08a;
+  color: #111;
+  font-weight: 700;
+}
+
+/* Celulares: la card se apila */
+@media (max-width: 576px) {
+  .cardTurno {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .info {
+    flex: 1 1 60%;
+  }
+
+  .acciones {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

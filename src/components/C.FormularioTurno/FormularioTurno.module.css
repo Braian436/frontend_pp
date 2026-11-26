@@ -1,0 +1,125 @@
+/* Fondo oscuro que tapa toda la pantalla */
+.fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 1000;
+}
+
+.formulario {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 420px;
+  background: #0d0d0d;
+  color: #fff;
+  border: 1px solid #777776;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.titulo {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #d9c493;
+}
+
+.fecha {
+  margin: 0;
+  font-size: 1 rem;
+  color: #cdcccc;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  flex: 1;
+  color: #c9b688;
+}
+
+.input {
+  background-color: #212529;
+  border: 1px solid #495057;
+  border-radius: 6px;
+  color: #f2efef;
+  padding: 7px 12px;
+  color-scheme: dark; /* para que el reloj del input time se vea oscuro */
+}
+
+.input:focus {
+  outline: none;
+  border-color: #d9c08a;
+
+}
+
+.horarios {
+  display: flex;
+  gap: 19px;
+
+}
+
+.botones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 4px;
+  max-width: 900px;
+  margin: 0 auto;
+  
+}
+
+.cancelar,
+.guardar {
+  padding: 6px 18px;
+  border-radius: 20px;
+  border: 1px solid #d9c08a;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+}
+
+.cancelar:hover {
+  background: #7c7b7a;
+  color: #111;
+  font-weight: 700;
+  border-color: #131313;
+}
+
+.cancelar {
+  background: transparent;
+  color: #d9c08a;
+}
+
+.guardar {
+  background: #d9c08a;
+  color: #111;
+  font-weight: 600;
+}
+
+.guardar:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ayuda { 
+  margin: 1;
+  font-size: 1 rem;
+  color: #949191;
+}
+
+@media (max-width: 576px) {
+  .horarios {
+    flex-direction: column;
+  }
+}
