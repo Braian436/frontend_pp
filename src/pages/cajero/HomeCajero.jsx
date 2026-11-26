@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
     LuBanknote,
-    LuHandCoins,
     LuPlus,
     LuTicket,
     LuWallet,
 } from "react-icons/lu";
 import AccesosCajero from "../../components/accesosCajero/AccesosCajero.jsx";
+import AvisoCajaModal from "../../components/avisoCajaModal/AvisoCajaModal.jsx";
 import IndicadoresCaja from "../../components/indicadoresCaja/IndicadoresCaja.jsx";
 import MovimientoCajaModal from "../../components/movimientoCajaModal/MovimientoCajaModal.jsx";
 import CierreCajaModal from "../../components/cierreCajaModal/CierreCajaModal.jsx";
@@ -40,11 +40,52 @@ export default function HomeCajero() {
         cargando,
     } = useCajaApi();
     const navigate = useNavigate();
+    const location = useLocation();
     const [modal, setModal] = useState(null);
     const [ticketACobrar, setTicketACobrar] = useState(null);
     const [nuevoTicket, setNuevoTicket] = useState(false);
+    const [avisoCaja, setAvisoCaja] = useState(false);
     const cerrada = estado === "cerrada";
     const pendientes = resumen.pendientes;
+
+    const avisoDesdeRuta = Boolean(location.state?.avisoCaja);
+    const mostrarAviso = avisoCaja || avisoDesdeRuta;
+
+    const cerrarAviso = () => {
+        setAvisoCaja(false);
+        if (avisoDesdeRuta) {
+            navigate(location.pathname, { replace: true, state: null });
+        }
+    };
+
+    const abrirCajaDesdeAviso = () => {
+        cerrarAviso();
+        setModal("apertura");
+    };
+
+    const irATickets = () => {
+        if (cerrada) {
+            setAvisoCaja(true);
+            return;
+        }
+        navigate("/cajero/tickets");
+    };
+
+    const irAAsistencias = () => {
+        if (cerrada) {
+            setAvisoCaja(true);
+            return;
+        }
+        navigate("/cajero/asistencias");
+    };
+
+    const abrirNuevoTicket = () => {
+        if (cerrada) {
+            setAvisoCaja(true);
+            return;
+        }
+        setNuevoTicket(true);
+    };
 
     const textoPendientes =
         pendientes.length === 0
@@ -73,12 +114,6 @@ export default function HomeCajero() {
             valor: dinero(resumen.efectivoEnCajon),
             detalle: `Incluye apertura de ${dinero(resumen.apertura)}`,
             icono: LuBanknote,
-        },
-        {
-            titulo: "Propinas",
-            valor: dinero(resumen.propinas),
-            detalle: "Se reparten al cierre",
-            icono: LuHandCoins,
         },
     ];
 
@@ -163,10 +198,12 @@ export default function HomeCajero() {
 
                 <AccesosCajero
                     cerrada={cerrada}
-                    onTickets={() => navigate("/cajero/tickets")}
+                    onBloqueado={() => setAvisoCaja(true)}
+                    onTickets={irATickets}
                     onIngreso={() => setModal("ingreso")}
                     onEgreso={() => setModal("egreso")}
                     onCaja={() => setModal(cerrada ? "apertura" : "cierre")}
+                    onAsistencias={irAAsistencias}
                 />
 
                 <section className="mt-4">
@@ -176,7 +213,7 @@ export default function HomeCajero() {
                             <button
                                 type="button"
                                 className={styles.nuevo}
-                                onClick={() => setNuevoTicket(true)}
+                                onClick={abrirNuevoTicket}
                             >
                                 <LuPlus aria-hidden="true" /> Nuevo ticket
                             </button>
@@ -205,9 +242,22 @@ export default function HomeCajero() {
                                 Total pendiente{" "}
                                 <strong>{dinero(resumen.totalPendiente)}</strong>
                             </p>
-                            <Link to="/cajero/tickets" className={styles.verTodos}>
-                                Ver todos los tickets
-                            </Link>
+                            {cerrada ? (
+                                <button
+                                    type="button"
+                                    className={styles.verTodos}
+                                    onClick={() => setAvisoCaja(true)}
+                                >
+                                    Ver todos los tickets
+                                </button>
+                            ) : (
+                                <Link
+                                    to="/cajero/tickets"
+                                    className={styles.verTodos}
+                                >
+                                    Ver todos los tickets
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </section>
@@ -260,6 +310,12 @@ export default function HomeCajero() {
                     }}
                     procesando={procesando}
                     error={error}
+                />
+            )}
+            {mostrarAviso && (
+                <AvisoCajaModal
+                    onCerrar={cerrarAviso}
+                    onAbrirCaja={abrirCajaDesdeAviso}
                 />
             )}
         </div>

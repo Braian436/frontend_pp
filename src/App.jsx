@@ -21,6 +21,9 @@ import HomeCajero from "./pages/cajero/HomeCajero.jsx";
 import CajaCajero from "./pages/cajero/CajaCajero.jsx";
 import TicketsCajero from "./pages/cajero/TicketsCajero.jsx";
 import ServiciosCajero from "./pages/cajero/ServiciosCajero.jsx";
+import AsistenciasCajero from "./pages/cajero/AsistenciasCajero.jsx";
+import { CajaProvider } from "./pages/cajero/CajaProvider.jsx";
+import CajaRequerida from "./pages/cajero/CajaRequerida.jsx";
 import Login from "./pages/login/Login.jsx";
 import RutaProtegida from "./components/rutaProtegida/RutaProtegida.jsx";
 
@@ -30,6 +33,7 @@ const ROLES_CAJERO = ["Cajero"];
 
 function Layout() {
     const { pathname } = useLocation();
+    const esCajero = pathname.startsWith("/cajero");
     const esPortal = pathname.startsWith("/admin") ||
         pathname.startsWith("/barbero") ||
         pathname.startsWith("/home-barbero") ||
@@ -39,6 +43,16 @@ function Layout() {
         pathname.startsWith("/turnos/disponibilidad") ||
         pathname.startsWith("/turnos/reservas");
 
+    const contenido = (
+        <>
+            {esPortal ? <NavbarAdministrador /> : <Navbar />}
+            <main className={`flex-grow-1 w-100 ${styles.contenido}`}>
+                <Outlet />
+            </main>
+            {!esPortal && <Footer />}
+        </>
+    );
+
     return (
         <div
             className={
@@ -47,11 +61,11 @@ function Layout() {
                     : `d-flex flex-column min-vh-100 ${styles.app}`
             }
         >
-            {esPortal ? <NavbarAdministrador /> : <Navbar />}
-            <main className={`flex-grow-1 w-100 ${styles.contenido}`}>
-                <Outlet />
-            </main>
-            {!esPortal && <Footer />}
+            {esCajero ? (
+                <CajaProvider>{contenido}</CajaProvider>
+            ) : (
+                contenido
+            )}
         </div>
     );
 }
@@ -84,9 +98,38 @@ function App() {
 
                 {/* Cajero */}
                 <Route path="/cajero" element={<RutaProtegida roles={ROLES_CAJERO}><HomeCajero /></RutaProtegida>} />
-                <Route path="/cajero/caja" element={<RutaProtegida roles={ROLES_CAJERO}><CajaCajero /></RutaProtegida>} />
-                <Route path="/cajero/tickets" element={<RutaProtegida roles={ROLES_CAJERO}><TicketsCajero /></RutaProtegida>} />
-                <Route path="/cajero/servicios" element={<RutaProtegida roles={ROLES_CAJERO}><ServiciosCajero /></RutaProtegida>} />
+                <Route
+                    path="/cajero/caja"
+                    element={
+                        <RutaProtegida roles={ROLES_CAJERO}>
+                            <CajaRequerida><CajaCajero /></CajaRequerida>
+                        </RutaProtegida>
+                    }
+                />
+                <Route
+                    path="/cajero/tickets"
+                    element={
+                        <RutaProtegida roles={ROLES_CAJERO}>
+                            <CajaRequerida><TicketsCajero /></CajaRequerida>
+                        </RutaProtegida>
+                    }
+                />
+                <Route
+                    path="/cajero/servicios"
+                    element={
+                        <RutaProtegida roles={ROLES_CAJERO}>
+                            <CajaRequerida><ServiciosCajero /></CajaRequerida>
+                        </RutaProtegida>
+                    }
+                />
+                <Route
+                    path="/cajero/asistencias"
+                    element={
+                        <RutaProtegida roles={ROLES_CAJERO}>
+                            <CajaRequerida><AsistenciasCajero /></CajaRequerida>
+                        </RutaProtegida>
+                    }
+                />
 
                 {/* Consultas de API (solo administración) */}
                 <Route

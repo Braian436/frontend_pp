@@ -89,6 +89,12 @@ export default function CierreCajaModal({
                     <dd className={styles.rojo}>- {dinero(resumen.egresosEfectivo)}</dd>
                 </div>
                 <div>
+                    <dt>Anulaciones</dt>
+                    <dd className={styles.rojo}>
+                        - {dinero(resumen.anulaciones)}
+                    </dd>
+                </div>
+                <div>
                     <dt>Propinas</dt>
                     <dd>{dinero(resumen.propinas)}</dd>
                 </div>
@@ -97,6 +103,25 @@ export default function CierreCajaModal({
                     <dd>{dinero(resumen.saldoEsperado)}</dd>
                 </div>
             </dl>
+
+            {resumen.ventasAnuladas?.length > 0 && (
+                <div className={styles.anuladas}>
+                    <p>Ventas anuladas en el turno</p>
+                    <ul>
+                        {resumen.ventasAnuladas.map((ticket) => (
+                            <li key={ticket.id}>
+                                <strong>#{ticket.id}</strong>{" "}
+                                {dinero(ticket.monto)}
+                                {" · "}
+                                {ticket.motivoAnulacion || "Sin motivo"}
+                                {ticket.anuladaPor
+                                    ? ` · ${ticket.anuladaPor}`
+                                    : ""}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
 
             <label className={styles.campo} htmlFor="caja-saldo-real">
                 <span className={styles.etiqueta}>Saldo real contado</span>

@@ -1,0 +1,98 @@
+.resumen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.75rem;
+    margin-bottom: 1rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid #2e2b27;
+    border-radius: 12px;
+    background: #171615;
+}
+
+.resumen span {
+    color: #d9c493;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.resumen strong {
+    margin-left: auto;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.resumen small {
+    flex: 1 0 100%;
+    color: #aaa49a;
+    font-size: 0.8rem;
+}
+
+.campo {
+    display: block;
+    margin-bottom: 0.9rem;
+}
+
+.etiqueta {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: #b2a57f;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.input,
+.textarea {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #2e2b27;
+    border-radius: 10px;
+    background: #0e0d0d;
+    color: #f5f1e8;
+    font-size: 0.88rem;
+}
+
+.textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.input:focus,
+.textarea:focus {
+    border-color: #d9c493;
+    outline: 0;
+}
+
+.clave {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.ojo {
+    display: inline-flex;
+    flex: 0 0 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #2e2b27;
+    border-radius: 10px;
+    background: transparent;
+    color: #aaa49a;
+}
+
+.ojo:hover {
+    border-color: #d9c493;
+    color: #d9c493;
+}
+
+.ayuda {
+    margin: 0;
+    color: #7d786f;
+    font-size: 0.76rem;
+    line-height: 1.45;
+}

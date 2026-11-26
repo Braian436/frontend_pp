@@ -27,6 +27,7 @@ const menuCajero = [
     { type: "link", label: "Caja", to: "/cajero/caja", icon: "wallet" },
     { type: "link", label: "Tickets", to: "/cajero/tickets", icon: "ticket" },
     { type: "link", label: "Servicios", to: "/cajero/servicios", icon: "scissors" },
+    { type: "link", label: "Asistencias", to: "/cajero/asistencias", icon: "users" },
 ];
 
 const menuBarbero = [

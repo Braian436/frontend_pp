@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { LuPlus, LuSearch } from "react-icons/lu";
+import AnularTicketModal from "../../components/anularTicketModal/AnularTicketModal.jsx";
 import CobroTicketModal from "../../components/cobroTicketModal/CobroTicketModal.jsx";
 import NuevoTicketModal from "../../components/nuevoTicketModal/NuevoTicketModal.jsx";
 import TicketCajero from "../../components/ticketCajero/TicketCajero.jsx";
@@ -14,21 +15,30 @@ export default function TicketsCajero() {
         resumen,
         cobrarTicket,
         crearTicket,
+        anularTicket,
+        cancelarTicket,
         error,
         procesando,
+        usuarioSesion,
         limpiarError,
     } = useCajaApi();
     const [filtro, setFiltro] = useState("todos");
     const [busqueda, setBusqueda] = useState("");
     const [ticketACobrar, setTicketACobrar] = useState(null);
     const [nuevoTicket, setNuevoTicket] = useState(false);
+    const [ticketAccion, setTicketAccion] = useState(null);
     const cerrada = estado === "cerrada";
     const texto = busqueda.trim().toLowerCase();
+
+    const esAnulada = (ticket) =>
+        ticket.estado === "anulada" || ticket.estado === "cancelada";
 
     const filtrados = [...tickets]
         .sort((a, b) => b.hora.localeCompare(a.hora))
         .filter((ticket) => {
-            const coincideFiltro = filtro === "todos" || ticket.estado === filtro;
+            const coincideFiltro =
+                filtro === "todos" ||
+                (filtro === "anulada" ? esAnulada(ticket) : ticket.estado === filtro);
             const coincideBusqueda =
                 !texto ||
                 ticket.cliente.toLowerCase().includes(texto) ||
@@ -37,10 +47,23 @@ export default function TicketsCajero() {
             return coincideFiltro && coincideBusqueda;
         });
 
-    const contar = (valor) =>
-        valor === "todos"
-            ? tickets.length
-            : tickets.filter((ticket) => ticket.estado === valor).length;
+    const contar = (valor) => {
+        if (valor === "todos") return tickets.length;
+        if (valor === "anulada") return tickets.filter(esAnulada).length;
+        return tickets.filter((ticket) => ticket.estado === valor).length;
+    };
+
+    const confirmarAccion = async (datos) => {
+        if (!ticketAccion) return;
+        const ok =
+            ticketAccion.modo === "anular"
+                ? await anularTicket(ticketAccion.ticket.id, datos)
+                : await cancelarTicket(ticketAccion.ticket.id, datos);
+        if (ok) {
+            limpiarError();
+            setTicketAccion(null);
+        }
+    };
 
     return (
         <section className={`min-vh-100 ${styles.pagina}`}>
@@ -93,6 +116,7 @@ export default function TicketsCajero() {
                             ["todos", "Todos"],
                             ["pendiente", "Pendientes"],
                             ["cobrado", "Cobrados"],
+                            ["anulada", "Anuladas"],
                         ].map(([valor, etiqueta]) => (
                             <button
                                 type="button"
@@ -115,7 +139,9 @@ export default function TicketsCajero() {
                                 ? "Todos los tickets"
                                 : filtro === "pendiente"
                                   ? "Tickets pendientes"
-                                  : "Tickets cobrados"}
+                                  : filtro === "cobrado"
+                                    ? "Tickets cobrados"
+                                    : "Tickets anulados o cancelados"}
                         </h2>
                         <span>{filtrados.length} resultados</span>
                     </div>
@@ -131,6 +157,18 @@ export default function TicketsCajero() {
                                     key={ticket.id}
                                     ticket={ticket}
                                     onCobrar={setTicketACobrar}
+                                    onAnular={(seleccionado) =>
+                                        setTicketAccion({
+                                            ticket: seleccionado,
+                                            modo: "anular",
+                                        })
+                                    }
+                                    onCancelar={(seleccionado) =>
+                                        setTicketAccion({
+                                            ticket: seleccionado,
+                                            modo: "cancelar",
+                                        })
+                                    }
                                     deshabilitado={cerrada}
                                 />
                             ))}
@@ -145,6 +183,12 @@ export default function TicketsCajero() {
                             Cobrado en el turno{" "}
                             <strong>{dinero(resumen.totalCobrado)}</strong>
                         </p>
+                        {resumen.totalAnulado > 0 && (
+                            <p>
+                                Anulado{" "}
+                                <strong>{dinero(resumen.totalAnulado)}</strong>
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>
@@ -176,6 +220,20 @@ export default function TicketsCajero() {
                     }}
                     procesando={procesando}
                     error={error}
+                />
+            )}
+            {ticketAccion && (
+                <AnularTicketModal
+                    ticket={ticketAccion.ticket}
+                    modo={ticketAccion.modo}
+                    onCerrar={() => {
+                        setTicketAccion(null);
+                        limpiarError();
+                    }}
+                    onConfirmar={confirmarAccion}
+                    procesando={procesando}
+                    error={error}
+                    usuarioSesion={usuarioSesion}
                 />
             )}
         </section>

@@ -32,6 +32,9 @@ export default function TablaMovimientosCaja({ movimientos }) {
                                 const positivo = ["ingreso", "cobro"].includes(
                                     movimiento.tipo
                                 );
+                                const negativo = ["egreso", "anulacion"].includes(
+                                    movimiento.tipo
+                                );
 
                                 return (
                                     <tr key={movimiento.id}>
@@ -53,16 +56,12 @@ export default function TablaMovimientosCaja({ movimientos }) {
                                             className={`text-end ${
                                                 positivo
                                                     ? styles.positivo
-                                                    : movimiento.tipo === "egreso"
+                                                    : negativo
                                                       ? styles.negativo
                                                       : styles.neutro
                                             }`}
                                         >
-                                            {movimiento.tipo === "egreso"
-                                                ? "- "
-                                                : positivo
-                                                  ? "+ "
-                                                  : ""}
+                                            {negativo ? "- " : positivo ? "+ " : ""}
                                             {dinero(movimiento.monto)}
                                         </td>
                                     </tr>

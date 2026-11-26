@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { apiRequest } from "../../api/apiRequest.js";
+import { useCajaContext } from "./cajaContexto.js";
 import {
     calcularResumen,
     normalizarCaja,
@@ -57,6 +58,9 @@ export function useCajaApi() {
     const [procesando, setProcesando] = useState(false);
     const [error, setError] = useState("");
 
+    const contexto = useCajaContext();
+    const marcarCajaAbierta = contexto?.marcarCajaAbierta;
+
     const usuarioSesion = useMemo(() => leerUsuarioSesion(), []);
 
     const aplicarCarga = useCallback((cajas, movimientosApi, ventas) => {
@@ -65,6 +69,8 @@ export function useCajaApi() {
             (fila) => !fila?.fecha_cierre && !fila?.fechaCierre
         );
         const elegida = abierta ?? filasCaja[0] ?? null;
+
+        if (marcarCajaAbierta) marcarCajaAbierta(Boolean(abierta));
 
         setCaja(elegida ? normalizarCaja(elegida) : cajaVacia());
 
@@ -80,7 +86,7 @@ export function useCajaApi() {
         setTickets(
             normalizarFilas(ventas ?? [], ["ventas"]).map(normalizarTicket)
         );
-    }, []);
+    }, [marcarCajaAbierta]);
 
     const recargar = useCallback(async () => {
         const pedir = (ruta) => apiRequest(ruta).catch(() => null);
@@ -284,6 +290,42 @@ export function useCajaApi() {
         return true;
     };
 
+    const anularTicket = async (id, { motivo, usuario, contrasena }) => {
+        setError("");
+        setProcesando(true);
+        try {
+            await apiRequest(`${ENDPOINTS.ventas}${id}/anular/`, {
+                method: "POST",
+                body: { motivo, usuario, contrasena },
+            });
+        } catch (fallo) {
+            setError(fallo.message);
+            setProcesando(false);
+            return false;
+        }
+        setProcesando(false);
+        await recargar();
+        return true;
+    };
+
+    const cancelarTicket = async (id, { motivo }) => {
+        setError("");
+        setProcesando(true);
+        try {
+            await apiRequest(`${ENDPOINTS.ventas}${id}/cancelar/`, {
+                method: "POST",
+                body: { motivo },
+            });
+        } catch (fallo) {
+            setError(fallo.message);
+            setProcesando(false);
+            return false;
+        }
+        setProcesando(false);
+        await recargar();
+        return true;
+    };
+
     return {
         caja,
         estado: caja.estado,
@@ -301,5 +343,7 @@ export function useCajaApi() {
         registrarMovimiento,
         cobrarTicket,
         crearTicket,
+        anularTicket,
+        cancelarTicket,
     };
 }
