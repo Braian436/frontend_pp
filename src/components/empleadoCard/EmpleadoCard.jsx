@@ -43,10 +43,6 @@ export default function EmpleadoCard( { empleado, onEditar, onEliminar } ) {
                     {nombreCompleto}
                 </h5>
 
-                <p className={styles.rol}>
-                    {empleado.rol}
-                </p>
-
                 <div className="row g-2 mt-2 mb-3">
 
                     <div className="col-6">

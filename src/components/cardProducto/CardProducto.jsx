@@ -4,35 +4,40 @@ import styles from "./CardProducto.module.css";
 export default function CardProducto({
     producto,
     servicio,
+    tarjeta,
     onEditar,
     onEliminar,
     onCambioEstado,
     onAgregarBarbero,
 }) {
     const [barberoId, setBarberoId] = useState("");
-    const item = producto ?? servicio ?? {};
+    const item = tarjeta ?? producto ?? servicio ?? {};
     const { nombre, descripcion, estado } = item;
 
-    const detalles = producto
-        ? [
-            ["Marca", producto.marca_nombre],
-            ["Categoría", `${producto.categoria_nombre ?? ""}${producto.categoria_descripcion ? ` · ${producto.categoria_descripcion}` : ""}`],
-            ["Descuento", `${producto.descuento_nombre ?? ""} · ${producto.descuento_mayorista == null ? "Tipo sin definir" : producto.descuento_mayorista ? "Mayorista" : "Minorista"} · ${producto.descuento_cantidad ?? "Sin cantidad"}`],
-            ["Stock actual", producto.stock_actual],
-            ["Stock mínimo", producto.stock_minimo ?? "Sin definir"],
-        ]
-        : [
-            ["Barberos", servicio?.barberos?.length ? servicio.barberos.map((b) => b.nombre).join(", ") : "Sin barberos asignados"],
-        ];
+    const detalles = tarjeta
+        ? (tarjeta.detalles ?? [])
+        : producto
+            ? [
+                ["Marca", producto.marca_nombre],
+                ["Categoría", `${producto.categoria_nombre ?? ""}${producto.categoria_descripcion ? ` · ${producto.categoria_descripcion}` : ""}`],
+                ["Descuento", `${producto.descuento_nombre ?? ""} · ${producto.descuento_mayorista == null ? "Tipo sin definir" : producto.descuento_mayorista ? "Mayorista" : "Minorista"} · ${producto.descuento_cantidad ?? "Sin cantidad"}`],
+                ["Stock actual", producto.stock_actual],
+                ["Stock mínimo", producto.stock_minimo ?? "Sin definir"],
+            ]
+            : [
+                ["Barberos", servicio?.barberos?.length ? servicio.barberos.map((b) => b.nombre).join(", ") : "Sin barberos asignados"],
+            ];
 
-    const precios = producto
-        ? [
-            ["Último costo unitario", producto.costo_ultima_compra == null ? "Sin compras" : `$${producto.costo_ultima_compra}`],
-            ["Último precio de venta", producto.precio_ultima_venta == null ? "Sin ventas" : `$${producto.precio_ultima_venta}`],
-        ]
-        : [
-            ["Precio", `$${servicio?.precio ?? 0}`],
-        ];
+    const precios = tarjeta
+        ? (tarjeta.precios ?? [])
+        : producto
+            ? [
+                ["Último costo unitario", producto.costo_ultima_compra == null ? "Sin compras" : `$${producto.costo_ultima_compra}`],
+                ["Último precio de venta", producto.precio_ultima_venta == null ? "Sin ventas" : `$${producto.precio_ultima_venta}`],
+            ]
+            : [
+                ["Precio", `$${servicio?.precio ?? 0}`],
+            ];
 
     const disponibles = servicio?.barberosDisponibles ?? [];
 
@@ -59,17 +64,21 @@ export default function CardProducto({
 
                 <p className={styles.descripcion}>{descripcion || "Sin descripción"}</p>
 
-                <div className={styles.detalles}>
-                    {detalles.map(([etiqueta, valor]) => (
-                        <p key={etiqueta}><span>{etiqueta}</span><strong>{valor}</strong></p>
-                    ))}
-                </div>
+                {detalles.length > 0 && (
+                    <div className={styles.detalles}>
+                        {detalles.map(([etiqueta, valor]) => (
+                            <p key={etiqueta}><span>{etiqueta}</span><strong>{valor}</strong></p>
+                        ))}
+                    </div>
+                )}
 
-                <div className={styles.precios}>
-                    {precios.map(([etiqueta, valor]) => (
-                        <p key={etiqueta}><span>{etiqueta}</span><strong>{valor}</strong></p>
-                    ))}
-                </div>
+                {precios.length > 0 && (
+                    <div className={styles.precios}>
+                        {precios.map(([etiqueta, valor]) => (
+                            <p key={etiqueta}><span>{etiqueta}</span><strong>{valor}</strong></p>
+                        ))}
+                    </div>
+                )}
 
                 {onAgregarBarbero && disponibles.length > 0 && (
                     <form className={styles.asignarForm} onSubmit={asignar}>

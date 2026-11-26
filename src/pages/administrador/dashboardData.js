@@ -28,7 +28,7 @@ export const estadoFila = (fila) => String(
 
 export const esPendiente = (estado) => estado.includes("pendiente") || estado === "pending";
 export const esCompletado = (estado) => ["finalizado", "completado", "realizado", "atendido", "asistio", "presente", "done", "finished", "completed", "closed", "en_curso"].some((valor) => estado.includes(valor));
-export const esCancelado = (estado) => ["cancelado", "cancelada", "anulado", "canceled", "cancelled"].some((valor) => estado.includes(valor));
+export const esCancelado = (estado) => ["cancelado", "cancelada", "anulado"].some((valor) => estado.includes(valor));
 
 export const sumarMonto = (fila) => ["monto", "total", "importe", "ingresos", "ingreso", "caja", "valor", "cobrado", "amount", "pago"]
     .reduce((total, clave) => {

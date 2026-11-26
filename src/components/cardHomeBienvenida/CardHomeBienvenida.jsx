@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from "./CardHomeBienvenida.module.css"
 
+
 export default function CardHomeBienvenida({ titulo, descripcion, detalle }) {
   return (
     <section className={`${styles.banner} mb-4`}>

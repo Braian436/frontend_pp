@@ -71,6 +71,34 @@
     -moz-appearance: textfield;
 }
 
+.clave {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.clave .inputSimple {
+    width: 100%;
+    padding-right: 2.5rem;
+}
+
+.ojo {
+    position: absolute;
+    right: 0.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    border: 0;
+    background: transparent;
+    color: #8f897e;
+    cursor: pointer;
+}
+
+.ojo:hover {
+    color: #d9c493;
+}
+
 .inputSimple::-webkit-outer-spin-button,
 .inputSimple::-webkit-inner-spin-button {
     margin: 0;

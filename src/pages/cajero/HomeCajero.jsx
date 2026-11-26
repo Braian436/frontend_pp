@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
     LuBanknote,
     LuHandCoins,
+    LuPlus,
     LuTicket,
     LuWallet,
 } from "react-icons/lu";
@@ -11,6 +12,7 @@ import IndicadoresCaja from "../../components/indicadoresCaja/IndicadoresCaja.js
 import MovimientoCajaModal from "../../components/movimientoCajaModal/MovimientoCajaModal.jsx";
 import CierreCajaModal from "../../components/cierreCajaModal/CierreCajaModal.jsx";
 import CobroTicketModal from "../../components/cobroTicketModal/CobroTicketModal.jsx";
+import NuevoTicketModal from "../../components/nuevoTicketModal/NuevoTicketModal.jsx";
 import TicketCajero from "../../components/ticketCajero/TicketCajero.jsx";
 import { useCajaApi } from "./cajaApi.js";
 import { dinero, fechaLarga } from "./cajaData.js";
@@ -27,14 +29,20 @@ export default function HomeCajero() {
         estado,
         resumen,
         cobrarTicket,
+        crearTicket,
         registrarMovimiento,
         cerrarCaja,
         abrirCaja,
         error,
+        procesando,
+        usuarioSesion,
+        limpiarError,
+        cargando,
     } = useCajaApi();
     const navigate = useNavigate();
     const [modal, setModal] = useState(null);
     const [ticketACobrar, setTicketACobrar] = useState(null);
+    const [nuevoTicket, setNuevoTicket] = useState(false);
     const cerrada = estado === "cerrada";
     const pendientes = resumen.pendientes;
 
@@ -74,22 +82,29 @@ export default function HomeCajero() {
         },
     ];
 
-    const registrar = (datos) => {
-        if (modal === "apertura") {
-            abrirCaja(datos.monto);
-        } else {
-            registrarMovimiento({
-                tipo: modal,
-                monto: datos.monto,
-                concepto: datos.concepto,
-            });
+    const registrar = async (datos) => {
+        const ok =
+            modal === "apertura"
+                ? await abrirCaja(datos)
+                : await registrarMovimiento({
+                      tipo: modal,
+                      monto: datos.monto,
+                      concepto: datos.concepto,
+                      metodo: datos.metodo,
+                      montoRecibido: datos.montoRecibido,
+                  });
+        if (ok) {
+            limpiarError();
+            setModal(null);
         }
-        setModal(null);
     };
 
-    const confirmarCierre = (datos) => {
-        cerrarCaja(datos);
-        setModal(null);
+    const confirmarCierre = async (datos) => {
+        const ok = await cerrarCaja(datos);
+        if (ok) {
+            limpiarError();
+            setModal(null);
+        }
     };
 
     return (
@@ -108,21 +123,28 @@ export default function HomeCajero() {
                         </h1>
                         <p>
                             {fechaLarga()} · Turno tarde.{" "}
-                            {cerrada ? (
-                                "La caja está cerrada. Abrila para volver a operar."
-                            ) : (
-                                <>
-                                    Abriste caja a las{" "}
-                                    <strong>{caja?.fechaInicio ?? "10:00"} hs</strong>{" "}
-                                    y {textoPendientes}.
-                                </>
-                            )}
+                            {cargando
+                                ? "Cargando caja..."
+                                : cerrada
+                                  ? "La caja está cerrada. Abrila para volver a operar."
+                                  : (
+                                        <>
+                                            Abriste caja a las{" "}
+                                            <strong>{caja?.fechaInicio} hs</strong>{" "}
+                                            y {textoPendientes}.
+                                        </>
+                                    )}
                         </p>
                     </div>
                     <span
                         className={`${styles.estado} ${cerrada ? styles.cerrada : ""}`}
                     >
-                        <span /> {cerrada ? "Caja cerrada" : "Caja abierta"}
+                        <span />{" "}
+                        {cargando
+                            ? "Cargando..."
+                            : cerrada
+                              ? "Caja cerrada"
+                              : "Caja abierta"}
                     </span>
                 </section>
             </div>
@@ -150,7 +172,16 @@ export default function HomeCajero() {
                 <section className="mt-4">
                     <div className={styles.encabezadoSeccion}>
                         <h2>Tickets por cobrar</h2>
-                        <span>{pendientes.length} esperando en mostrador</span>
+                        <div className={styles.encabezadoAcciones}>
+                            <button
+                                type="button"
+                                className={styles.nuevo}
+                                onClick={() => setNuevoTicket(true)}
+                            >
+                                <LuPlus aria-hidden="true" /> Nuevo ticket
+                            </button>
+                            <span>{pendientes.length} esperando en mostrador</span>
+                        </div>
                     </div>
 
                     <div className={styles.listaTickets}>
@@ -187,7 +218,9 @@ export default function HomeCajero() {
                     tipo={modal}
                     onCerrar={() => setModal(null)}
                     onRegistrar={registrar}
+                    procesando={procesando}
                     error={error}
+                    usuarioSesion={usuarioSesion}
                 />
             )}
             {modal === "cierre" && (
@@ -195,17 +228,37 @@ export default function HomeCajero() {
                     resumen={resumen}
                     onCerrar={() => setModal(null)}
                     onConfirmar={confirmarCierre}
+                    procesando={procesando}
                     error={error}
+                    usuarioSesion={usuarioSesion}
                 />
             )}
             {ticketACobrar && (
                 <CobroTicketModal
                     ticket={ticketACobrar}
                     onCerrar={() => setTicketACobrar(null)}
-                    onConfirmar={(datos) => {
-                        cobrarTicket(ticketACobrar.id, datos);
-                        setTicketACobrar(null);
+                    onConfirmar={async (datos) => {
+                        const ok = await cobrarTicket(ticketACobrar.id, datos);
+                        if (ok) {
+                            limpiarError();
+                            setTicketACobrar(null);
+                        }
                     }}
+                    procesando={procesando}
+                    error={error}
+                />
+            )}
+            {nuevoTicket && (
+                <NuevoTicketModal
+                    onCerrar={() => setNuevoTicket(false)}
+                    onConfirmar={async (datos) => {
+                        const ok = await crearTicket(datos);
+                        if (ok) {
+                            limpiarError();
+                            setNuevoTicket(false);
+                        }
+                    }}
+                    procesando={procesando}
                     error={error}
                 />
             )}

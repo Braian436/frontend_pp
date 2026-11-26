@@ -16,6 +16,11 @@ export const solicitar = async (peticion) => {
     try {
         return (await peticion).data;
     } catch (error) {
+        if (axios.isCancel(error)) {
+            const abortError = new Error("Solicitud abortada");
+            abortError.name = "AbortError";
+            throw abortError;
+        }
         throw obtenerError(error);
     }
 };
@@ -35,3 +40,8 @@ export const cargarProductosApi = (signal) => solicitar(api.get("/productos/", {
 export const crearProductoApi = (producto) => solicitar(api.post("/productos/", producto));
 export const editarProductoApi = (id, producto) => solicitar(api.patch(`/productos/${id}/`, producto));
 export const eliminarProductoApi = (id) => solicitar(api.delete(`/productos/${id}/`));
+
+export const listarCatalogoApi = (recurso, signal) => solicitar(api.get(`/${recurso}/`, { signal }));
+export const crearCatalogoApi = (recurso, data) => solicitar(api.post(`/${recurso}/`, data));
+export const editarCatalogoApi = (recurso, id, data) => solicitar(api.patch(`/${recurso}/${id}/`, data));
+export const eliminarCatalogoApi = (recurso, id) => solicitar(api.delete(`/${recurso}/${id}/`));

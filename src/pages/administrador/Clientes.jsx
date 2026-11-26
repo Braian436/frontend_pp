@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { crearClienteApi, editarClienteApi, eliminarClienteApi, listarClientesApi } from "../../api/clientesApi.js";
 import AdminCatalogModal from "../../components/adminCatalogModal/AdminCatalogModal";
-import styles from "./Clientes.module.css";
+import styles from "./Administrador.module.css";
 import { extraerFilas } from "./adminCrud";
 
 export default function Clientes() {
@@ -19,7 +19,7 @@ export default function Clientes() {
             setClientes(extraerFilas(resp, "clientes"));
             setError("");
         } catch (fallo) {
-            if (fallo.name !== "AbortError" && fallo.name !== "CanceledError") setError(fallo.message);
+            if (fallo.name !== "AbortError") setError(fallo.message);
         } finally {
             setLoading(false);
         }
@@ -31,7 +31,7 @@ export default function Clientes() {
             setClientes(extraerFilas(resp, "clientes"));
             setError("");
         }).catch((fallo) => {
-            if (fallo.name !== "AbortError" && fallo.name !== "CanceledError") setError(fallo.message);
+            if (fallo.name !== "AbortError") setError(fallo.message);
         }).finally(() => {
             if (!controller.signal.aborted) setLoading(false);
         });

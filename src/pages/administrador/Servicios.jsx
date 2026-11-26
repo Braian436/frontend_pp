@@ -4,7 +4,7 @@ import CardProducto from "../../components/cardProducto/CardProducto";
 import CardServicio from "../../components/cardServicio/CardServicio";
 import AdminCatalogModal from "../../components/adminCatalogModal/AdminCatalogModal";
 import fondo from "../../assets/fondoservicio1.jpg";
-import styles from "./Servicios.module.css";
+import styles from "./Administrador.module.css";
 import { construirServicio, extraerFilas } from "./adminCrud";
 
 export default function Servicios({ administracion = false }) {
@@ -25,7 +25,7 @@ export default function Servicios({ administracion = false }) {
             });
             setError("");
         } catch (fallo) {
-            if (fallo.name !== "AbortError" && fallo.name !== "CanceledError") setError(fallo.message);
+            if (fallo.name !== "AbortError") setError(fallo.message);
         } finally {
             setLoading(false);
         }
@@ -41,7 +41,7 @@ export default function Servicios({ administracion = false }) {
             });
             setError("");
         }).catch((fallo) => {
-            if (fallo.name !== "AbortError" && fallo.name !== "CanceledError") setError(fallo.message);
+            if (fallo.name !== "AbortError") setError(fallo.message);
         }).finally(() => {
             if (!controller.signal.aborted) setLoading(false);
         });

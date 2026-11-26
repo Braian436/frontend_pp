@@ -3,14 +3,13 @@ import EmpleadoCard from "../../components/empleadoCard/EmpleadoCard";
 import EmpleadoFiltros from "../../components/empleadoFiltro/EmpleadoFiltro";
 import EmpleadoModal from "../../components/empleadoModal/EmpleadoModal";
 import { apiRequest } from "../../api/apiRequest.js";
-import styles from "./Empleados.module.css";
+import styles from "./Administrador.module.css";
 import { construirEmpleado, extraerFilas, normalizarEmpleado, useCrudApi } from "./adminCrud.js";
 
 export default function Empleados() {
   const crud = useCrudApi("/empleados/", "empleados");
   const empleados = crud.items.map(normalizarEmpleado);
 
-  const [roles, setRoles] = useState([]);
   const [gruposUsuario, setGruposUsuario] = useState([]);
   const [errorOpciones, setErrorOpciones] = useState("");
   const [busqueda, setBusqueda] = useState("");
@@ -23,12 +22,8 @@ export default function Empleados() {
     let activo = true;
     const cargarOpciones = async () => {
       try {
-        const [rolesData, gruposData] = await Promise.all([
-          apiRequest("/roles/"),
-          apiRequest("/grupos/"),
-        ]);
+        const gruposData = await apiRequest("/grupos/");
         if (!activo) return;
-        setRoles(extraerFilas(rolesData, "roles"));
         setGruposUsuario(extraerFilas(gruposData, "groups"));
       } catch (fallo) {
         if (activo) setErrorOpciones(fallo.message);
@@ -172,7 +167,6 @@ export default function Empleados() {
           guardar={guardarEmpleado}
           saving={crud.saving}
           error={crud.error}
-          roles={roles}
           grupos={gruposUsuario}
         />
       )}

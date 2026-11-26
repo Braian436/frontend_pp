@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { LuSearch } from "react-icons/lu";
+import { LuPlus, LuSearch } from "react-icons/lu";
 import CobroTicketModal from "../../components/cobroTicketModal/CobroTicketModal.jsx";
+import NuevoTicketModal from "../../components/nuevoTicketModal/NuevoTicketModal.jsx";
 import TicketCajero from "../../components/ticketCajero/TicketCajero.jsx";
 import { useCajaApi } from "./cajaApi.js";
 import { dinero } from "./cajaData.js";
@@ -12,11 +13,15 @@ export default function TicketsCajero() {
         tickets,
         resumen,
         cobrarTicket,
+        crearTicket,
         error,
+        procesando,
+        limpiarError,
     } = useCajaApi();
     const [filtro, setFiltro] = useState("todos");
     const [busqueda, setBusqueda] = useState("");
     const [ticketACobrar, setTicketACobrar] = useState(null);
+    const [nuevoTicket, setNuevoTicket] = useState(false);
     const cerrada = estado === "cerrada";
     const texto = busqueda.trim().toLowerCase();
 
@@ -54,6 +59,16 @@ export default function TicketsCajero() {
                     >
                         <span /> {cerrada ? "Caja cerrada" : "Caja abierta"}
                     </span>
+                </div>
+
+                <div className={styles.acciones}>
+                    <button
+                        type="button"
+                        className={styles.nuevo}
+                        onClick={() => setNuevoTicket(true)}
+                    >
+                        <LuPlus aria-hidden="true" /> Nuevo ticket
+                    </button>
                 </div>
 
                 {error && (
@@ -138,10 +153,28 @@ export default function TicketsCajero() {
                 <CobroTicketModal
                     ticket={ticketACobrar}
                     onCerrar={() => setTicketACobrar(null)}
-                    onConfirmar={(datos) => {
-                        cobrarTicket(ticketACobrar.id, datos);
-                        setTicketACobrar(null);
+                    onConfirmar={async (datos) => {
+                        const ok = await cobrarTicket(ticketACobrar.id, datos);
+                        if (ok) {
+                            limpiarError();
+                            setTicketACobrar(null);
+                        }
                     }}
+                    procesando={procesando}
+                    error={error}
+                />
+            )}
+            {nuevoTicket && (
+                <NuevoTicketModal
+                    onCerrar={() => setNuevoTicket(false)}
+                    onConfirmar={async (datos) => {
+                        const ok = await crearTicket(datos);
+                        if (ok) {
+                            limpiarError();
+                            setNuevoTicket(false);
+                        }
+                    }}
+                    procesando={procesando}
                     error={error}
                 />
             )}

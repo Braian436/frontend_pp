@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LuLock } from "react-icons/lu";
+import { LuEye, LuEyeOff, LuLock } from "react-icons/lu";
 import CajaModal from "../cajaModal/CajaModal.jsx";
 import styles from "./CierreCajaModal.module.css";
 
@@ -16,11 +16,15 @@ export default function CierreCajaModal({
     onConfirmar,
     procesando = false,
     error = "",
+    usuarioSesion = "",
 }) {
     const [saldoReal, setSaldoReal] = useState(() =>
         String(resumen.saldoEsperado ?? 0)
     );
     const [observacion, setObservacion] = useState("");
+    const [usuario, setUsuario] = useState(usuarioSesion || "");
+    const [contrasena, setContrasena] = useState("");
+    const [verContrasena, setVerContrasena] = useState(false);
     const [errorLocal, setErrorLocal] = useState("");
 
     const diferencia = (Number(saldoReal) || 0) - resumen.saldoEsperado;
@@ -31,10 +35,21 @@ export default function CierreCajaModal({
             return;
         }
 
+        if (!usuario.trim()) {
+            setErrorLocal("Ingresá tu usuario.");
+            return;
+        }
+        if (!contrasena) {
+            setErrorLocal("Ingresá tu contraseña.");
+            return;
+        }
+
         setErrorLocal("");
         onConfirmar({
             saldoReal: Number(saldoReal),
             observacion,
+            usuario: usuario.trim(),
+            contrasena,
         });
     };
 
@@ -70,6 +85,10 @@ export default function CierreCajaModal({
                     <dd className={styles.rojo}>- {dinero(resumen.egresos)}</dd>
                 </div>
                 <div>
+                    <dt>Egresos en efectivo</dt>
+                    <dd className={styles.rojo}>- {dinero(resumen.egresosEfectivo)}</dd>
+                </div>
+                <div>
                     <dt>Propinas</dt>
                     <dd>{dinero(resumen.propinas)}</dd>
                 </div>
@@ -91,6 +110,50 @@ export default function CierreCajaModal({
                     value={saldoReal}
                     onChange={(evento) => setSaldoReal(evento.target.value)}
                 />
+            </label>
+
+            <label className={styles.campo} htmlFor="cierre-usuario">
+                <span className={styles.etiqueta}>Usuario</span>
+                <input
+                    id="cierre-usuario"
+                    className={styles.input}
+                    type="text"
+                    autoComplete="username"
+                    value={usuario}
+                    onChange={(evento) => {
+                        setUsuario(evento.target.value);
+                        setErrorLocal("");
+                    }}
+                />
+            </label>
+
+            <label className={styles.campo} htmlFor="cierre-contrasena">
+                <span className={styles.etiqueta}>Contraseña</span>
+                <div className={styles.clave}>
+                    <input
+                        id="cierre-contrasena"
+                        className={styles.input}
+                        type={verContrasena ? "text" : "password"}
+                        autoComplete="current-password"
+                        value={contrasena}
+                        onChange={(evento) => {
+                            setContrasena(evento.target.value);
+                            setErrorLocal("");
+                        }}
+                    />
+                    <button
+                        type="button"
+                        className={styles.ojo}
+                        onClick={() => setVerContrasena((valor) => !valor)}
+                        aria-label={
+                            verContrasena
+                                ? "Ocultar contraseña"
+                                : "Mostrar contraseña"
+                        }
+                    >
+                        {verContrasena ? <LuEyeOff /> : <LuEye />}
+                    </button>
+                </div>
             </label>
 
             <p

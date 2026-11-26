@@ -24,6 +24,10 @@ export default function CajaCajero() {
         cerrarCaja,
         abrirCaja,
         error,
+        procesando,
+        usuarioSesion,
+        limpiarError,
+        cargando,
     } = useCajaApi();
     const [modal, setModal] = useState(null);
     const cerrada = estado === "cerrada";
@@ -32,7 +36,9 @@ export default function CajaCajero() {
         {
             titulo: "Apertura",
             valor: dinero(resumen.apertura),
-            detalle: `A las ${caja?.fechaInicio ?? "10:00"} hs`,
+            detalle: caja?.fechaInicio
+                ? `A las ${caja.fechaInicio} hs`
+                : "Sin apertura",
             icono: LuBanknote,
         },
         {
@@ -58,22 +64,29 @@ export default function CajaCajero() {
         },
     ];
 
-    const registrar = (datos) => {
-        if (modal === "apertura") {
-            abrirCaja(datos.monto);
-        } else {
-            registrarMovimiento({
-                tipo: modal,
-                monto: datos.monto,
-                concepto: datos.concepto,
-            });
+    const registrar = async (datos) => {
+        const ok =
+            modal === "apertura"
+                ? await abrirCaja(datos)
+                : await registrarMovimiento({
+                      tipo: modal,
+                      monto: datos.monto,
+                      concepto: datos.concepto,
+                      metodo: datos.metodo,
+                      montoRecibido: datos.montoRecibido,
+                  });
+        if (ok) {
+            limpiarError();
+            setModal(null);
         }
-        setModal(null);
     };
 
-    const confirmarCierre = (datos) => {
-        cerrarCaja(datos);
-        setModal(null);
+    const confirmarCierre = async (datos) => {
+        const ok = await cerrarCaja(datos);
+        if (ok) {
+            limpiarError();
+            setModal(null);
+        }
     };
 
     return (
@@ -90,7 +103,12 @@ export default function CajaCajero() {
                     <span
                         className={`${styles.estado} ${cerrada ? styles.cerrada : ""}`}
                     >
-                        <span /> {cerrada ? "Caja cerrada" : "Caja abierta"}
+                        <span />{" "}
+                        {cargando
+                            ? "Cargando..."
+                            : cerrada
+                              ? "Caja cerrada"
+                              : "Caja abierta"}
                     </span>
                 </div>
 
@@ -146,7 +164,9 @@ export default function CajaCajero() {
                     tipo={modal}
                     onCerrar={() => setModal(null)}
                     onRegistrar={registrar}
+                    procesando={procesando}
                     error={error}
+                    usuarioSesion={usuarioSesion}
                 />
             )}
             {modal === "cierre" && (
@@ -154,7 +174,9 @@ export default function CajaCajero() {
                     resumen={resumen}
                     onCerrar={() => setModal(null)}
                     onConfirmar={confirmarCierre}
+                    procesando={procesando}
                     error={error}
+                    usuarioSesion={usuarioSesion}
                 />
             )}
         </section>

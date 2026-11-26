@@ -2,6 +2,8 @@ import { useState } from "react";
 import {
     LuArrowDownToLine,
     LuArrowUpFromLine,
+    LuEye,
+    LuEyeOff,
     LuWallet,
 } from "react-icons/lu";
 import CajaModal from "../cajaModal/CajaModal.jsx";
@@ -28,7 +30,7 @@ const CONFIG = {
     },
     egreso: {
         titulo: "Nuevo egreso",
-        descripcion: "Registrá una salida de efectivo de la caja.",
+        descripcion: "Registrá una salida y elegí si es en efectivo o por transferencia.",
         texto: "Registrar egreso",
         concepto: "Egreso manual",
         icono: LuArrowDownToLine,
@@ -49,13 +51,20 @@ export default function MovimientoCajaModal({
     onRegistrar,
     procesando = false,
     error = "",
+    usuarioSesion = "",
 }) {
     const config = CONFIG[tipo] ?? CONFIG.ingreso;
     const esIngreso = tipo === "ingreso";
+    const esEgreso = tipo === "egreso";
+    const esApertura = tipo === "apertura";
+    const esMovimiento = esIngreso || esEgreso;
     const [monto, setMonto] = useState("");
     const [concepto, setConcepto] = useState(config.concepto);
     const [metodo, setMetodo] = useState("efectivo");
     const [montoRecibido, setMontoRecibido] = useState("");
+    const [usuario, setUsuario] = useState(usuarioSesion || "");
+    const [contrasena, setContrasena] = useState("");
+    const [verContrasena, setVerContrasena] = useState(false);
     const [errorLocal, setErrorLocal] = useState("");
     const esEfectivo = esIngreso && metodo === "efectivo";
     const total = Number(monto) || 0;
@@ -77,12 +86,25 @@ export default function MovimientoCajaModal({
             return;
         }
 
+        if (esApertura) {
+            if (!usuario.trim()) {
+                setErrorLocal("Ingresá tu usuario.");
+                return;
+            }
+            if (!contrasena) {
+                setErrorLocal("Ingresá tu contraseña.");
+                return;
+            }
+        }
+
         setErrorLocal("");
         onRegistrar({
             monto: total,
             concepto,
-            metodo: esIngreso ? metodo : "efectivo",
+            metodo: esMovimiento ? metodo : "efectivo",
             montoRecibido: esEfectivo ? Number(montoRecibido) : null,
+            usuario: esApertura ? usuario.trim() : undefined,
+            contrasena: esApertura ? contrasena : undefined,
         });
     };
 
@@ -117,7 +139,57 @@ export default function MovimientoCajaModal({
                 </div>
             </label>
 
-            {esIngreso && (
+            {esApertura && (
+                <>
+                    <label className={styles.campo} htmlFor="caja-usuario">
+                        <span className={styles.etiqueta}>Usuario</span>
+                        <input
+                            id="caja-usuario"
+                            className={styles.inputSimple}
+                            type="text"
+                            autoComplete="username"
+                            value={usuario}
+                            onChange={(evento) => {
+                                setUsuario(evento.target.value);
+                                setErrorLocal("");
+                            }}
+                        />
+                    </label>
+
+                    <label className={styles.campo} htmlFor="caja-contrasena">
+                        <span className={styles.etiqueta}>Contraseña</span>
+                        <div className={styles.clave}>
+                            <input
+                                id="caja-contrasena"
+                                className={styles.inputSimple}
+                                type={verContrasena ? "text" : "password"}
+                                autoComplete="current-password"
+                                value={contrasena}
+                                onChange={(evento) => {
+                                    setContrasena(evento.target.value);
+                                    setErrorLocal("");
+                                }}
+                            />
+                            <button
+                                type="button"
+                                className={styles.ojo}
+                                onClick={() =>
+                                    setVerContrasena((valor) => !valor)
+                                }
+                                aria-label={
+                                    verContrasena
+                                        ? "Ocultar contraseña"
+                                        : "Mostrar contraseña"
+                                }
+                            >
+                                {verContrasena ? <LuEyeOff /> : <LuEye />}
+                            </button>
+                        </div>
+                    </label>
+                </>
+            )}
+
+            {esMovimiento && (
                 <SelectorMetodo
                     valor={metodo}
                     onChange={(nuevo) => {
@@ -164,6 +236,13 @@ export default function MovimientoCajaModal({
             {esIngreso && !esEfectivo && (
                 <p className={styles.nota}>
                     Se cobra el total exacto con {METODOS[metodo].toLowerCase()}.
+                </p>
+            )}
+
+            {esEgreso && metodo !== "efectivo" && (
+                <p className={styles.nota}>
+                    Se descuenta por {METODOS[metodo].toLowerCase()}; no afecta el
+                    efectivo del cajón.
                 </p>
             )}
 
