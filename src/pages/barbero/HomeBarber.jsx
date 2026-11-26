@@ -42,7 +42,7 @@ const LISTA_DE_TURNOS = [
     <div className={styles.contenedorPrincipal}>
       <CardHomeBienvenida
         titulo={"PANEL DEL BARBERO"}
-        descripcion={"Bienvenido"}
+        descripcion={"Bienvenido ,{${nombreBarbero}}}"}
         detalle={"Estadisticas Recurrentes"}
       />
       <ListCardStats/>
