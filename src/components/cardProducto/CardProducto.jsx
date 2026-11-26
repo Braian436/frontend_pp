@@ -1,7 +1,47 @@
-import styles from './CardProducto.module.css'
+import { useState } from "react";
+import styles from "./CardProducto.module.css";
 
-export default function CardProducto({ producto, onEditar, onEliminar, onCambioEstado }) {
-    const { nombre, descripcion, estado, stock_actual, stock_minimo, marca_nombre, categoria_nombre, descuento_nombre, costo_ultima_compra, precio_ultima_venta } = producto
+export default function CardProducto({
+    producto,
+    servicio,
+    onEditar,
+    onEliminar,
+    onCambioEstado,
+    onAgregarBarbero,
+}) {
+    const [barberoId, setBarberoId] = useState("");
+    const item = producto ?? servicio ?? {};
+    const { nombre, descripcion, estado } = item;
+
+    const detalles = producto
+        ? [
+            ["Marca", producto.marca_nombre],
+            ["Categoría", `${producto.categoria_nombre ?? ""}${producto.categoria_descripcion ? ` · ${producto.categoria_descripcion}` : ""}`],
+            ["Descuento", `${producto.descuento_nombre ?? ""} · ${producto.descuento_mayorista == null ? "Tipo sin definir" : producto.descuento_mayorista ? "Mayorista" : "Minorista"} · ${producto.descuento_cantidad ?? "Sin cantidad"}`],
+            ["Stock actual", producto.stock_actual],
+            ["Stock mínimo", producto.stock_minimo ?? "Sin definir"],
+        ]
+        : [
+            ["Barberos", servicio?.barberos?.length ? servicio.barberos.map((b) => b.nombre).join(", ") : "Sin barberos asignados"],
+        ];
+
+    const precios = producto
+        ? [
+            ["Último costo unitario", producto.costo_ultima_compra == null ? "Sin compras" : `$${producto.costo_ultima_compra}`],
+            ["Último precio de venta", producto.precio_ultima_venta == null ? "Sin ventas" : `$${producto.precio_ultima_venta}`],
+        ]
+        : [
+            ["Precio", `$${servicio?.precio ?? 0}`],
+        ];
+
+    const disponibles = servicio?.barberosDisponibles ?? [];
+
+    const asignar = (e) => {
+        e.preventDefault();
+        if (!barberoId || !onAgregarBarbero) return;
+        onAgregarBarbero(barberoId);
+        setBarberoId("");
+    };
 
     return (
         <div className={styles.card}>
@@ -12,23 +52,43 @@ export default function CardProducto({ producto, onEditar, onEliminar, onCambioE
             <div className={styles.cuerpo}>
                 <div className={styles.encabezado}>
                     <h2 className={styles.nombre}>{nombre}</h2>
-                    <span className={`${styles.indicador} ${estado ? styles.indicadorActivo : ''}`} aria-hidden="true"></span>
+                    {onCambioEstado && (
+                        <span className={`${styles.indicador} ${estado ? styles.indicadorActivo : ""}`} aria-hidden="true"></span>
+                    )}
                 </div>
 
                 <p className={styles.descripcion}>{descripcion || "Sin descripción"}</p>
 
                 <div className={styles.detalles}>
-                    <p><span>Marca</span><strong>{marca_nombre}</strong></p>
-                    <p><span>Categoría</span><strong>{categoria_nombre}{producto.categoria_descripcion ? ` · ${producto.categoria_descripcion}` : ""}</strong></p>
-                    <p><span>Descuento</span><strong>{descuento_nombre} · {producto.descuento_mayorista == null ? "Tipo sin definir" : producto.descuento_mayorista ? "Mayorista" : "Minorista"} · {producto.descuento_cantidad ?? "Sin cantidad"}</strong></p>
-                    <p><span>Stock actual</span><strong>{stock_actual}</strong></p>
-                    <p><span>Stock mínimo</span><strong>{stock_minimo ?? "Sin definir"}</strong></p>
+                    {detalles.map(([etiqueta, valor]) => (
+                        <p key={etiqueta}><span>{etiqueta}</span><strong>{valor}</strong></p>
+                    ))}
                 </div>
 
                 <div className={styles.precios}>
-                    <p><span>Último costo unitario</span><strong>{costo_ultima_compra == null ? "Sin compras" : `$${costo_ultima_compra}`}</strong></p>
-                    <p><span>Último precio de venta</span><strong>{precio_ultima_venta == null ? "Sin ventas" : `$${precio_ultima_venta}`}</strong></p>
+                    {precios.map(([etiqueta, valor]) => (
+                        <p key={etiqueta}><span>{etiqueta}</span><strong>{valor}</strong></p>
+                    ))}
                 </div>
+
+                {onAgregarBarbero && disponibles.length > 0 && (
+                    <form className={styles.asignarForm} onSubmit={asignar}>
+                        <select
+                            className={styles.selectBarbero}
+                            value={barberoId}
+                            onChange={(e) => setBarberoId(e.target.value)}
+                            aria-label={`Añadir barbero a ${nombre}`}
+                        >
+                            <option value="">Añadir barbero...</option>
+                            {disponibles.map((b) => (
+                                <option key={b.id} value={b.id}>{b.nombre}</option>
+                            ))}
+                        </select>
+                        <button type="submit" className={styles.botonAsignar} disabled={!barberoId}>
+                            + Añadir
+                        </button>
+                    </form>
+                )}
 
                 <div className={styles.acciones}>
                     <div className={styles.botones}>
@@ -40,20 +100,22 @@ export default function CardProducto({ producto, onEditar, onEliminar, onCambioE
                         </button>
                     </div>
 
-                    <div className={styles.estado}>
-                        <input
-                            className={styles.switch}
-                            type="checkbox"
-                            checked={Boolean(estado)}
-                            onChange={(evento) => onCambioEstado?.(evento.target.checked)}
-                            aria-label={`Cambiar estado de ${nombre}`}
-                        />
-                        <span className={`${styles.estadoTexto} ${estado ? styles.estadoTextoActivo : ''}`}>
-                            {estado ? 'ACTIVO' : 'INACTIVO'}
-                        </span>
-                    </div>
+                    {onCambioEstado && (
+                        <div className={styles.estado}>
+                            <input
+                                className={styles.switch}
+                                type="checkbox"
+                                checked={Boolean(estado)}
+                                onChange={(evento) => onCambioEstado(evento.target.checked)}
+                                aria-label={`Cambiar estado de ${nombre}`}
+                            />
+                            <span className={`${styles.estadoTexto} ${estado ? styles.estadoTextoActivo : ""}`}>
+                                {estado ? "ACTIVO" : "INACTIVO"}
+                            </span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
-    )
+    );
 }

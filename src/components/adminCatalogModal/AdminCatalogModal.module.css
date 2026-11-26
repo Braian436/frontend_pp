@@ -10,3 +10,8 @@
 .cancelar:hover { background: #333; color: #fff; }
 .guardar { background: #d9c493; border: 1px solid #d9c493; color: #111; font-weight: 700; }
 .guardar:hover { background: #ebd9af; color: #111; }
+.multiLista { display: flex; flex-wrap: wrap; gap: 8px; }
+.multiItem { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid #383838; border-radius: 8px; background: #0e0d0d; color: #b7b1a4; font-size: 0.85rem; cursor: pointer; }
+.multiItem input { accent-color: #d9c493; }
+.multiItemActivo { border-color: #d9c493; color: #d9c493; }
+.vacio { color: #b7b1a4; font-size: 0.85rem; }

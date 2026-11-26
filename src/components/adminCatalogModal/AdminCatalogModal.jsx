@@ -2,20 +2,26 @@ import { useState } from "react";
 import styles from "./AdminCatalogModal.module.css";
 
 export default function AdminCatalogModal({ titulo, item, campos, guardar, cerrar, saving, error: apiError }) {
-    const [form, setForm] = useState(() => Object.fromEntries(campos.map(({ name, value, options }) => {
+    const [form, setForm] = useState(() => Object.fromEntries(campos.map(({ name, value, options, multiple }) => {
         const inicial = item?.[name] ?? item?.[value] ?? value;
+        if (multiple) return [name, Array.isArray(inicial) ? inicial.map(String) : []];
         return [name, options ? String(inicial) : inicial];
     })));
     const [error, setError] = useState("");
 
+    const toggleMulti = (name, val) => setForm((prev) => {
+        const actuales = prev[name] ?? [];
+        return { ...prev, [name]: actuales.includes(val) ? actuales.filter((x) => x !== val) : [...actuales, val] };
+    });
+
     const submit = (evento) => {
         evento.preventDefault();
         for (const campo of campos) {
-            if (campo.required && String(form[campo.name] ?? "").trim() === "") {
+            if (campo.required && (campo.multiple ? !form[campo.name]?.length : String(form[campo.name] ?? "").trim() === "")) {
                 setError(`Completá ${campo.label.toLowerCase()}.`);
                 return;
             }
-            if (campo.min !== undefined && Number(form[campo.name]) < campo.min) {
+            if (campo.min !== undefined && (Number.isNaN(Number(form[campo.name])) || Number(form[campo.name]) < campo.min)) {
                 setError(`${campo.label} debe ser válido.`);
                 return;
             }
@@ -37,7 +43,21 @@ export default function AdminCatalogModal({ titulo, item, campos, guardar, cerra
                             {campos.map((campo) => (
                                 <div className="mb-3" key={campo.name}>
                                     <label className="form-label" htmlFor={`catalogo-${campo.name}`}>{campo.label}</label>
-                                    {campo.options ? (
+                                    {campo.multiple ? (
+                                        <div className={styles.multiLista}>
+                                            {campo.options.length ? campo.options.map((option) => {
+                                                const val = String(typeof option === "object" ? option.value : option);
+                                                const lbl = typeof option === "object" ? option.label : option;
+                                                const activo = form[campo.name]?.includes(val);
+                                                return (
+                                                    <label key={val} className={`${styles.multiItem} ${activo ? styles.multiItemActivo : ""}`}>
+                                                        <input type="checkbox" checked={activo} onChange={() => toggleMulti(campo.name, val)} />
+                                                        <span>{lbl}</span>
+                                                    </label>
+                                                );
+                                            }) : <span className={styles.vacio}>Sin opciones disponibles</span>}
+                                        </div>
+                                    ) : campo.options ? (
                                         <select id={`catalogo-${campo.name}`} className={`form-select ${styles.input}`} value={form[campo.name]} onChange={(e) => setForm({ ...form, [campo.name]: e.target.value })}>
                                             <option value="">Seleccionar...</option>
                                             {campo.options.map((option) => (
@@ -47,7 +67,7 @@ export default function AdminCatalogModal({ titulo, item, campos, guardar, cerra
                                             ))}
                                         </select>
                                     ) : (
-                                        <input id={`catalogo-${campo.name}`} className={`form-control ${styles.input}`} type={campo.type || "text"} min={campo.min} value={form[campo.name]} onChange={(e) => setForm({ ...form, [campo.name]: e.target.value })} required={campo.required} />
+                                        <input id={`catalogo-${campo.name}`} className={`form-control ${styles.input}`} type={campo.type || "text"} min={campo.min} step={campo.step} value={form[campo.name]} onChange={(e) => setForm({ ...form, [campo.name]: e.target.value })} required={campo.required} />
                                     )}
                                 </div>
                             ))}

@@ -98,6 +98,44 @@
     color: #ffffff;
 }
 
+.asignarForm {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.selectBarbero {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid #d9c49366;
+    border-radius: 8px;
+    background: #0e0d0d;
+    color: #fff;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.78rem;
+}
+
+.botonAsignar {
+    border: 1px solid #d9c493;
+    border-radius: 8px;
+    background: transparent;
+    color: #d9c493;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.botonAsignar:hover:not(:disabled) {
+    background: #d9c493;
+    color: #111;
+}
+
+.botonAsignar:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
 .acciones {
     margin-top: auto;
 }

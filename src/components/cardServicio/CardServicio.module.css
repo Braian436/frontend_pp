@@ -40,7 +40,70 @@
 .descripcion {
     color: #b7b1a4;
     line-height: 1.6;
-    margin: 0 0 24px;
+    margin: 0 0 16px;
+}
+
+.barberosBloque {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0 0 20px;
+}
+
+.barberos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.barberoTag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border: 1px solid #6a4d0966;
+    border-radius: 16px;
+    background: #0e0d0d;
+    color: #d9c493;
+    font-size: 0.78rem;
+}
+
+.sinBarberos {
+    color: #b7b1a4;
+    font-size: 0.78rem;
+}
+
+.asignarForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.selectBarbero {
+    border: 1px solid #d9c49366;
+    border-radius: 8px;
+    background: #0e0d0d;
+    color: #fff;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
+}
+
+.botonAsignar {
+    border: 1px solid #d9c493;
+    border-radius: 8px;
+    background: transparent;
+    color: #d9c493;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.botonAsignar:hover:not(:disabled) {
+    background: #d9c493;
+    color: #111;
+}
+
+.botonAsignar:disabled {
+    opacity: 0.45;
 }
 
 .footer {
@@ -86,7 +149,7 @@
     border: 1px solid #803030 !important;
 }
 
-/* En pantallas chicas la imagen ocupa todo el ancho (como col-md-5 de Bootstrap) */
+/* En pantallas chicas la imagen ocupa todo el ancho*/
 @media (max-width: 767px) {
     .imagen {
         width: 100%;
