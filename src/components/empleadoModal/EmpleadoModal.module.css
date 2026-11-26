@@ -65,50 +65,6 @@
 }
 
 
-.fotoZona {
-    background-color: #232220;
-    border: 1px dashed #635740;
-    border-radius: 10px;
-    padding: 18px;
-}
-
-.avatar {
-    width: 85px;
-    height: 85px;
-
-    border: 1px solid #D9C493;
-    border-radius: 50%;
-    overflow: hidden;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    flex-shrink: 0;
-    background-color: #28251f;
-    color: #D9C493;
-    font-size: 32px;
-}
-
-.avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.botonFoto {
-    background-color: #D9C493;
-    color: #111;
-    border: 1px solid #D9C493;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.botonFoto:hover {
-    background-color: #ebd8aa;
-    color: #111;
-}
-
 .input {
     background-color: #111;
     border: 1px solid #383838;

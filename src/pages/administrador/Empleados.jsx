@@ -106,10 +106,6 @@ export default function Empleados() {
               Empleados
             </h1>
 
-            <p className="text-secondary mb-0">
-              Gestioná el equipo de la barbería,
-              sus comisiones y su estado.
-            </p>
           </div>
 
           <div className="col-12 col-md-4 text-md-end">

@@ -19,15 +19,11 @@ export default function EmpleadoModal({
         id_rol: empleado?.rolId || "",
         estado: empleado?.estado || "activo",
         comision: empleado?.comision ?? 15,
-        foto: empleado?.foto || null,
         usuario: empleado?.usuario || "",
         contrasena: "",
         grupoUsuario: empleado?.grupoUsuario || "",
     });
 
-    const [archivoFoto, setArchivoFoto] = useState(null);
-    const [preview, setPreview] = useState(empleado?.foto || null);
-    const [errorFoto, setErrorFoto] = useState("");
     const [errorFormulario, setErrorFormulario] = useState("");
 
     const cambiar = (e) => {
@@ -38,38 +34,6 @@ export default function EmpleadoModal({
         ...anterior,
         [name]: value,
         }));
-    };
-
-    const subirFoto = (e) => {
-        const archivo = e.target.files?.[0];
-
-        if (!archivo) return;
-
-        const tipos = [
-        "image/jpeg",
-        "image/png",
-        "image/webp",
-        ];
-
-        if (
-        !tipos.includes(archivo.type) ||
-        archivo.size > 5 * 1024 * 1024
-        ) {
-        setErrorFoto("La imagen debe ser JPG, PNG o WebP de hasta 5 MB.");
-        e.target.value = "";
-        return;
-        }
-
-        setErrorFoto("");
-        setArchivoFoto(archivo);
-
-        const lector = new FileReader();
-
-        lector.onload = () => {
-        setPreview(lector.result);
-        };
-
-        lector.readAsDataURL(archivo);
     };
 
     const enviar = (e) => {
@@ -95,8 +59,6 @@ export default function EmpleadoModal({
         ...form,
         id_rol: idRol,
         comision: Number(form.comision),
-        archivoFoto,
-        foto: preview,
         });
     };
 
@@ -146,56 +108,6 @@ export default function EmpleadoModal({
                 <form onSubmit={enviar} className={styles.formulario}>
 
                 <div className={`modal-body p-4 ${styles.cuerpo}`}>
-
-                    {/* FOTOGRAFÍA */}
-                    <div className={`d-flex align-items-center gap-3 mb-4 ${styles.fotoZona}`}>
-
-                    <div className={styles.avatar}>
-                        {preview ? (
-                        <img
-                            src={preview}
-                            alt="Vista previa del empleado"
-                        />
-                        ) : (
-                        <span>👤</span>
-                        )}
-                    </div>
-
-                    <div>
-                        <p className="fw-bold mb-1">
-                        Foto del empleado
-                        </p>
-
-                        <p className="text-secondary small mb-2">
-                        Usá una foto cuadrada o vertical.
-                        </p>
-
-                        <label
-                        htmlFor="fotoEmpleado"
-                        className={`btn btn-sm ${styles.botonFoto}`}
-                        >
-                        Subir foto
-                        </label>
-
-                        <input
-                        id="fotoEmpleado"
-                        type="file"
-                        accept="image/jpeg,image/png,image/webp"
-                        className="d-none"
-                        onChange={subirFoto}
-                        />
-
-                        <p className="text-secondary small mt-2 mb-0">
-                        JPG, PNG o WebP · Máximo 5 MB
-                        </p>
-
-                        {errorFoto && (
-                        <p className="text-danger small mt-2 mb-0">
-                            {errorFoto}
-                        </p>
-                        )}
-                    </div>
-                    </div>
 
                     <div className="row g-3">
 

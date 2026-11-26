@@ -15,7 +15,7 @@ const menuAdministrador = [
     { type: "link", label: "Productos", to: "/admin/productos", icon: "package" },
     { type: "link", label: "Compras", to: "/admin/compras", icon: "ticket" },
     { type: "link", label: "Servicios", to: "/admin/servicios", icon: "scissors" },
-    { type: "link", label: "Clientes", icon: "userSearch", disabled: true },
+    { type: "link", label: "Clientes", to: "/admin/clientes", icon: "userSearch" },
 ];
 
 const menuCajero = [

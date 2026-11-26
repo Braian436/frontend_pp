@@ -5,6 +5,7 @@ import ListaBarberos from "./pages/cliente/ListaBarberos.jsx";
 import TurnosDisponibles from "./pages/cliente/TurnosDisponibles.jsx";
 import Servicios from "./pages/administrador/Servicios";
 import Empleados from "./pages/administrador/Empleados.jsx";
+import Clientes from "./pages/administrador/Clientes.jsx";
 import Compras from "./pages/administrador/Compras.jsx";
 import GestionProductos from "./pages/administrador/GestionProductos.jsx";
 import HomeAdministrador from "./pages/administrador/HomeAdministrador.jsx";
@@ -61,6 +62,7 @@ function App() {
                 <Route path="/admin/productos" element={<GestionProductos />} />
                 <Route path="/admin/compras" element={<Compras />} />
                 <Route path="/admin/servicios" element={<Servicios administracion />} />
+                <Route path="/admin/clientes" element={<Clientes />} />
 
                 {/*Paginas de Barberos */}
                 <Route path="/home-barbero" element={<HomeBarber />} />
