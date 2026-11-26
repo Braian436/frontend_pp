@@ -1,7 +1,7 @@
 .contenedorPrincipal {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  margin-left: 10px;
+  gap: 1.4rem;
+  padding: 0.5rem;
+  margin-left: 22px;
 }
