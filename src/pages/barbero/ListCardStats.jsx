@@ -55,6 +55,7 @@ const indicadores = [
     { titulo: "Turnos de hoy", valor: reservasHoy.cargando ? "..." : reservasTurnoHoy.length, detalle: `${reservasPendientes} pendientes`, icono: LuCalendarPlus, color: "verde" },
     { titulo: "Comisiones del día", valor: liquidacionesHoy.cargando ? "..." : new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(ingresoHoy), icono: LuCircleDollarSign, color: "verde", id: "caja" },
     { titulo: "Total Mensual Acumulado", valor: liquidacionesHoy.cargando ? "..." : liquidacionesPendientes, icono: LuReceipt, color: "ambar", id: "liquidaciones" },
+    { titulo: "Total Mensual Acumulado", valor: liquidacionesHoy.cargando ? "..." : liquidacionesPendientes, icono: LuReceipt, color: "ambar", id: "liquidaciones" },
 ];
 return (
 <div className="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 mb-4">
