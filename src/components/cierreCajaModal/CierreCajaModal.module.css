@@ -125,6 +125,40 @@
     color: #83b77f;
 }
 
+.anuladas {
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(194, 86, 74, 0.35);
+    border-radius: 12px;
+    background: rgba(194, 86, 74, 0.08);
+}
+
+.anuladas p {
+    margin: 0 0 0.5rem;
+    color: #e4897f;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.anuladas ul {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.anuladas li {
+    color: #aaa49a;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.anuladas li strong {
+    color: #f5f1e8;
+}
+
 .rojo {
     color: #e4897f;
 }

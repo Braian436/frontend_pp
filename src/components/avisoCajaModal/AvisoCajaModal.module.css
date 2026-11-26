@@ -1,0 +1,122 @@
+.overlay {
+    position: fixed;
+    z-index: 1050;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.68);
+}
+
+.modal {
+    position: relative;
+    width: min(100%, 440px);
+    padding: 2rem 1.6rem 1.5rem;
+    border: 1px solid #2e2b27;
+    border-radius: 20px;
+    background: #141312;
+    color: #f5f1e8;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.cerrar {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #2e2b27;
+    border-radius: 50%;
+    background: transparent;
+    color: #aaa49a;
+}
+
+.cerrar:hover {
+    border-color: #d9c493;
+    color: #d9c493;
+}
+
+.icono {
+    display: inline-flex;
+    width: 56px;
+    height: 56px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.9rem;
+    border-radius: 50%;
+    background: rgba(194, 86, 74, 0.14);
+    color: #e4897f;
+    font-size: 1.5rem;
+}
+
+.modal h2 {
+    margin: 0 0 0.5rem;
+    font-family: Baskerville, "Baskerville Old Face", "Palatino Linotype", Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.modal p {
+    margin: 0 auto 1.4rem;
+    max-width: 330px;
+    color: #aaa49a;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.modal p strong {
+    color: #d9c493;
+    font-weight: 700;
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.principal,
+.secundario {
+    padding: 0.65rem 1.1rem;
+    border-radius: 11px;
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.principal {
+    border: 1px solid #d9c493;
+    background: #d9c493;
+    color: #151310;
+}
+
+.principal:hover {
+    background: #ebd9af;
+}
+
+.secundario {
+    border: 1px solid #2e2b27;
+    background: transparent;
+    color: #f5f1e8;
+}
+
+.secundario:hover {
+    border-color: #4a453d;
+}
+
+@media (max-width: 420px) {
+    .acciones {
+        flex-direction: column-reverse;
+    }
+
+    .principal,
+    .secundario {
+        width: 100%;
+    }
+}

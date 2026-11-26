@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CardTurno from "../cardCardTurnoAgenda/CardTurno";
 import FormularioTurno from "../cardFormularioTurno/FormularioTurno";
 import styles from "./ListaTurno.module.css";

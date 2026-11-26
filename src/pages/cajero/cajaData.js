@@ -80,6 +80,7 @@ export const ETIQUETAS = {
     egreso: "Egreso",
     cobro: "Cobro",
     propina: "Propina",
+    anulacion: "Anulación",
 };
 
 export const METODOS = {
@@ -120,6 +121,7 @@ export const normalizarMovimiento = (fila) => {
 
     return {
         id: fila?.id_movimiento_caja ?? fila?.id ?? fila?.pk ?? Date.now(),
+        idVenta: fila?.id_venta ?? fila?.idVenta ?? null,
         hora: horaDe(fila?.fecha ?? fila?.hora),
         tipo: tipo ?? "ingreso",
         detalle: fila?.concepto ?? fila?.detalle ?? "Movimiento de caja",
@@ -165,7 +167,19 @@ export const normalizarTicket = (fila) => {
         ["cobrado", "pagado", "cerrado", "finalizado"].some((valor) =>
             estadoCrudo.includes(valor)
         );
+    const anulada =
+        fila?.anulada === true ||
+        fila?.anulada === 1 ||
+        estadoCrudo === "anulada" ||
+        estadoCrudo === "cancelada";
     const total = numero(fila?.subtotal ?? fila?.total ?? fila?.monto);
+
+    let estado = "pendiente";
+    if (anulada) {
+        estado = cobrado ? "anulada" : "cancelada";
+    } else if (cobrado) {
+        estado = "cobrado";
+    }
 
     return {
         id: fila?.id_venta ?? fila?.id ?? fila?.pk ?? Date.now(),
@@ -174,13 +188,16 @@ export const normalizarTicket = (fila) => {
         barbero: barbero || "Sin barbero",
         servicios,
         monto: total - numero(fila?.descuento),
-        estado: cobrado ? "cobrado" : "pendiente",
+        estado,
         metodo:
             fila?.metodo || fila?.metodo_pago || fila?.medio_pago
                 ? normalizarMetodo(
                       fila?.metodo ?? fila?.metodo_pago ?? fila?.medio_pago
                   )
                 : "",
+        motivoAnulacion: texto(fila?.motivo_anulacion ?? fila?.motivoAnulacion),
+        anuladaPor: texto(fila?.anulada_por ?? fila?.anuladaPor),
+        fechaAnulacion: fila?.fecha_anulacion ?? fila?.fechaAnulacion ?? null,
     };
 };
 
@@ -205,13 +222,22 @@ export const calcularResumen = (caja, movimientos, tickets) => {
     );
 
     const apertura = caja?.saldoInicial ?? 0;
-    const ingresos = cobros.reduce(
+    const anulaciones = sumar(["anulacion"]);
+    const anulacionesEfectivo = movimientos
+        .filter(
+            (movimiento) =>
+                movimiento.tipo === "anulacion" && esEfectivo(movimiento)
+        )
+        .reduce((total, movimiento) => total + movimiento.monto, 0);
+    const ingresosBrutos = cobros.reduce(
         (total, movimiento) => total + movimiento.monto,
         0
     );
-    const ingresosEfectivo = cobros
+    const ingresosEfectivoBrutos = cobros
         .filter(esEfectivo)
         .reduce((total, movimiento) => total + movimiento.monto, 0);
+    const ingresos = ingresosBrutos - anulaciones;
+    const ingresosEfectivo = ingresosEfectivoBrutos - anulacionesEfectivo;
     const ingresosElectronicos = ingresos - ingresosEfectivo;
     const egresos = sumar(["egreso"]);
     const egresosEfectivo = movimientos
@@ -221,14 +247,29 @@ export const calcularResumen = (caja, movimientos, tickets) => {
     const propinas = sumar(["propina"]);
     const pendientes = tickets.filter((ticket) => ticket.estado === "pendiente");
     const cobrados = tickets.filter((ticket) => ticket.estado === "cobrado");
+    const idsAnulados = new Set(
+        movimientos
+            .filter((movimiento) => movimiento.tipo === "anulacion")
+            .map((movimiento) => String(movimiento.idVenta ?? ""))
+            .filter(Boolean)
+    );
+    const ventasAnuladas = tickets.filter(
+        (ticket) => ticket.estado === "anulada" && idsAnulados.has(String(ticket.id))
+    );
+    const ticketsCancelados = tickets.filter(
+        (ticket) => ticket.estado === "cancelada"
+    );
     const efectivoEnCajon =
         apertura + ingresosEfectivo + propinas - egresosEfectivo;
 
     return {
         apertura,
         ingresos,
+        ingresosBrutos,
         ingresosEfectivo,
         ingresosElectronicos,
+        anulaciones,
+        anulacionesEfectivo,
         egresos,
         egresosEfectivo,
         egresosElectronicos,
@@ -238,6 +279,9 @@ export const calcularResumen = (caja, movimientos, tickets) => {
         cajaDelDia: apertura + ingresos - egresos,
         pendientes,
         cobrados,
+        ventasAnuladas,
+        ticketsCancelados,
+        totalAnulado: anulaciones,
         totalPendiente: pendientes.reduce((total, ticket) => total + ticket.monto, 0),
         totalCobrado: cobrados.reduce((total, ticket) => total + ticket.monto, 0),
     };

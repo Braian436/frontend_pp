@@ -1,0 +1,26 @@
+.pantalla {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    background: #0e0d0d;
+    color: #aaa49a;
+    font-size: 0.9rem;
+}
+
+.spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #2e2b27;
+    border-top-color: #d9c493;
+    border-radius: 50%;
+    animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
+}

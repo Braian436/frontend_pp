@@ -1,12 +1,23 @@
 import styles from "./IndicadoresCaja.module.css";
 
+const COLUMNAS_POR_CANTIDAD = {
+    1: "row-cols-1",
+    2: "row-cols-1 row-cols-md-2",
+    3: "row-cols-1 row-cols-md-3",
+    4: "row-cols-1 row-cols-md-2 row-cols-xl-4",
+};
+
 export default function IndicadoresCaja({
     indicadores,
     etiqueta = "Resumen de la caja",
 }) {
+    const columnas =
+        COLUMNAS_POR_CANTIDAD[Math.min(indicadores.length, 4)] ??
+        "row-cols-1 row-cols-md-2";
+
     return (
         <div
-            className="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 mb-4"
+            className={`row ${columnas} g-3 mb-4`}
             aria-label={etiqueta}
         >
             {indicadores.map(

@@ -21,9 +21,13 @@ import HomeCajero from "./pages/cajero/HomeCajero.jsx";
 import CajaCajero from "./pages/cajero/CajaCajero.jsx";
 import TicketsCajero from "./pages/cajero/TicketsCajero.jsx";
 import ServiciosCajero from "./pages/cajero/ServiciosCajero.jsx";
+import AsistenciasCajero from "./pages/cajero/AsistenciasCajero.jsx";
+import { CajaProvider } from "./pages/cajero/CajaProvider.jsx";
+import CajaRequerida from "./pages/cajero/CajaRequerida.jsx";
 
 function Layout() {
     const { pathname } = useLocation();
+    const esCajero = pathname.startsWith("/cajero");
     const esPortal = pathname.startsWith("/admin") ||
         pathname.startsWith("/barbero") ||
         pathname.startsWith("/home-barbero") ||
@@ -33,6 +37,16 @@ function Layout() {
         pathname.startsWith("/turnos/disponibilidad") ||
         pathname.startsWith("/turnos/reservas");
 
+    const contenido = (
+        <>
+            {esPortal ? <NavbarAdministrador /> : <Navbar />}
+            <main className={`flex-grow-1 w-100 ${styles.contenido}`}>
+                <Outlet />
+            </main>
+            {!esPortal && <Footer />}
+        </>
+    );
+
     return (
         <div
             className={
@@ -41,11 +55,11 @@ function Layout() {
                     : `d-flex flex-column min-vh-100 ${styles.app}`
             }
         >
-            {esPortal ? <NavbarAdministrador /> : <Navbar />}
-            <main className={`flex-grow-1 w-100 ${styles.contenido}`}>
-                <Outlet />
-            </main>
-            {!esPortal && <Footer />}
+            {esCajero ? (
+                <CajaProvider>{contenido}</CajaProvider>
+            ) : (
+                contenido
+            )}
         </div>
     );
 }
@@ -74,9 +88,38 @@ function App() {
                 <Route path="/home-barbero/agenda" element={<AgendaBarbero />} />
 
                 <Route path="/cajero" element={<HomeCajero />} />
-                <Route path="/cajero/caja" element={<CajaCajero />} />
-                <Route path="/cajero/tickets" element={<TicketsCajero />} />
-                <Route path="/cajero/servicios" element={<ServiciosCajero />} />
+                <Route
+                    path="/cajero/caja"
+                    element={
+                        <CajaRequerida>
+                            <CajaCajero />
+                        </CajaRequerida>
+                    }
+                />
+                <Route
+                    path="/cajero/tickets"
+                    element={
+                        <CajaRequerida>
+                            <TicketsCajero />
+                        </CajaRequerida>
+                    }
+                />
+                <Route
+                    path="/cajero/servicios"
+                    element={
+                        <CajaRequerida>
+                            <ServiciosCajero />
+                        </CajaRequerida>
+                    }
+                />
+                <Route
+                    path="/cajero/asistencias"
+                    element={
+                        <CajaRequerida>
+                            <AsistenciasCajero />
+                        </CajaRequerida>
+                    }
+                />
                         <Route
                             path="/empleados/"
                             element={

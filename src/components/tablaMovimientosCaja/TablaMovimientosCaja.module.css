@@ -90,7 +90,8 @@
     color: #83b77f;
 }
 
-.egreso {
+.egreso,
+.anulacion {
     background: rgba(194, 86, 74, 0.08);
     color: #e4897f;
 }

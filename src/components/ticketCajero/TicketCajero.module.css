@@ -53,6 +53,16 @@
     color: #83b77f;
 }
 
+.anulada {
+    background: rgba(194, 86, 74, 0.12);
+    color: #e4897f;
+}
+
+.cancelada {
+    background: rgba(170, 164, 154, 0.12);
+    color: #aaa49a;
+}
+
 .monto {
     color: #fff;
     font-size: 0.95rem;
@@ -79,6 +89,56 @@
     cursor: not-allowed;
 }
 
+.acciones {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.anular,
+.cancelar {
+    padding: 0.45rem 0.9rem;
+    border: 1px solid #2e2b27;
+    border-radius: 8px;
+    background: transparent;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.anular {
+    border-color: rgba(194, 86, 74, 0.55);
+    color: #e4897f;
+}
+
+.anular:hover:not(:disabled) {
+    background: rgba(194, 86, 74, 0.12);
+}
+
+.cancelar {
+    color: #aaa49a;
+}
+
+.cancelar:hover:not(:disabled) {
+    border-color: #4a453d;
+    color: #f5f1e8;
+}
+
+.anular:disabled,
+.cancelar:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.motivo {
+    flex: 1 0 100%;
+    margin: 0;
+    padding-left: 74px;
+    color: #aaa49a;
+    font-size: 0.78rem;
+    font-style: italic;
+}
+
 .listo {
     flex: 0 0 80px;
 }
@@ -98,8 +158,17 @@
     }
 
     .cobrar,
-    .listo {
+    .listo,
+    .acciones {
         flex: 0 0 100%;
         text-align: center;
+    }
+
+    .acciones {
+        justify-content: flex-end;
+    }
+
+    .motivo {
+        padding-left: 0;
     }
 }

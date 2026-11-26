@@ -39,3 +39,7 @@
     opacity: 0.45;
     cursor: not-allowed;
 }
+
+.inactivo {
+    opacity: 0.55;
+}
