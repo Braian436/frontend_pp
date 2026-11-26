@@ -104,6 +104,30 @@
     font-size: 0.85rem;
 }
 
+.encabezadoAcciones {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.nuevo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid #d9c493;
+    border-radius: 12px;
+    background: transparent;
+    color: #d9c493;
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.nuevo:hover {
+    background: rgba(217, 196, 147, 0.1);
+}
+
 .listaTickets {
     overflow: hidden;
     border: 1px solid #2e2b27;

@@ -214,10 +214,15 @@ export const calcularResumen = (caja, movimientos, tickets) => {
         .reduce((total, movimiento) => total + movimiento.monto, 0);
     const ingresosElectronicos = ingresos - ingresosEfectivo;
     const egresos = sumar(["egreso"]);
+    const egresosEfectivo = movimientos
+        .filter((movimiento) => movimiento.tipo === "egreso" && esEfectivo(movimiento))
+        .reduce((total, movimiento) => total + movimiento.monto, 0);
+    const egresosElectronicos = egresos - egresosEfectivo;
     const propinas = sumar(["propina"]);
     const pendientes = tickets.filter((ticket) => ticket.estado === "pendiente");
     const cobrados = tickets.filter((ticket) => ticket.estado === "cobrado");
-    const efectivoEnCajon = apertura + ingresosEfectivo + propinas - egresos;
+    const efectivoEnCajon =
+        apertura + ingresosEfectivo + propinas - egresosEfectivo;
 
     return {
         apertura,
@@ -225,6 +230,8 @@ export const calcularResumen = (caja, movimientos, tickets) => {
         ingresosEfectivo,
         ingresosElectronicos,
         egresos,
+        egresosEfectivo,
+        egresosElectronicos,
         propinas,
         efectivoEnCajon,
         saldoEsperado: efectivoEnCajon,

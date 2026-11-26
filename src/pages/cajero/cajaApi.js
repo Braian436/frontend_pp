@@ -1,10 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { apiRequest } from "../../api/apiRequest.js";
-import { demo } from "./cajaDemo.js";
 import {
     calcularResumen,
-    horaActual,
     normalizarCaja,
     normalizarFilas,
     normalizarMetodo,
@@ -13,28 +11,86 @@ import {
     normalizarTicket,
 } from "./cajaData.js";
 
-// Rutas que va a exponer la API cuando estén creadas las vistas de cajas.
+// Rutas que expone la API de cajas y ventas.
 const ENDPOINTS = {
     cajas: "/cajas/",
+    abrir: "/cajas/abrir/",
     movimientos: "/movimientos-cajas/",
     ventas: "/ventas/",
     servicios: "/servicios/",
 };
 
-// Los campos metodo, montoRecibido y vuelto se guardan solo en el estado demo.
-// Cuando la API los soporte, incluirlos en los POST como metodo_pago,
-// monto_recibido y vuelto.
+const SESION = "barberia:sesion";
 
-const clonar = (valor) => JSON.parse(JSON.stringify(valor));
+function leerUsuarioSesion() {
+    try {
+        const guardada =
+            sessionStorage.getItem(SESION) ?? localStorage.getItem(SESION);
+        if (!guardada) return "";
+        const sesion = JSON.parse(guardada);
+        return sesion?.username ?? "";
+    } catch {
+        return "";
+    }
+}
+
+function cajaVacia() {
+    return {
+        id: null,
+        idEmpleado: null,
+        estado: "cerrada",
+        saldoInicial: 0,
+        saldoEsperado: null,
+        saldoReal: null,
+        diferencia: null,
+        fechaInicio: "",
+        fechaCierre: null,
+    };
+}
 
 export function useCajaApi() {
-    const [caja, setCaja] = useState(() => clonar(demo.caja));
-    const [movimientos, setMovimientos] = useState(() => clonar(demo.movimientos));
-    const [tickets, setTickets] = useState(() => clonar(demo.tickets));
-    const [servicios, setServicios] = useState(() => clonar(demo.servicios));
-    const [modoDemo, setModoDemo] = useState(true);
+    const [caja, setCaja] = useState(() => cajaVacia());
+    const [movimientos, setMovimientos] = useState([]);
+    const [tickets, setTickets] = useState([]);
+    const [servicios, setServicios] = useState([]);
     const [cargando, setCargando] = useState(false);
+    const [procesando, setProcesando] = useState(false);
     const [error, setError] = useState("");
+
+    const usuarioSesion = useMemo(() => leerUsuarioSesion(), []);
+
+    const aplicarCarga = useCallback((cajas, movimientosApi, ventas) => {
+        const filasCaja = normalizarFilas(cajas ?? [], ["cajas"]);
+        const abierta = filasCaja.find(
+            (fila) => !fila?.fecha_cierre && !fila?.fechaCierre
+        );
+        const elegida = abierta ?? filasCaja[0] ?? null;
+
+        setCaja(elegida ? normalizarCaja(elegida) : cajaVacia());
+
+        const idCaja = elegida?.id_caja ?? elegida?.id ?? null;
+        let filas = normalizarFilas(movimientosApi ?? [], ["movimientos"]);
+        if (idCaja != null) {
+            filas = filas.filter(
+                (fila) => String(fila?.id_caja ?? fila?.idCaja) === String(idCaja)
+            );
+        }
+        setMovimientos(filas.map(normalizarMovimiento));
+
+        setTickets(
+            normalizarFilas(ventas ?? [], ["ventas"]).map(normalizarTicket)
+        );
+    }, []);
+
+    const recargar = useCallback(async () => {
+        const pedir = (ruta) => apiRequest(ruta).catch(() => null);
+        const [cajas, movimientosApi, ventas] = await Promise.all([
+            pedir(ENDPOINTS.cajas),
+            pedir(ENDPOINTS.movimientos),
+            pedir(ENDPOINTS.ventas),
+        ]);
+        if (cajas !== null) aplicarCarga(cajas, movimientosApi, ventas);
+    }, [aplicarCarga]);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -45,48 +101,28 @@ export function useCajaApi() {
             const pedir = (ruta) =>
                 apiRequest(ruta, { signal: controller.signal }).catch(() => null);
 
-            const [cajas, movimientosApi, ventas, serviciosApi] = await Promise.all([
-                pedir(ENDPOINTS.cajas),
-                pedir(ENDPOINTS.movimientos),
-                pedir(ENDPOINTS.ventas),
-                pedir(ENDPOINTS.servicios),
-            ]);
+            const [cajas, movimientosApi, ventas, serviciosApi] =
+                await Promise.all([
+                    pedir(ENDPOINTS.cajas),
+                    pedir(ENDPOINTS.movimientos),
+                    pedir(ENDPOINTS.ventas),
+                    pedir(ENDPOINTS.servicios),
+                ]);
 
             if (!activo) return;
 
-            const filasCaja = normalizarFilas(cajas ?? [], ["cajas"]);
-            if (filasCaja.length) {
-                const abierta = filasCaja.find(
-                    (fila) => !fila?.fecha_cierre && !fila?.fechaCierre
-                );
-                const siguienteCaja = normalizarCaja(abierta ?? filasCaja[0]);
-                demo.caja = siguienteCaja;
-                setCaja(siguienteCaja);
-                setModoDemo(false);
-
-                if (movimientosApi) {
-                    const filasMovimientos = normalizarFilas(movimientosApi, [
-                        "movimientos",
-                    ]).map(normalizarMovimiento);
-                    demo.movimientos = filasMovimientos;
-                    setMovimientos(filasMovimientos);
-                }
-                if (ventas) {
-                    const filasVentas = normalizarFilas(ventas, ["ventas"]).map(
-                        normalizarTicket
-                    );
-                    demo.tickets = filasVentas;
-                    setTickets(filasVentas);
-                }
-                if (serviciosApi) {
-                    const filasServicios = normalizarFilas(serviciosApi, [
-                        "servicios",
-                    ]).map(normalizarServicio);
-                    demo.servicios = filasServicios;
-                    setServicios(filasServicios);
-                }
+            if (cajas === null) {
+                setError("No se pudo cargar la información de caja.");
+            } else {
+                aplicarCarga(cajas, movimientosApi, ventas);
             }
-
+            if (serviciosApi) {
+                setServicios(
+                    normalizarFilas(serviciosApi, ["servicios"]).map(
+                        normalizarServicio
+                    )
+                );
+            }
             setCargando(false);
         };
 
@@ -96,77 +132,39 @@ export function useCajaApi() {
             activo = false;
             controller.abort();
         };
-    }, []);
+    }, [aplicarCarga]);
 
     const resumen = useMemo(
         () => calcularResumen(caja, movimientos, tickets),
         [caja, movimientos, tickets]
     );
 
-    const guardarCaja = (siguiente) => {
-        demo.caja = siguiente;
-        setCaja(siguiente);
-    };
+    const limpiarError = () => setError("");
 
-    const guardarMovimientos = (siguientes) => {
-        demo.movimientos = siguientes;
-        setMovimientos(siguientes);
-    };
-
-    const guardarTickets = (siguientes) => {
-        demo.tickets = siguientes;
-        setTickets(siguientes);
-    };
-
-    const enviar = async (ruta, opciones) => {
-        if (modoDemo) return;
-
+    const abrirCaja = async ({ usuario, contrasena, monto }) => {
+        const saldoInicial = Number(monto) || 0;
         setError("");
+        setProcesando(true);
         try {
-            await apiRequest(ruta, opciones);
+            await apiRequest(ENDPOINTS.abrir, {
+                method: "POST",
+                body: {
+                    usuario: usuario?.trim() ?? "",
+                    contrasena: contrasena ?? "",
+                    saldo_inicial: saldoInicial,
+                },
+            });
         } catch (fallo) {
             setError(fallo.message);
+            setProcesando(false);
+            return false;
         }
+        setProcesando(false);
+        await recargar();
+        return true;
     };
 
-    const abrirCaja = (saldoInicial) => {
-        const monto = Number(saldoInicial) || 0;
-        const siguiente = {
-            id: caja?.id ?? Date.now(),
-            idEmpleado: caja?.idEmpleado ?? null,
-            estado: "abierta",
-            saldoInicial: monto,
-            saldoEsperado: null,
-            saldoReal: null,
-            diferencia: null,
-            fechaInicio: horaActual(),
-            fechaCierre: null,
-        };
-
-        guardarCaja(siguiente);
-        guardarMovimientos([
-            {
-                id: Date.now(),
-                hora: horaActual(),
-                tipo: "apertura",
-                detalle: "Apertura de caja",
-                monto,
-                metodo: "efectivo",
-            },
-            ...movimientos,
-        ]);
-        void enviar(ENDPOINTS.cajas, {
-            method: "POST",
-            body: {
-                id_empleado: siguiente.idEmpleado,
-                fecha_inicio: new Date().toISOString(),
-                saldo_inicial: monto,
-                saldo_esperado: monto,
-            },
-        });
-    };
-
-    const registrarMovimiento = ({
+    const registrarMovimiento = async ({
         tipo,
         monto,
         concepto,
@@ -176,143 +174,113 @@ export function useCajaApi() {
         const total = Number(monto);
         if (!total || total <= 0) return false;
 
-        const metodoPago =
-            tipo === "ingreso" ? normalizarMetodo(metodo) : "efectivo";
+        const metodoPago = normalizarMetodo(metodo);
         const recibido =
-            metodoPago === "efectivo" && montoRecibido != null
+            tipo === "ingreso" &&
+            metodoPago === "efectivo" &&
+            montoRecibido != null
                 ? Number(montoRecibido)
                 : null;
-        const vuelto =
-            recibido != null ? Math.max(0, recibido - total) : null;
+        const vuelto = recibido != null ? Math.max(0, recibido - total) : null;
         const detalle =
             concepto?.trim() ||
             (tipo === "egreso" ? "Egreso manual" : "Ingreso manual");
 
-        guardarMovimientos([
-            {
-                id: Date.now(),
-                hora: horaActual(),
-                tipo,
-                detalle,
-                monto: total,
-                metodo: metodoPago,
-                montoRecibido: recibido,
-                vuelto,
-            },
-            ...movimientos,
-        ]);
-        void enviar(ENDPOINTS.movimientos, {
-            method: "POST",
-            body: {
-                id_caja: caja?.id ?? null,
-                total,
-                fecha: new Date().toISOString(),
-                tipo_movimiento: tipo,
-                concepto: detalle,
-                // TODO API: agregar metodo_pago, monto_recibido y vuelto
-                // cuando movimientos_cajas tenga esas columnas.
-            },
-        });
-
-        return true;
-    };
-
-    const cerrarCaja = ({ saldoReal, observacion }) => {
-        const real = Number(saldoReal) || 0;
-        const esperado = resumen.saldoEsperado;
-        const siguiente = {
-            ...caja,
-            estado: "cerrada",
-            saldoEsperado: esperado,
-            saldoReal: real,
-            diferencia: real - esperado,
-            fechaCierre: new Date().toISOString(),
-            observacion: observacion?.trim() ?? "",
-        };
-
-        guardarCaja(siguiente);
-
-        if (caja?.id) {
-            void enviar(`${ENDPOINTS.cajas}${caja.id}/`, {
-                method: "PATCH",
-                body: {
-                    fecha_cierre: new Date().toISOString(),
-                    saldo_esperado: esperado,
-                    saldo_real: real,
-                    diferencia: real - esperado,
-                },
-            });
-        }
-    };
-
-    const cobrarTicket = (
-        id,
-        { metodo = "efectivo", montoRecibido = null } = {}
-    ) => {
-        const ticket = tickets.find(
-            (item) => item.id === id && item.estado === "pendiente"
-        );
-        if (!ticket) return false;
-
-        const metodoPago = normalizarMetodo(metodo);
-        const recibido =
-            metodoPago === "efectivo"
-                ? Number(montoRecibido ?? ticket.monto)
-                : null;
-        const vuelto =
-            recibido != null ? Math.max(0, recibido - ticket.monto) : null;
-
-        guardarTickets(
-            tickets.map((item) =>
-                item.id === id
-                    ? {
-                          ...item,
-                          estado: "cobrado",
-                          metodo: metodoPago,
-                          montoRecibido: recibido,
-                          vuelto,
-                      }
-                    : item
-            )
-        );
-        guardarMovimientos([
-            {
-                id: Date.now(),
-                hora: horaActual(),
-                tipo: "cobro",
-                detalle: `Ticket de ${ticket.cliente}`,
-                monto: ticket.monto,
-                metodo: metodoPago,
-                montoRecibido: recibido,
-                vuelto,
-            },
-            ...movimientos,
-        ]);
-
-        if (!modoDemo) {
-            const fecha = new Date().toISOString();
-            void enviar(`${ENDPOINTS.ventas}${id}/`, {
-                method: "PATCH",
-                body: {
-                    estado: true,
-                    fecha_cierre: fecha,
-                },
-            });
-            void enviar(ENDPOINTS.movimientos, {
+        setError("");
+        setProcesando(true);
+        try {
+            await apiRequest(ENDPOINTS.movimientos, {
                 method: "POST",
                 body: {
                     id_caja: caja?.id ?? null,
-                    id_venta: id,
-                    total: ticket.monto,
-                    fecha,
-                    tipo_movimiento: "cobro",
-                    concepto: `Ticket de ${ticket.cliente}`,
-                    // TODO API: agregar metodo_pago, monto_recibido y vuelto
-                    // cuando movimientos_cajas tenga esas columnas.
+                    total,
+                    tipo_movimiento: tipo,
+                    concepto: detalle,
+                    metodo_pago: metodoPago,
+                    monto_recibido: recibido,
+                    vuelto,
                 },
             });
+        } catch (fallo) {
+            setError(fallo.message);
+            setProcesando(false);
+            return false;
         }
+        setProcesando(false);
+        await recargar();
+        return true;
+    };
 
+    const cerrarCaja = async ({ usuario, contrasena, saldoReal }) => {
+        if (!caja?.id) {
+            setError("No hay una caja abierta para cerrar.");
+            return false;
+        }
+        setError("");
+        setProcesando(true);
+        try {
+            await apiRequest(`${ENDPOINTS.cajas}${caja.id}/cerrar/`, {
+                method: "POST",
+                body: {
+                    usuario: usuario?.trim() ?? "",
+                    contrasena: contrasena ?? "",
+                    saldo_real: Number(saldoReal) || 0,
+                },
+            });
+        } catch (fallo) {
+            setError(fallo.message);
+            setProcesando(false);
+            return false;
+        }
+        setProcesando(false);
+        await recargar();
+        return true;
+    };
+
+    const cobrarTicket = async (
+        id,
+        { metodo = "efectivo", montoRecibido = null } = {}
+    ) => {
+        const metodoPago = normalizarMetodo(metodo);
+        const recibido =
+            metodoPago === "efectivo"
+                ? montoRecibido != null
+                    ? Number(montoRecibido)
+                    : null
+                : null;
+
+        setError("");
+        setProcesando(true);
+        try {
+            await apiRequest(`${ENDPOINTS.ventas}${id}/cobrar/`, {
+                method: "POST",
+                body: { metodo_pago: metodoPago, monto_recibido: recibido },
+            });
+        } catch (fallo) {
+            setError(fallo.message);
+            setProcesando(false);
+            return false;
+        }
+        setProcesando(false);
+        await recargar();
+        return true;
+    };
+
+    const crearTicket = async (datos) => {
+        setError("");
+        setProcesando(true);
+        try {
+            await apiRequest(`${ENDPOINTS.ventas}crear-ticket/`, {
+                method: "POST",
+                body: datos,
+            });
+        } catch (fallo) {
+            setError(fallo.message);
+            setProcesando(false);
+            return false;
+        }
+        setProcesando(false);
+        await recargar();
         return true;
     };
 
@@ -324,11 +292,14 @@ export function useCajaApi() {
         servicios,
         resumen,
         cargando,
+        procesando,
         error,
-        modoDemo,
+        usuarioSesion,
+        limpiarError,
         abrirCaja,
         cerrarCaja,
         registrarMovimiento,
         cobrarTicket,
+        crearTicket,
     };
 }
