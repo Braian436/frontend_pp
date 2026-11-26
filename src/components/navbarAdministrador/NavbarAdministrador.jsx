@@ -7,7 +7,7 @@ import { cargarProductosApi } from "../../api/productosApi.js";
 import { obtenerAvisosStock } from "./stockNotifications.js";
 
 const menuAdministrador = [
-    { type: "link", label: "Inicio", to: "/admin", icon: "home" },
+    { type: "link", label: "Inicio", to: "/admin", icon: "home", end: true },
     { type: "link", label: "Nuevo Turno", icon: "scissors", disabled: true },
     { type: "heading", label: "Gestion" },
     { type: "link", label: "Caja", to: "/admin/caja", icon: "dollar" },
