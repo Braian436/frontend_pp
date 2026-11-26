@@ -10,7 +10,7 @@ const menuAdministrador = [
     { type: "link", label: "Inicio", to: "/admin", icon: "home" },
     { type: "link", label: "Nuevo Turno", icon: "scissors", disabled: true },
     { type: "heading", label: "Gestion" },
-    { type: "link", label: "Caja", icon: "dollar", disabled: true },
+    { type: "link", label: "Caja", to: "/admin/caja", icon: "dollar" },
     { type: "link", label: "Empleados", to: "/admin/empleados", icon: "users" },
     { type: "link", label: "Productos", to: "/admin/productos", icon: "package" },
     { type: "link", label: "Compras", to: "/admin/compras", icon: "ticket" },

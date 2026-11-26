@@ -58,6 +58,7 @@ function App() {
                 <Route path="/registrar-turno" element={<ListaBarberos />} />
                 <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
                 <Route path="/admin" element={<HomeAdministrador />} />
+                <Route path="/admin/caja" element={<CajaCajero />} />
                 <Route path="/admin/empleados" element={<Empleados />} />
                 <Route path="/admin/productos" element={<GestionProductos />} />
                 <Route path="/admin/compras" element={<Compras />} />

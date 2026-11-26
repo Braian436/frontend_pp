@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
+import { apiRequest } from "../../api/apiRequest.js";
 import { demo } from "./cajaDemo.js";
 import {
     calcularResumen,
