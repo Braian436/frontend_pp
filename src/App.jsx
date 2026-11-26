@@ -21,6 +21,12 @@ import HomeCajero from "./pages/cajero/HomeCajero.jsx";
 import CajaCajero from "./pages/cajero/CajaCajero.jsx";
 import TicketsCajero from "./pages/cajero/TicketsCajero.jsx";
 import ServiciosCajero from "./pages/cajero/ServiciosCajero.jsx";
+import Login from "./pages/login/Login.jsx";
+import RutaProtegida from "./components/rutaProtegida/RutaProtegida.jsx";
+
+const ROLES_ADMIN = ["Administrador"];
+const ROLES_BARBERO = ["Barbero"];
+const ROLES_CAJERO = ["Cajero"];
 
 function Layout() {
     const { pathname } = useLocation();
@@ -53,71 +59,85 @@ function Layout() {
 function App() {
     return (
         <Routes>
+            <Route path="/login" element={<Login />} />
             <Route element={<Layout />}>
-                <Route path="/" element={<Home/>}/>
+                <Route path="/" element={<Home />} />
                 <Route path="/servicios" element={<Servicios />} />
                 <Route path="/registrar-turno" element={<ListaBarberos />} />
                 <Route path="/turnos-disponibles" element={<TurnosDisponibles />} />
-                <Route path="/admin" element={<HomeAdministrador />} />
-                <Route path="/admin/caja" element={<CajaCajero />} />
-                <Route path="/admin/empleados" element={<Empleados />} />
-                <Route path="/admin/productos" element={<GestionProductos />} />
-                <Route path="/admin/marcas" element={<CatalogoProductos key="marcas" tipo="marcas" />} />
-                <Route path="/admin/categorias" element={<CatalogoProductos key="categorias" tipo="categorias" />} />
-                <Route path="/admin/descuentos" element={<CatalogoProductos key="descuentos" tipo="descuentos" />} />
-                <Route path="/admin/compras" element={<Compras />} />
-                <Route path="/admin/servicios" element={<Servicios administracion />} />
-                <Route path="/admin/clientes" element={<Clientes />} />
 
-                {/*Paginas de Barberos */}
-                <Route path="/home-barbero" element={<HomeBarber />} />
-                <Route path="/home-barbero/agenda" element={<AgendaBarbero />} />
+                {/* Administrador */}
+                <Route path="/admin" element={<RutaProtegida roles={ROLES_ADMIN}><HomeAdministrador /></RutaProtegida>} />
+                <Route path="/admin/caja" element={<RutaProtegida roles={ROLES_ADMIN}><CajaCajero /></RutaProtegida>} />
+                <Route path="/admin/empleados" element={<RutaProtegida roles={ROLES_ADMIN}><Empleados /></RutaProtegida>} />
+                <Route path="/admin/productos" element={<RutaProtegida roles={ROLES_ADMIN}><GestionProductos /></RutaProtegida>} />
+                <Route path="/admin/marcas" element={<RutaProtegida roles={ROLES_ADMIN}><CatalogoProductos key="marcas" tipo="marcas" /></RutaProtegida>} />
+                <Route path="/admin/categorias" element={<RutaProtegida roles={ROLES_ADMIN}><CatalogoProductos key="categorias" tipo="categorias" /></RutaProtegida>} />
+                <Route path="/admin/descuentos" element={<RutaProtegida roles={ROLES_ADMIN}><CatalogoProductos key="descuentos" tipo="descuentos" /></RutaProtegida>} />
+                <Route path="/admin/compras" element={<RutaProtegida roles={ROLES_ADMIN}><Compras /></RutaProtegida>} />
+                <Route path="/admin/servicios" element={<RutaProtegida roles={ROLES_ADMIN}><Servicios administracion /></RutaProtegida>} />
+                <Route path="/admin/clientes" element={<RutaProtegida roles={ROLES_ADMIN}><Clientes /></RutaProtegida>} />
 
-                <Route path="/cajero" element={<HomeCajero />} />
-                <Route path="/cajero/caja" element={<CajaCajero />} />
-                <Route path="/cajero/tickets" element={<TicketsCajero />} />
-                <Route path="/cajero/servicios" element={<ServiciosCajero />} />
-                        <Route
-                            path="/empleados/"
-                            element={
-                                <ApiDataPage
-                                    title="Empleados"
-                                    description="Consulta el equipo registrado en la barbería."
-                                    endpoint="/empleados/"
-                                />
-                            }
-                        />
-                        <Route
-                            path="/liquidaciones/"
-                            element={
-                                <ApiDataPage
-                                    title="Liquidaciones"
-                                    description="Consulta las liquidaciones disponibles."
-                                    endpoint="/liquidaciones/"
-                                />
-                            }
-                        />
-                        <Route
-                            path="/turnos/disponibilidad/"
-                            element={
-                                <ApiDataPage
-                                    title="Disponibilidad de turnos"
-                                    description="Consulta los horarios disponibles de un empleado."
-                                    endpoint="/turnos/disponibilidad/"
-                                    requiereFiltros
-                                />
-                            }
-                        />
-                        <Route
-                            path="/turnos/reservas/"
-                            element={
-                                <ApiDataPage
-                                    title="Reservas"
-                                    description="Consulta las reservas registradas."
-                                    endpoint="/turnos/reservas/"
-                                />
-                            }
-                        />
+                {/* Barbero */}
+                <Route path="/home-barbero" element={<RutaProtegida roles={ROLES_BARBERO}><HomeBarber /></RutaProtegida>} />
+                <Route path="/home-barbero/agenda" element={<RutaProtegida roles={ROLES_BARBERO}><AgendaBarbero /></RutaProtegida>} />
+
+                {/* Cajero */}
+                <Route path="/cajero" element={<RutaProtegida roles={ROLES_CAJERO}><HomeCajero /></RutaProtegida>} />
+                <Route path="/cajero/caja" element={<RutaProtegida roles={ROLES_CAJERO}><CajaCajero /></RutaProtegida>} />
+                <Route path="/cajero/tickets" element={<RutaProtegida roles={ROLES_CAJERO}><TicketsCajero /></RutaProtegida>} />
+                <Route path="/cajero/servicios" element={<RutaProtegida roles={ROLES_CAJERO}><ServiciosCajero /></RutaProtegida>} />
+
+                {/* Consultas de API (solo administración) */}
+                <Route
+                    path="/empleados/"
+                    element={
+                        <RutaProtegida roles={ROLES_ADMIN}>
+                            <ApiDataPage
+                                title="Empleados"
+                                description="Consulta el equipo registrado en la barbería."
+                                endpoint="/empleados/"
+                            />
+                        </RutaProtegida>
+                    }
+                />
+                <Route
+                    path="/liquidaciones/"
+                    element={
+                        <RutaProtegida roles={ROLES_ADMIN}>
+                            <ApiDataPage
+                                title="Liquidaciones"
+                                description="Consulta las liquidaciones disponibles."
+                                endpoint="/liquidaciones/"
+                            />
+                        </RutaProtegida>
+                    }
+                />
+                <Route
+                    path="/turnos/disponibilidad/"
+                    element={
+                        <RutaProtegida roles={ROLES_ADMIN}>
+                            <ApiDataPage
+                                title="Disponibilidad de turnos"
+                                description="Consulta los horarios disponibles de un empleado."
+                                endpoint="/turnos/disponibilidad/"
+                                requiereFiltros
+                            />
+                        </RutaProtegida>
+                    }
+                />
+                <Route
+                    path="/turnos/reservas/"
+                    element={
+                        <RutaProtegida roles={ROLES_ADMIN}>
+                            <ApiDataPage
+                                title="Reservas"
+                                description="Consulta las reservas registradas."
+                                endpoint="/turnos/reservas/"
+                            />
+                        </RutaProtegida>
+                    }
+                />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

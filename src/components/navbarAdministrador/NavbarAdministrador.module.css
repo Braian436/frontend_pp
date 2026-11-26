@@ -81,6 +81,54 @@
     color: #d9c493;
 }
 
+.pieSidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(217, 196, 147, 0.25);
+}
+
+.usuarioSidebar {
+    overflow: hidden;
+    color: #f5f1e8;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rolSidebar {
+    color: #a9a49a;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.botonSalir {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    margin-top: 12px;
+    padding: 9px 12px;
+    border: 1px solid #d9c493;
+    border-radius: 999px;
+    background: transparent;
+    color: #d9c493;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.botonSalir:hover,
+.botonSalir:focus-visible {
+    background: #d9c493;
+    color: #111;
+}
+
 .botonAvisos {
     width: 44px;
     height: 44px;
@@ -194,5 +242,14 @@
         height: 64px;
         margin: 8px 12px 0;
         padding: 0.6rem 1rem;
+    }
+
+    .pieSidebar {
+        padding-top: 0.75rem;
+    }
+
+    .botonSalir {
+        padding: 7px 10px;
+        font-size: 0.75rem;
     }
 }

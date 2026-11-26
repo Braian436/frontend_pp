@@ -1,6 +1,15 @@
+import { obtenerToken } from "../auth/sesion.js";
+
 const API_URL = (
     import.meta.env?.VITE_API_URL || "http://localhost:8000/api"
 ).replace(/\/+$/, "");
+
+// El sitio público es anónimo: un token vencido no debe romperlo.
+const RUTAS_PUBLICAS = ["/turnos/disponibilidad/", "/turnos/reservas/"];
+
+function esRutaPublica(path) {
+    return RUTAS_PUBLICAS.some((ruta) => path.startsWith(ruta));
+}
 
 export class ApiError extends Error {
     constructor(message, status, data = null) {
@@ -24,11 +33,12 @@ async function leerRespuesta(response) {
 }
 
 export function mensajeErrorRespuesta(data, status) {
+    if (typeof data?.detail === "string" && !data.detail.trim().startsWith("<")) return data.detail;
+    if (typeof data?.message === "string") return data.message;
+
     if (status === 401) return "No autorizado.";
     if (status === 403) return "Acceso denegado.";
     if (status === 404) return "La ruta solicitada no existe.";
-    if (typeof data?.detail === "string" && !data.detail.trim().startsWith("<")) return data.detail;
-    if (typeof data?.message === "string") return data.message;
 
     const campo = data && typeof data === "object"
         ? Object.entries(data).find(([, valor]) => Array.isArray(valor) || typeof valor === "string")
@@ -41,10 +51,16 @@ export function mensajeErrorRespuesta(data, status) {
 }
 
 export async function apiRequest(path, options = {}) {
-    const headers = new Headers(options.headers);
+    const { token: tokenExplicito, ...opciones } = options;
+    const headers = new Headers(opciones.headers);
     headers.set("Accept", "application/json");
 
-    let body = options.body;
+    const token = tokenExplicito !== undefined
+        ? tokenExplicito
+        : esRutaPublica(path) ? "" : obtenerToken();
+    if (token) headers.set("Authorization", `Token ${token}`);
+
+    let body = opciones.body;
     if (
         body !== undefined &&
         !(typeof FormData !== "undefined" && body instanceof FormData)
@@ -56,7 +72,7 @@ export async function apiRequest(path, options = {}) {
     let response;
     try {
         response = await fetch(`${API_URL}${path}`, {
-            ...options,
+            ...opciones,
             credentials: "omit",
             headers,
             body,
@@ -68,6 +84,11 @@ export async function apiRequest(path, options = {}) {
 
     const data = await leerRespuesta(response);
     if (!response.ok) {
+        if (response.status === 401 && token) {
+            if (typeof window !== "undefined" && typeof window.dispatchEvent === "function") {
+                window.dispatchEvent(new Event("barberia:sesion-expirada"));
+            }
+        }
         const mensaje = mensajeErrorRespuesta(data, response.status);
         throw new ApiError(mensaje, response.status, data);
     }

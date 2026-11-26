@@ -1,3 +1,21 @@
+.titulo {
+  margin: 0 0 4px;
+  color: #f5f1e8;
+  font-size: 1.15rem;
+}
+
+.aviso {
+  text-align: center;
+  color: #a9a49a;
+  padding: 16px;
+}
+
+.error {
+  text-align: center;
+  color: #ffb4b4;
+  padding: 16px;
+}
+
 .vacio {
   text-align: center;
   color: #777;

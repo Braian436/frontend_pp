@@ -52,7 +52,6 @@ export default function ListaBarberos() {
                                             .join(" ")
                                     }
                                     especialidad={barbero.especialidad || "Barbero"}
-                                    foto={barbero.foto_empleado}
                                 />
                             </div>
                         ))}

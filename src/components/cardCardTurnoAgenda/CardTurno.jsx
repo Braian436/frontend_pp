@@ -4,14 +4,17 @@ const TEXTO_ESTADO = {
   finalizado: "Finalizado",
   enCurso: "En curso",
   pendiente: "Pendiente",
+  cancelado: "Cancelado",
 };
 
-export default function CardTurno({ horaInicio, horaFin, cliente, servicio, estado, onIniciar }) {
+export default function CardTurno({ horaInicio, horaFin, cliente, servicio, estado = "pendiente", onIniciar }) {
+  const claveEstado = TEXTO_ESTADO[estado] ? estado : "pendiente";
+
   return (
-    <article className={`${styles.cardTurno} ${styles[estado]}`}>
+    <article className={`${styles.cardTurno} ${styles[claveEstado] ?? ""}`}>
       <div className={styles.horario}>
         <strong className={styles.horaInicio}>{horaInicio}</strong>
-        <span className={styles.horaFin}>{horaFin}</span>
+        {horaFin && <span className={styles.horaFin}>{horaFin}</span>}
       </div>
 
       <div className={styles.info}>
@@ -20,10 +23,10 @@ export default function CardTurno({ horaInicio, horaFin, cliente, servicio, esta
       </div>
 
       <div className={styles.acciones}>
-        <span className={`${styles.etiqueta} ${styles["etiqueta_" + estado]}`}>
-          {TEXTO_ESTADO[estado]}
+        <span className={`${styles.etiqueta} ${styles["etiqueta_" + claveEstado] ?? ""}`}>
+          {TEXTO_ESTADO[claveEstado]}
         </span>
-        {estado === "pendiente" && (
+        {claveEstado === "pendiente" && onIniciar && (
           <button className={styles.botonIniciar} onClick={onIniciar}>
             Iniciar
           </button>

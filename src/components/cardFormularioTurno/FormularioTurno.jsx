@@ -1,21 +1,25 @@
-
 import { useState } from "react";
-import SelectorServicio from "../cardSelectorServicio/SelectorServicio";
 import styles from "./FormularioTurno.module.css";
 
-export default function FormularioTurno({ fechaTexto, onGuardar, onCerrar }) {
-  const [cliente, setCliente] = useState("");
-  const [servicio, setServicio] = useState("");
-  const [horaInicio, setHoraInicio] = useState("");
-  const [horaFin, setHoraFin] = useState("");
+export default function FormularioTurno({ fechaTexto, onGuardar, onCerrar, guardando = false }) {
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [hora, setHora] = useState("");
 
   function enviar(e) {
     e.preventDefault();
-    onGuardar({ cliente, servicio, horaInicio, horaFin });
+    if (!completo || guardando) return;
+    onGuardar({
+      nombre: nombre.trim(),
+      apellido: apellido.trim(),
+      telefono: telefono.trim(),
+      hora,
+    });
   }
 
   // El botón queda deshabilitado hasta completar todo
-  const completo = cliente && servicio && horaInicio && horaFin;
+  const completo = nombre.trim() && apellido.trim() && telefono.trim() && hora;
 
   return (
     <div className={styles.fondo} onClick={onCerrar}>
@@ -28,40 +32,47 @@ export default function FormularioTurno({ fechaTexto, onGuardar, onCerrar }) {
         <h2 className={styles.titulo}>Reservar turno</h2>
         <p className={styles.fecha}>{fechaTexto}</p>
 
-        <label className={styles.campo}>
-          Cliente
-          <input
-            type="text"
-            className={styles.input}
-            placeholder="Nombre del cliente"
-            value={cliente}
-            onChange={(e) => setCliente(e.target.value)}
-          />
-        </label>
-
-        <div className={styles.campo}>
-          Servicio
-          <SelectorServicio valor={servicio} onCambiar={setServicio} />
+        <div className={styles.horarios}>
+          <label className={styles.campo}>
+            Nombre
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Nombre"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+            />
+          </label>
+          <label className={styles.campo}>
+            Apellido
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Apellido"
+              value={apellido}
+              onChange={(e) => setApellido(e.target.value)}
+            />
+          </label>
         </div>
 
         <div className={styles.horarios}>
           <label className={styles.campo}>
-            Desde
+            Teléfono
             <input
-              type="time"
-              className={`${styles.input} ${styles.inputHora}`}
-              value={horaInicio}
-              onChange={(e) => setHoraInicio(e.target.value)}
-              onClick={(e) => e.target.showPicker?.()}
+              type="tel"
+              className={styles.input}
+              placeholder="Teléfono del cliente"
+              value={telefono}
+              onChange={(e) => setTelefono(e.target.value)}
             />
           </label>
           <label className={styles.campo}>
-            Hasta
+            Hora
             <input
               type="time"
               className={`${styles.input} ${styles.inputHora}`}
-              value={horaFin}
-              onChange={(e) => setHoraFin(e.target.value)}
+              value={hora}
+              onChange={(e) => setHora(e.target.value)}
               onClick={(e) => e.target.showPicker?.()}
             />
           </label>
@@ -72,8 +83,8 @@ export default function FormularioTurno({ fechaTexto, onGuardar, onCerrar }) {
           <button type="button" className={styles.cancelar} onClick={onCerrar}>
             Cancelar
           </button>
-          <button type="submit" className={styles.guardar} disabled={!completo}>
-            Reservar
+          <button type="submit" className={styles.guardar} disabled={!completo || guardando}>
+            {guardando ? "Reservando..." : "Reservar"}
           </button>
         </div>
       </form>

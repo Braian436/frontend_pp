@@ -12,12 +12,22 @@
     transform: translateY(-3px);
 }
 
-.foto {
+.iniciales {
+    display: flex;
     width: 65px;
     height: 65px;
+    flex: 0 0 65px;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #D9C493;
+    border: 1px solid #b7a47c;
     border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
+
+    color: #171615;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 
 .informacion {

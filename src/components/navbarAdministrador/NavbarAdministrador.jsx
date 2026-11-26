@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { LuBell, LuCircleAlert, LuDollarSign, LuDoorClosed, LuHouse, LuPackage, LuScissors, LuTicket, LuUserSearch, LuUsers, LuWallet } from "react-icons/lu";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { LuBell, LuCircleAlert, LuDollarSign, LuHouse, LuLogOut, LuPackage, LuScissors, LuTicket, LuUserSearch, LuUsers, LuWallet } from "react-icons/lu";
 import styles from "./NavbarAdministrador.module.css";
 import Logo from "../../assets/LOGO-BARBER.png";
 import { cargarProductosApi } from "../../api/productosApi.js";
 import { obtenerAvisosStock } from "./stockNotifications.js";
+import { useAuth } from "../../auth/useAuth.js";
 
 const menuAdministrador = [
     { type: "link", label: "Inicio", to: "/admin", icon: "home", end: true },
@@ -31,8 +32,6 @@ const menuCajero = [
 const menuBarbero = [
     { type: "link", label: "Inicio", to: "/home-barbero", icon: "home", end: true },
     { type: "link", label: "Agenda", to: "/home-barbero/agenda", icon: "wallet" },
-
-    { type: "link", label: "Salir", to: "/home-cliente", icon: "door" },
 ];
 
 const iconos = {
@@ -44,14 +43,19 @@ const iconos = {
     userSearch: LuUserSearch,
     wallet: LuWallet,
     ticket: LuTicket,
-    door: LuDoorClosed,
-
 };
 
 export default function NavbarAdministrador() {
     const [avisosAbiertos, setAvisosAbiertos] = useState(false);
     const [avisosStock, setAvisosStock] = useState([]);
     const { pathname } = useLocation();
+    const navigate = useNavigate();
+    const { usuario, nombre, rol, logout } = useAuth();
+
+    const cerrarSesion = async () => {
+        await logout();
+        navigate("/login", { replace: true });
+    };
     
     const esCajero = pathname === "/cajero" || pathname.startsWith("/cajero/");
     const esBarbero = pathname === "/home-barbero" || pathname.startsWith("/home-barbero/");
@@ -127,6 +131,22 @@ export default function NavbarAdministrador() {
                         );
                     })}
                 </nav>
+
+                <div className={styles.pieSidebar}>
+                    <span className={styles.usuarioSidebar} title={nombre || usuario}>
+                        {nombre || usuario}
+                    </span>
+                    {rol && <span className={styles.rolSidebar}>{rol}</span>}
+                    <button
+                        type="button"
+                        className={styles.botonSalir}
+                        onClick={cerrarSesion}
+                        aria-label="Cerrar sesión"
+                    >
+                        <LuLogOut aria-hidden="true" />
+                        <span>Cerrar sesión</span>
+                    </button>
+                </div>
             </aside>
 
             <header className={`d-flex align-items-center gap-3 ${styles.cabecera}`}>
@@ -142,8 +162,9 @@ export default function NavbarAdministrador() {
                         <>Barbería <strong>Clase A</strong></>
                     )}
                 </p>
+                <div className="ms-auto d-flex align-items-center gap-2">
                 {!esCajero && !esBarbero && (
-                    <div className="position-relative ms-auto">
+                    <div className="position-relative">
                         <button
                             type="button"
                             className={`btn d-inline-flex align-items-center justify-content-center position-relative ${styles.botonAvisos}`}
@@ -176,6 +197,7 @@ export default function NavbarAdministrador() {
                         )}
                     </div>
                 )}
+                </div>
             </header>
         </>
     );

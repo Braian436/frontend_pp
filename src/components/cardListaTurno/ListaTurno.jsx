@@ -1,41 +1,15 @@
-import React, { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+
+import { apiRequest } from "../../api/apiRequest.js";
+import { useAuth } from "../../auth/useAuth.js";
 import CardTurno from "../cardCardTurnoAgenda/CardTurno";
 import FormularioTurno from "../cardFormularioTurno/FormularioTurno";
+import {
+  claveFecha,
+  listarTurnosBarbero,
+} from "../../pages/barbero/barberoApi.js";
 import styles from "./ListaTurno.module.css";
-
-// Convierte una fecha a texto "2026-11-24" para poder comparar días
-const claveFecha = (f) => f.toLocaleDateString("en-CA");
-const HOY = claveFecha(new Date());
-
-const LISTA_DE_TURNOS = [
-  {
-    id: 1,
-    fecha: HOY,
-    horaInicio: "10:00",
-    horaFin: "10:45",
-    cliente: "Lucas Gómez",
-    servicio: "Corte de pelo",
-    estado: "finalizado",
-  },
-  {
-    id: 2,
-    fecha: HOY,
-    horaInicio: "11:00",
-    horaFin: "11:30",
-    cliente: "Matías Rojas",
-    servicio: "Perfilado de barba",
-    estado: "enCurso",
-  },
-  {
-    id: 3,
-    fecha: HOY,
-    horaInicio: "12:00",
-    horaFin: "13:00",
-    cliente: "Nicolás Pérez",
-    servicio: "Corte + barba",
-    estado: "pendiente",
-  },
-];
 
 const FILTROS = [
   { valor: "todos", texto: "todos" },
@@ -45,10 +19,63 @@ const FILTROS = [
 ];
 
 export default function ListaTurno() {
-  const [turnos, setTurnos] = useState(LISTA_DE_TURNOS);
+  const { idEmpleado, nombre, usuario } = useAuth();
+  const [params] = useSearchParams();
+  const empleado = params.get("empleado") || idEmpleado || "";
+
+  const [turnos, setTurnos] = useState([]);
   const [filtro, setFiltro] = useState("todos");
-  const [fecha, setFecha] = useState(new Date());
+  const [fecha, setFecha] = useState(() => new Date());
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [cargando, setCargando] = useState(true);
+  const [guardando, setGuardando] = useState(false);
+  const [error, setError] = useState("");
+
+  const fechaClave = claveFecha(fecha);
+
+  const consultar = useCallback(
+    (signal) => listarTurnosBarbero({ empleado, fecha: fechaClave, signal }),
+    [empleado, fechaClave]
+  );
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const cargar = async () => {
+      if (!empleado) {
+        setTurnos([]);
+        setError("Tu usuario no tiene un barbero vinculado.");
+        setCargando(false);
+        return;
+      }
+
+      setCargando(true);
+      setError("");
+      try {
+        setTurnos(await consultar(controller.signal));
+      } catch (fallo) {
+        if (fallo.name !== "AbortError") setError(fallo.message);
+      } finally {
+        if (!controller.signal.aborted) setCargando(false);
+      }
+    };
+
+    void cargar();
+    return () => controller.abort();
+  }, [empleado, consultar]);
+
+  const recargar = useCallback(async () => {
+    if (!empleado) return;
+    setCargando(true);
+    setError("");
+    try {
+      setTurnos(await consultar());
+    } catch (fallo) {
+      setError(fallo.message);
+    } finally {
+      setCargando(false);
+    }
+  }, [empleado, consultar]);
 
   // Cambia la fecha sumando o restando días
   const cambiarDia = (dias) => {
@@ -57,32 +84,47 @@ export default function ListaTurno() {
     setFecha(nueva);
   };
 
-  // Pasa un turno de "pendiente" a "enCurso"
-  const iniciarTurno = (id) => {
-    setTurnos(
-      turnos.map((t) => (t.id === id ? { ...t, estado: "enCurso" } : t))
-    );
+  // Pasa un turno de "pendiente" a "en curso" en el backend
+  const iniciarTurno = async (id) => {
+    setError("");
+    try {
+      await apiRequest(`/turnos/${id}/iniciar/`, { method: "POST" });
+      await recargar();
+    } catch (fallo) {
+      setError(fallo.message);
+    }
   };
 
-  // Agrega el turno nuevo (siempre queda pendiente) y cierra el formulario
-  const reservarTurno = (datos) => {
-    const nuevoTurno = {
-      id: Date.now(),
-      fecha: claveFecha(fecha),
-      horaInicio: datos.horaInicio,
-      horaFin: datos.horaFin,
-      cliente: datos.cliente,
-      servicio: datos.servicio,
-      estado: "pendiente",
-    };
-    setTurnos([...turnos, nuevoTurno]);
-    setMostrarFormulario(false);
+  // Crea el turno en el backend y recarga el día
+  const reservarTurno = async (datos) => {
+    if (!empleado) return;
+    setGuardando(true);
+    setError("");
+    try {
+      await apiRequest("/turnos/reservas/", {
+        method: "POST",
+        body: {
+          empleado,
+          fecha: fechaClave,
+          hora: datos.hora,
+          nombre: datos.nombre,
+          apellido: datos.apellido,
+          telefono: datos.telefono,
+        },
+      });
+      setMostrarFormulario(false);
+      await recargar();
+    } catch (fallo) {
+      setError(fallo.message);
+    } finally {
+      setGuardando(false);
+    }
   };
 
-  // Solo los turnos del día que se está viendo, ordenados por hora
-  const turnosDelDia = turnos
-    .filter((t) => t.fecha === claveFecha(fecha))
-    .sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
+  const turnosDelDia = useMemo(
+    () => [...turnos].sort((a, b) => a.horaInicio.localeCompare(b.horaInicio)),
+    [turnos]
+  );
 
   const contar = (valor) =>
     valor === "todos"
@@ -103,20 +145,24 @@ export default function ListaTurno() {
   });
   const fechaTexto = textoLargo.charAt(0).toUpperCase() + textoLargo.slice(1);
 
+  const nombreBarbero = nombre || usuario || "Barbero";
+  const inicial = nombreBarbero.trim().charAt(0).toUpperCase() || "B";
+
   return (
     <section className={styles.contenedor}>
       {/* Encabezado del barbero */}
       <div className={styles.encabezado}>
         <div className={styles.perfil}>
-          <div className={styles.avatar}>B</div>
+          <div className={styles.avatar}>{inicial}</div>
           <div className="d-flex flex-column">
-            <strong className={styles.nombre}>Barbero</strong>
+            <strong className={styles.nombre}>{nombreBarbero}</strong>
             <span className={styles.rol}>Barbero profesional</span>
           </div>
         </div>
         <button
           className={styles.botonReservar}
           onClick={() => setMostrarFormulario(true)}
+          disabled={!empleado}
         >
           Reservar turno
         </button>
@@ -150,7 +196,9 @@ export default function ListaTurno() {
 
       {/* Lista de turnos */}
       <div className="d-flex flex-column gap-2">
-        {turnosFiltrados.length === 0 ? (
+        {cargando && <p className={styles.vacio} role="status">Cargando turnos...</p>}
+        {!cargando && error && <p className={styles.error} role="alert">{error}</p>}
+        {!cargando && !error && turnosFiltrados.length === 0 ? (
           <p className={styles.vacio}>No hay turnos para mostrar</p>
         ) : (
           turnosFiltrados.map((turno) => (
@@ -171,6 +219,7 @@ export default function ListaTurno() {
       {mostrarFormulario && (
         <FormularioTurno
           fechaTexto={fechaTexto}
+          guardando={guardando}
           onGuardar={reservarTurno}
           onCerrar={() => setMostrarFormulario(false)}
         />
