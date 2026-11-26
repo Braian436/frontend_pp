@@ -28,7 +28,7 @@ const menuCajero = [
 const menuBarbero = [
     { type: "link", label: "Inicio", to: "/home-barbero", icon: "home", end: true },
     { type: "link", label: "Agenda", to: "/home-barbero/agenda", icon: "wallet" },
-    { type: "link", label: "Servicios", to: "/home-barbero/servicios", icon: "scissors" },
+
     { type: "link", label: "Salir", to: "/home-cliente", icon: "door" },
 ];
 

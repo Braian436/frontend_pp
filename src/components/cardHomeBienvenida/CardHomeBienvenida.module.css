@@ -1,38 +1,51 @@
-.titulo {
-    color: #D9C493;
-    font-size: 32px;
-    font-weight: 00;
-    margin: 4px 0 19px;
-    font-family: 'Montserrat', sans-serif;
-    
+.banner {
+    min-height: clamp(250px, 35vw, 410px);
+    padding: 3rem clamp(1.25rem, 7vw, 6rem);
+    border-radius: 45px;
+    display: flex;
+    align-items: center;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("../../assets/facha4.png");
+    background-size: cover;
+    background-position: center 42%;
 }
 
-.subtitulo {
-    color: #f5f2f2;
-    font-size: 18px;
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
+.bannerTexto {
+    width: min(100%, 720px);
 }
+
 .etiqueta {
     margin: 0 0 0.65rem;
+    color: #d9c493;
     font-family: 'Montserrat', sans-serif;
-    color: #e9dec4;
     font-size: 13px;
     font-weight: 900;
     letter-spacing: 0.2em;
     text-transform: uppercase;
 }
 
-.banner {
-    min-height: 220px;
-    padding: 40px;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("../../assets/facha4.png");
-    background-size: cover;
-    background-position: center;
+.titulo {
+    margin: 0;
+    color: #d9c493;
+    font-family: Baskerville, "Baskerville Old Face", "Palatino Linotype", Georgia, serif;
+    font-size: clamp(2.2rem, 5vw, 4.25rem);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.subtitulo {
+    max-width: 520px;
+    margin: 1rem 0 0;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+}
+
+@media (max-width: 575px) {
+    .banner {
+        min-height: 230px;
+        padding: 2rem 1.25rem;
+        border-radius: 24px;
+    }
 }

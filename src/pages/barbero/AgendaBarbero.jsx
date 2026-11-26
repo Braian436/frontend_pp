@@ -1,10 +1,10 @@
 import CardHomeBienvenida from "../../components/cardHomeBienvenida/CardHomeBienvenida.jsx";
-import ListaTurno from "../../components/c.listaTurno/ListaTurno.jsx";
-import styles from "./AgendaBarbero.module.css";
+import ListaTurno from "../../components/cardListaTurno/ListaTurno.jsx";
 
+import styles from "./HomeBarber.module.css";
 export default function AgendaBarbero() {
   return (
-    <section className={styles.contenedorPrincipal} data-bs-theme="dark">
+    <div className={styles.contenedorPrincipal}>
       <CardHomeBienvenida
         titulo="PANEL DEL BARBERO"
         descripcion="MI AGENDA"
@@ -12,6 +12,6 @@ export default function AgendaBarbero() {
       />
 
       <ListaTurno />
-    </section>
+    </div>
   );
 }
