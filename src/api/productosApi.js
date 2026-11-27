@@ -1,9 +1,32 @@
 import axios from "axios";
 
+import { obtenerToken } from "../auth/sesion.js";
+
 export const api = axios.create({
     baseURL: (import.meta.env?.VITE_API_URL || "http://localhost:8000/api").replace(/\/+$/, ""),
     timeout: 10000,
 });
+
+api.interceptors.request.use((config) => {
+    const token = obtenerToken();
+    if (token) {
+        config.headers = config.headers ?? {};
+        config.headers.Authorization = `Token ${token}`;
+    }
+    return config;
+});
+
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401 && obtenerToken()) {
+            if (typeof window !== "undefined" && typeof window.dispatchEvent === "function") {
+                window.dispatchEvent(new Event("barberia:sesion-expirada"));
+            }
+        }
+        return Promise.reject(error);
+    }
+);
 
 const obtenerError = (error) => {
     const data = error.response?.data;
@@ -16,7 +39,7 @@ export const solicitar = async (peticion) => {
     try {
         return (await peticion).data;
     } catch (error) {
-        if (axios.isCancel(error)) {
+        if (axios.isCancel(error) || error.name === "CanceledError") {
             const abortError = new Error("Solicitud abortada");
             abortError.name = "AbortError";
             throw abortError;
