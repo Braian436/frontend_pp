@@ -1,8 +1,9 @@
-.overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,.85); }
-.modal { z-index: 2001; padding: 15px 0; }
-.contenido { max-height: calc(100vh - 2rem); background: #161515; color: #fff; border: 1px solid #d9c49366; border-right: 3px solid #a4a4a4; border-bottom: 3px solid #a4a4a4; border-radius: 12px; }
-.contenido > .modal-body { overflow-y: auto; }
-.header, .footer { background: #161515; border-color: #333; }
+.overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,.85); overflow-y: auto; overscroll-behavior: contain; }
+.modal { z-index: 2001; padding: 1rem 0; min-height: 100%; }
+.dialogo { margin: auto; }
+.contenido { display: flex; flex-direction: column; max-height: calc(100dvh - 2rem); background: #161515; color: #fff; border: 1px solid #d9c49366; border-right: 3px solid #a4a4a4; border-bottom: 3px solid #a4a4a4; border-radius: 12px; overflow: hidden; }
+.cuerpo { overflow-y: auto; min-height: 0; -webkit-overflow-scrolling: touch; }
+.header, .footer { background: #161515; border-color: #333; flex-shrink: 0; }
 .input { background: #0e0d0d; border: 1px solid #383838; color: #fff; color-scheme: dark; }
 .input:focus { background: #0e0d0d; border-color: #d9c493; color: #fff; box-shadow: none; }
 .error { color: #d8897d; margin: 0; }
@@ -15,3 +16,48 @@
 .multiItem input { accent-color: #d9c493; }
 .multiItemActivo { border-color: #d9c493; color: #d9c493; }
 .vacio { color: #b7b1a4; font-size: 0.85rem; }
+
+@media (max-width: 575.98px) {
+    .modal {
+        padding: 0.75rem 0;
+    }
+
+    .dialogo {
+        margin: 0.25rem auto;
+        width: calc(100% - 1rem);
+    }
+
+    .contenido {
+        max-height: calc(100dvh - 1.5rem);
+        border-radius: 10px;
+    }
+
+    .header,
+    .footer,
+    .cuerpo {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .footer > * {
+        margin: 0;
+    }
+
+    .cancelar,
+    .guardar {
+        width: 100%;
+        min-height: 44px;
+    }
+}
+
+@media (max-width: 380px) {
+    .footer {
+        grid-template-columns: 1fr;
+    }
+}

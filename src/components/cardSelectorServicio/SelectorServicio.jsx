@@ -30,7 +30,7 @@ export default function SelectorServicio({ valor, onCambiar }) {
             </button>
 
             {abierto && (
-                <ul className={styles.lista}>
+                <ul className={`${styles.lista} scrollbar-app`}>
                     {servicios.map((nombre) => (
                         <li key={nombre}>
                             <button type="button" className={styles.opcion} onClick={() => elegir(nombre)}>

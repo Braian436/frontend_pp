@@ -133,6 +133,8 @@
 
 .modalOverlay, .modalExito { 
     overflow-y: auto; 
+    padding: 1rem 0;
+    overscroll-behavior: contain;
     background: rgba(0,0,0,.72); 
 }
 
@@ -146,7 +148,8 @@
 }
 
 .modalDialog { 
-    max-width: 460px; 
+    max-width: 460px;
+    margin: 1rem auto;
 }
 
 .dialogoExito { 
@@ -154,10 +157,25 @@
 }
 
 .modalContent { 
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 2rem);
     color: #fff; 
     background: #202020; 
     border: 1px solid #d9c493; 
     border-radius: 6px; 
+    overflow: hidden;
+}
+
+.modalContent > :global(.modal-body) {
+    overflow-y: auto;
+    min-height: 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.modalContent > :global(.modal-header),
+.modalContent > :global(.modal-footer) {
+    flex-shrink: 0;
 }
 
 .campo { 
@@ -208,4 +226,9 @@
     .contenedor { padding: 0 18px; }
     .listaHorarios { justify-content: center; }
     .botonHorario { min-width: 102px; }
+    .modalOverlay, .modalExito { padding: 0.75rem 0; }
+    .modalDialog, .dialogoExito { margin: 0.5rem auto; width: calc(100% - 1rem); }
+    .modalContent { max-height: calc(100dvh - 1.5rem); }
+    .modalContent > :global(.modal-footer) { padding-bottom: calc(1rem + env(safe-area-inset-bottom)); }
+    .botonConfirmar { width: 100%; min-height: 44px; }
 }

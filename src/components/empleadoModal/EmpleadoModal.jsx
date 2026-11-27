@@ -65,7 +65,7 @@ export default function EmpleadoModal({
             aria-modal="true"
             aria-labelledby="tituloEmpleado"
         >
-            <div className="modal-dialog modal-dialog-centered modal-lg">
+            <div className={`modal-dialog modal-dialog-centered modal-lg ${styles.dialogo}`}>
 
             <div className={`modal-content ${styles.contenido}`}>
 
@@ -98,7 +98,7 @@ export default function EmpleadoModal({
                 {/* FORMULARIO */}
                 <form onSubmit={enviar} className={styles.formulario}>
 
-                <div className={`modal-body p-4 ${styles.cuerpo}`}>
+                <div className={`modal-body p-4 scrollbar-app ${styles.cuerpo}`}>
 
                     <div className="row g-3">
 

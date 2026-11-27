@@ -25,7 +25,7 @@ export default function FormularioTurno({ fechaTexto, onGuardar, onCerrar, guard
     <div className={styles.fondo} onClick={onCerrar}>
       {/* stopPropagation: así al hacer click dentro no se cierra */}
       <form
-        className={styles.formulario}
+        className={`${styles.formulario} scrollbar-app`}
         onSubmit={enviar}
         onClick={(e) => e.stopPropagation()}
       >

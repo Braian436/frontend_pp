@@ -5,7 +5,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.25rem;
+    padding: 1rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     background: rgba(5, 5, 5, 0.82);
     backdrop-filter: blur(4px);
 }
@@ -13,6 +15,7 @@
 .modal {
     width: 100%;
     max-width: 580px;
+    margin: auto;
 }
 
 .dialogo {
@@ -21,6 +24,9 @@
 }
 
 .contenido {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 2rem);
     overflow: hidden;
     border: 1px solid rgba(217, 196, 147, 0.35);
     border-radius: 18px;
@@ -31,6 +37,7 @@
 
 .header,
 .footer {
+    flex-shrink: 0;
     border-color: #2e2b27;
     background: #161515;
 }
@@ -44,6 +51,7 @@
     display: flex;
     align-items: flex-start;
     gap: 0.85rem;
+    min-width: 0;
 }
 
 .encabezado > svg {
@@ -60,6 +68,7 @@
     font-size: 1.55rem;
     font-weight: 700;
     line-height: 1.15;
+    overflow-wrap: anywhere;
 }
 
 .descripcion {
@@ -73,11 +82,15 @@
     display: grid;
     gap: 1.15rem;
     padding: 1.5rem 1.65rem;
+    overflow-y: auto;
+    min-height: 0;
+    -webkit-overflow-scrolling: touch;
 }
 
 .footer {
     gap: 0.7rem;
     padding: 1.1rem 1.65rem 1.35rem;
+    flex-wrap: wrap;
 }
 
 .cancelar,
@@ -134,4 +147,60 @@
     background: rgba(194, 86, 74, 0.12);
     color: #e4897f;
     font-size: 0.85rem;
+}
+
+@media (max-width: 575.98px) {
+    .overlay {
+        align-items: flex-end;
+        padding: 0.75rem;
+    }
+
+    .modal {
+        max-width: none;
+    }
+
+    .contenido {
+        max-height: calc(100dvh - 1.5rem);
+        border-radius: 16px;
+    }
+
+    .header {
+        padding: 1rem 1rem 0.9rem;
+    }
+
+    .encabezado {
+        gap: 0.65rem;
+    }
+
+    .encabezado > svg {
+        font-size: 1.35rem;
+    }
+
+    .titulo {
+        font-size: 1.3rem;
+    }
+
+    .cuerpo {
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 0.9rem 1rem calc(1rem + env(safe-area-inset-bottom));
+    }
+
+    .cancelar,
+    .confirmar,
+    .peligro {
+        width: 100%;
+        min-height: 44px;
+    }
+}
+
+@media (max-width: 380px) {
+    .footer {
+        grid-template-columns: 1fr;
+    }
 }

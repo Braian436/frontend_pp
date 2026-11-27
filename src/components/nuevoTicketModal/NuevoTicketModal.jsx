@@ -263,7 +263,7 @@ export default function NuevoTicketModal({
                         {servicios.length === 0 ? (
                             <p className={styles.aviso}>No hay servicios cargados.</p>
                         ) : (
-                            <ul className={styles.lista}>
+                            <ul className={`${styles.lista} scrollbar-app`}>
                                 {servicios.map((s) => {
                                     const id = idDe(s);
                                     return (
@@ -297,7 +297,7 @@ export default function NuevoTicketModal({
                         {productos.length === 0 ? (
                             <p className={styles.aviso}>No hay productos cargados.</p>
                         ) : (
-                            <ul className={styles.lista}>
+                            <ul className={`${styles.lista} scrollbar-app`}>
                                 {productos.map((p) => {
                                     const id = idDe(p);
                                     const sinPrecio = p.precio == null;

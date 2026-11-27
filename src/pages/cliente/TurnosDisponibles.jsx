@@ -164,7 +164,7 @@ export default function TurnosDisponibles() {
             </div>
             {formAbierto && seleccionValida && <div className={`modal show d-block ${styles.modalOverlay}`} role="dialog" aria-modal="true" aria-labelledby="tituloReserva">
                 <div className={`modal-dialog modal-dialog-centered ${styles.modalDialog}`}>
-                    <form className={`modal-content ${styles.modalContent}`} onSubmit={confirmar}>
+                    <form className={`modal-content scrollbar-app ${styles.modalContent}`} onSubmit={confirmar}>
                         <div className="modal-header border-0 pb-2"><h2 id="tituloReserva" className="modal-title fs-6">Para confirmar tu turno completá los siguientes campos</h2><button type="button" className="btn-close btn-close-white" onClick={cerrar} aria-label="Cerrar" /></div>
                         <div className="modal-body pt-2">{campos.map(([name, label]) => <input key={name} className={`form-control mb-3 ${styles.campo}`} type={name === "correo" ? "email" : "text"} name={name} aria-label={label} placeholder={`${label}:`} value={formulario[name]} onChange={cambiarCampo} required />)}{errorReserva && <p role="alert" className="text-warning mb-0">{errorReserva}</p>}</div>
                         <div className="modal-footer border-0 justify-content-center pt-0"><button type="submit" className={`btn ${styles.botonConfirmar}`} disabled={reservando}>{reservando ? "ENVIANDO..." : "CONFIRMAR"}</button></div>

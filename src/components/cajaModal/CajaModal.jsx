@@ -68,7 +68,7 @@ export default function CajaModal({
                             />
                         </div>
 
-                        <div className={`modal-body ${styles.cuerpo}`}>
+                        <div className={`modal-body scrollbar-app ${styles.cuerpo}`}>
                             {children}
                             {error && (
                                 <p className={styles.error} role="alert">

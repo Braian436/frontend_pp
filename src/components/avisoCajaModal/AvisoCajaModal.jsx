@@ -6,7 +6,7 @@ export default function AvisoCajaModal({ onCerrar, onAbrirCaja }) {
     return (
         <div className={styles.overlay}>
             <div
-                className={styles.modal}
+                className={`${styles.modal} scrollbar-app`}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="tituloAvisoCaja"

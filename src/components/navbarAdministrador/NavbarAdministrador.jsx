@@ -90,7 +90,7 @@ export default function NavbarAdministrador() {
 
     return (
         <>
-            <aside className={styles.sidebar}>
+            <aside className={`${styles.sidebar} scrollbar-app`}>
                 <nav className={`nav flex-column gap-2 ${styles.enlaces}`} aria-label={ariaNav}>
                     {items.map((item) => {
                         if (item.type === "heading") {
@@ -182,7 +182,7 @@ export default function NavbarAdministrador() {
                             )}
                         </button>
                         {avisosAbiertos && (
-                            <div id="avisos-stock" className={`position-absolute top-100 end-0 mt-2 p-3 shadow ${styles.panelAvisos}`}>
+                            <div id="avisos-stock" className={`position-absolute top-100 end-0 mt-2 p-3 shadow scrollbar-app ${styles.panelAvisos}`}>
                                 <h2 className="mb-3">Avisos de stock</h2>
                                 {avisosStock.length === 0 && <p className="text-white mb-0">No hay productos con bajo stock.</p>}
                                 {avisosStock.map((aviso) => (

@@ -33,13 +33,13 @@ export default function AdminCatalogModal({ titulo, item, campos, guardar, cerra
     return (
         <div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby="catalogo-modal-title">
             <div className={`modal show d-block ${styles.modal}`}>
-                <div className="modal-dialog modal-dialog-centered">
+                <div className={`modal-dialog modal-dialog-centered ${styles.dialogo}`}>
                     <form className={`modal-content ${styles.contenido}`} onSubmit={submit}>
                         <div className={`modal-header ${styles.header}`}>
                             <h2 id="catalogo-modal-title" className="modal-title fs-5">{titulo}</h2>
                             <button type="button" className="btn-close btn-close-white" onClick={cerrar} aria-label="Cerrar" />
                         </div>
-                        <div className="modal-body">
+                        <div className={`modal-body scrollbar-app ${styles.cuerpo}`}>
                             {campos.map((campo) => (
                                 <div className="mb-3" key={campo.name}>
                                     <label className="form-label" htmlFor={`catalogo-${campo.name}`}>{campo.label}</label>
