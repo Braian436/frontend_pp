@@ -17,6 +17,7 @@ import NavbarAdministrador from "./components/navbarAdministrador/NavbarAdminist
 import Footer from "./components/footer/Footer.jsx";
 import "@fontsource/montserrat";
 import AgendaBarbero from "./pages/barbero/AgendaBarbero.jsx";
+import AgendaAdministrador from "./pages/administrador/AgendaAdministrador.jsx";
 import HomeCajero from "./pages/cajero/HomeCajero.jsx";
 import CajaCajero from "./pages/cajero/CajaCajero.jsx";
 import TicketsCajero from "./pages/cajero/TicketsCajero.jsx";
@@ -82,6 +83,7 @@ function App() {
 
                 {/* Administrador */}
                 <Route path="/admin" element={<RutaProtegida roles={ROLES_ADMIN}><HomeAdministrador /></RutaProtegida>} />
+                <Route path="/admin/agenda" element={<RutaProtegida roles={ROLES_ADMIN}><AgendaAdministrador /></RutaProtegida>} />
                 <Route path="/admin/caja" element={<RutaProtegida roles={ROLES_ADMIN}><CajaCajero /></RutaProtegida>} />
                 <Route path="/admin/empleados" element={<RutaProtegida roles={ROLES_ADMIN}><Empleados /></RutaProtegida>} />
                 <Route path="/admin/productos" element={<RutaProtegida roles={ROLES_ADMIN}><GestionProductos /></RutaProtegida>} />

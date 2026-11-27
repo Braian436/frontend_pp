@@ -19,7 +19,7 @@ const FILTROS = [
 ];
 
 export default function ListaTurno() {
-  const { idEmpleado, nombre, usuario } = useAuth();
+  const { idEmpleado, nombre, usuario, rol } = useAuth();
   const [params] = useSearchParams();
   const empleado = params.get("empleado") || idEmpleado || "";
 
@@ -44,7 +44,11 @@ export default function ListaTurno() {
     const cargar = async () => {
       if (!empleado) {
         setTurnos([]);
-        setError("Tu usuario no tiene un barbero vinculado.");
+        setError(
+          rol === "Administrador"
+            ? "Tu usuario no tiene un empleado vinculado. Vinculá tu cuenta en Empleados para usar la agenda."
+            : "Tu usuario no tiene un barbero vinculado."
+        );
         setCargando(false);
         return;
       }
@@ -145,18 +149,19 @@ export default function ListaTurno() {
   });
   const fechaTexto = textoLargo.charAt(0).toUpperCase() + textoLargo.slice(1);
 
-  const nombreBarbero = nombre || usuario || "Barbero";
-  const inicial = nombreBarbero.trim().charAt(0).toUpperCase() || "B";
+  const nombreProfesional = nombre || usuario || "Profesional";
+  const inicial = nombreProfesional.trim().charAt(0).toUpperCase() || "P";
+  const etiquetaRol = rol === "Administrador" ? "Administrador" : "Barbero profesional";
 
   return (
     <section className={styles.contenedor}>
-      {/* Encabezado del barbero */}
+      {/* Encabezado del profesional */}
       <div className={styles.encabezado}>
         <div className={styles.perfil}>
           <div className={styles.avatar}>{inicial}</div>
           <div className="d-flex flex-column">
-            <strong className={styles.nombre}>{nombreBarbero}</strong>
-            <span className={styles.rol}>Barbero profesional</span>
+            <strong className={styles.nombre}>{nombreProfesional}</strong>
+            <span className={styles.rol}>{etiquetaRol}</span>
           </div>
         </div>
         <button
