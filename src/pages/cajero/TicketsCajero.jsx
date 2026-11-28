@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { LuPlus, LuSearch } from "react-icons/lu";
+import AgregarItemTicketModal from "../../components/nuevoTicketModal/AgregarItemTicketModal.jsx";
 import AnularTicketModal from "../../components/anularTicketModal/AnularTicketModal.jsx";
 import CobroTicketModal from "../../components/cobroTicketModal/CobroTicketModal.jsx";
 import NuevoTicketModal from "../../components/nuevoTicketModal/NuevoTicketModal.jsx";
@@ -16,6 +17,7 @@ export default function TicketsCajero() {
         cobrarTicket,
         crearTicket,
         anularTicket,
+        agregarItemTicket,
         cancelarTicket,
         error,
         procesando,
@@ -26,6 +28,7 @@ export default function TicketsCajero() {
     const [busqueda, setBusqueda] = useState("");
     const [ticketACobrar, setTicketACobrar] = useState(null);
     const [nuevoTicket, setNuevoTicket] = useState(false);
+    const [ticketEditar, setTicketEditar] = useState(null);
     const [ticketAccion, setTicketAccion] = useState(null);
     const cerrada = estado === "cerrada";
     const texto = busqueda.trim().toLowerCase();
@@ -157,17 +160,12 @@ export default function TicketsCajero() {
                                     key={ticket.id}
                                     ticket={ticket}
                                     onCobrar={setTicketACobrar}
+                                    onAgregar={setTicketEditar}
                                     onAnular={(seleccionado) =>
-                                        setTicketAccion({
-                                            ticket: seleccionado,
-                                            modo: "anular",
-                                        })
+                                        setTicketAccion({ ticket: seleccionado, modo: "anular" })
                                     }
                                     onCancelar={(seleccionado) =>
-                                        setTicketAccion({
-                                            ticket: seleccionado,
-                                            modo: "cancelar",
-                                        })
+                                        setTicketAccion({ ticket: seleccionado, modo: "cancelar" })
                                     }
                                     deshabilitado={cerrada}
                                 />
@@ -213,10 +211,19 @@ export default function TicketsCajero() {
                     onCerrar={() => setNuevoTicket(false)}
                     onConfirmar={async (datos) => {
                         const ok = await crearTicket(datos);
-                        if (ok) {
-                            limpiarError();
-                            setNuevoTicket(false);
-                        }
+                        if (ok) { limpiarError(); setNuevoTicket(false); }
+                    }}
+                    procesando={procesando}
+                    error={error}
+                />
+            )}
+            {ticketEditar && (
+                <AgregarItemTicketModal
+                    ticket={ticketEditar}
+                    onCerrar={() => { setTicketEditar(null); limpiarError(); }}
+                    onConfirmar={async (datos) => {
+                        const ok = await agregarItemTicket(ticketEditar.id, datos);
+                        if (ok) { limpiarError(); setTicketEditar(null); }
                     }}
                     procesando={procesando}
                     error={error}

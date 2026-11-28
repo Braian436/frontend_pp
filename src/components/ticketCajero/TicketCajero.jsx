@@ -18,6 +18,7 @@ const BADGES = {
 export default function TicketCajero({
     ticket,
     onCobrar,
+    onAgregar,
     onAnular,
     onCancelar,
     deshabilitado = false,
@@ -51,15 +52,11 @@ export default function TicketCajero({
 
             {enCaja && (pendiente || cobrado) ? (
                 <div className={styles.acciones}>
+                    {pendiente && onAgregar && (
+                        <button type="button" className={styles.cobrar} onClick={() => onAgregar(ticket)} disabled={deshabilitado}>Agregar</button>
+                    )}
                     {pendiente && onCobrar && (
-                        <button
-                            type="button"
-                            className={styles.cobrar}
-                            onClick={() => onCobrar(ticket)}
-                            disabled={deshabilitado}
-                        >
-                            Cobrar
-                        </button>
+                        <button type="button" className={styles.cobrar} onClick={() => onCobrar(ticket)} disabled={deshabilitado}>Cobrar</button>
                     )}
                     {pendiente && onCancelar && (
                         <button

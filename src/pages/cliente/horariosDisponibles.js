@@ -1,5 +1,5 @@
 export const MARGEN_MINUTOS = 5;
-export const HORAS_POR_PAGINA = 4;
+export const HORAS_POR_PAGINA = 6;
 
 // Los domingos están cerrados: se entregan 6 días hábiles desde `inicio`.
 export function diasSinDomingo(inicio, cantidad = 6) {

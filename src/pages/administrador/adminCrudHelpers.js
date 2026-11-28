@@ -7,7 +7,7 @@ export const extraerFilas = (data, clave) => {
 };
 
 export const obtenerId = (item) =>
-    String(item?.id ?? item?.id_servicio ?? item?.id_empleado ?? item?.pk ?? item?.uuid ?? "");
+    String(item?.id ?? item?.id_liquidacion ?? item?.id_servicio ?? item?.id_empleado ?? item?.pk ?? item?.uuid ?? "");
 
 export const rutaDetalle = (endpoint, id) => `${endpoint.replace(/\/$/, "")}/${String(id).replace(/^\//, "").replace(/\/$/, "")}/`;
 

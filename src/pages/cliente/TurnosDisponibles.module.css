@@ -2,7 +2,7 @@
     --fondo-turnos: none;
     min-height: 100%; 
     padding: 36px 0 56px; 
-    color: #fff; 
+    color: #ffffff; 
     background: linear-gradient(rgba(12,12,12,.88),rgba(12,12,12,.94)),var(--fondo-turnos),radial-gradient(ellipse at top,#514b3d 0%,#171615 58%,#0b0b0b 100%); 
     background-position: center; 
     background-size: cover; 
@@ -16,7 +16,8 @@
 
 .encabezado { 
     padding: 12px 20px; 
-    text-align: center; background: rgba(217,196,147,.35); border-bottom: 2px solid #d9c493; 
+    text-align: center; background: #d9c493a1; 
+    border-radius: 50px;
 }
 
 .aclaracion { 
@@ -30,7 +31,7 @@
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    gap: 20px; 
+    gap: 1cm; 
     margin: 22px 0; 
     color: #e9d8ae; 
     font-weight: 700; 
@@ -82,6 +83,14 @@
     flex-wrap: wrap; 
     gap: 8px; 
     padding: 15px;
+}
+
+.listaHorarios > .botonNavegacion:first-child {
+    margin-right: calc(1cm - 8px);
+}
+
+.listaHorarios > .botonNavegacion:last-child {
+    margin-left: calc(1cm - 8px);
 }
 
 .botonHorario { 
@@ -196,6 +205,27 @@
     border-color: #d9c493; 
     box-shadow: 0 0 0 .2rem rgba(217,196,147,.2); 
 }
+
+.selectServicio {
+    appearance: auto;
+    cursor: pointer;
+}
+.selectServicio option {
+    background: #202020;
+    color: #e9d8ae;
+}
+
+.checkCliente {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #e9d8ae;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+}
+.checkCliente input { accent-color: #d9c493; width: 16px; height: 16px; }
+.buscarCliente { margin-bottom: 0.75rem; }
+.buscarCliente button { width: 100%; min-height: 38px; }
 
 .botonConfirmar { 
     padding: 5px 24px; 

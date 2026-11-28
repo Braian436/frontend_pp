@@ -7,7 +7,7 @@ const TEXTO_ESTADO = {
   cancelado: "Cancelado",
 };
 
-export default function CardTurno({ horaInicio, horaFin, cliente, servicio, estado = "pendiente", onIniciar }) {
+export default function CardTurno({ horaInicio, horaFin, cliente, servicio, estado = "pendiente", onIniciar, onFinalizar }) {
   const claveEstado = TEXTO_ESTADO[estado] ? estado : "pendiente";
 
   return (
@@ -29,6 +29,11 @@ export default function CardTurno({ horaInicio, horaFin, cliente, servicio, esta
         {claveEstado === "pendiente" && onIniciar && (
           <button className={styles.botonIniciar} onClick={onIniciar}>
             Iniciar
+          </button>
+        )}
+        {claveEstado === "enCurso" && onFinalizar && (
+          <button className={styles.botonIniciar} onClick={onFinalizar}>
+            Finalizar
           </button>
         )}
       </div>

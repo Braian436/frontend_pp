@@ -88,11 +88,20 @@ export default function ListaTurno() {
     setFecha(nueva);
   };
 
-  // Pasa un turno de "pendiente" a "en curso" en el backend
   const iniciarTurno = async (id) => {
     setError("");
     try {
       await apiRequest(`/turnos/${id}/iniciar/`, { method: "POST" });
+      await recargar();
+    } catch (fallo) {
+      setError(fallo.message);
+    }
+  };
+
+  const finalizarTurno = async (id) => {
+    setError("");
+    try {
+      await apiRequest(`/turnos/${id}/finalizar/`, { method: "POST" });
       await recargar();
     } catch (fallo) {
       setError(fallo.message);
@@ -215,6 +224,7 @@ export default function ListaTurno() {
               servicio={turno.servicio}
               estado={turno.estado}
               onIniciar={() => iniciarTurno(turno.id)}
+              onFinalizar={() => finalizarTurno(turno.id)}
             />
           ))
         )}

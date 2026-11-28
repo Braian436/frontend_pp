@@ -18,6 +18,7 @@ import Footer from "./components/footer/Footer.jsx";
 import "@fontsource/montserrat";
 import AgendaBarbero from "./pages/barbero/AgendaBarbero.jsx";
 import AgendaAdministrador from "./pages/administrador/AgendaAdministrador.jsx";
+import Liquidaciones from "./pages/administrador/Liquidaciones.jsx";
 import HomeCajero from "./pages/cajero/HomeCajero.jsx";
 import CajaCajero from "./pages/cajero/CajaCajero.jsx";
 import TicketsCajero from "./pages/cajero/TicketsCajero.jsx";
@@ -35,10 +36,12 @@ const ROLES_CAJERO = ["Cajero"];
 function Layout() {
     const { pathname } = useLocation();
     const esCajero = pathname.startsWith("/cajero");
-    const esPortal = pathname.startsWith("/admin") ||
+    const esAdmin = pathname.startsWith("/admin");
+    const usaCaja = esCajero || esAdmin;
+    const esPortal = esAdmin ||
         pathname.startsWith("/barbero") ||
         pathname.startsWith("/home-barbero") ||
-        pathname.startsWith("/cajero") ||
+        esCajero ||
         pathname.startsWith("/empleados") ||
         pathname.startsWith("/liquidaciones") ||
         pathname.startsWith("/turnos/disponibilidad") ||
@@ -62,7 +65,7 @@ function Layout() {
                     : `d-flex flex-column min-vh-100 ${styles.app}`
             }
         >
-            {esCajero ? (
+            {usaCaja ? (
                 <CajaProvider>{contenido}</CajaProvider>
             ) : (
                 contenido
@@ -85,6 +88,15 @@ function App() {
                 <Route path="/admin" element={<RutaProtegida roles={ROLES_ADMIN}><HomeAdministrador /></RutaProtegida>} />
                 <Route path="/admin/agenda" element={<RutaProtegida roles={ROLES_ADMIN}><AgendaAdministrador /></RutaProtegida>} />
                 <Route path="/admin/caja" element={<RutaProtegida roles={ROLES_ADMIN}><CajaCajero /></RutaProtegida>} />
+                <Route
+                    path="/admin/asistencias"
+                    element={
+                        <RutaProtegida roles={ROLES_ADMIN}>
+                            <CajaRequerida redirectTo="/admin"><AsistenciasCajero /></CajaRequerida>
+                        </RutaProtegida>
+                    }
+                />
+                <Route path="/admin/liquidaciones" element={<RutaProtegida roles={ROLES_ADMIN}><Liquidaciones /></RutaProtegida>} />
                 <Route path="/admin/empleados" element={<RutaProtegida roles={ROLES_ADMIN}><Empleados /></RutaProtegida>} />
                 <Route path="/admin/productos" element={<RutaProtegida roles={ROLES_ADMIN}><GestionProductos /></RutaProtegida>} />
                 <Route path="/admin/marcas" element={<RutaProtegida roles={ROLES_ADMIN}><CatalogoProductos key="marcas" tipo="marcas" /></RutaProtegida>} />
@@ -146,18 +158,7 @@ function App() {
                         </RutaProtegida>
                     }
                 />
-                <Route
-                    path="/liquidaciones/"
-                    element={
-                        <RutaProtegida roles={ROLES_ADMIN}>
-                            <ApiDataPage
-                                title="Liquidaciones"
-                                description="Consulta las liquidaciones disponibles."
-                                endpoint="/liquidaciones/"
-                            />
-                        </RutaProtegida>
-                    }
-                />
+                <Route path="/liquidaciones/" element={<Navigate to="/admin/liquidaciones" replace />} />
                 <Route
                     path="/turnos/disponibilidad/"
                     element={

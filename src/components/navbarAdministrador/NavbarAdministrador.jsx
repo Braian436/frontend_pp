@@ -13,6 +13,8 @@ const menuAdministrador = [
     { type: "heading", label: "Gestion" },
     { type: "link", label: "Caja", to: "/admin/caja", icon: "dollar" },
     { type: "link", label: "Empleados", to: "/admin/empleados", icon: "users" },
+    { type: "link", label: "Asistencias", to: "/admin/asistencias", icon: "users" },
+    { type: "link", label: "Liquidaciones", to: "/admin/liquidaciones", icon: "wallet" },
     { type: "link", label: "Productos", to: "/admin/productos", icon: "package" },
     { type: "link", label: "Marcas", to: "/admin/marcas", icon: "package" },
     { type: "link", label: "Categorías", to: "/admin/categorias", icon: "package" },

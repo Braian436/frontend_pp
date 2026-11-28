@@ -183,6 +183,7 @@ export const normalizarTicket = (fila) => {
 
     return {
         id: fila?.id_venta ?? fila?.id ?? fila?.pk ?? Date.now(),
+        idTurno: fila?.id_turno ?? fila?.idTurno ?? null,
         hora: horaDe(fila?.fecha_venta ?? fila?.fecha ?? fila?.hora),
         cliente: cliente || `Cliente ${fila?.id_cliente ?? ""}`.trim(),
         barbero: barbero || "Sin barbero",

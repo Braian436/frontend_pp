@@ -44,13 +44,15 @@ export default function Clientes() {
         const nombre = String(c.nombre ?? "").toLowerCase();
         const apellido = String(c.apellido ?? "").toLowerCase();
         const telefono = String(c.telefono ?? "").toLowerCase();
-        return nombre.includes(texto) || apellido.includes(texto) || `${nombre} ${apellido}`.includes(texto) || telefono.includes(texto);
+        const email = String(c.email ?? "").toLowerCase();
+        return nombre.includes(texto) || apellido.includes(texto) || `${nombre} ${apellido}`.includes(texto) || telefono.includes(texto) || email.includes(texto);
     });
 
     const campos = [
         { name: "nombre", label: "Nombre", required: true, value: "" },
         { name: "apellido", label: "Apellido", required: true, value: "" },
         { name: "telefono", label: "Teléfono", required: true, value: "" },
+        { name: "email", label: "Email", type: "email", value: "" },
         { name: "fecha_nacimiento", label: "Fecha de nacimiento", type: "date", value: "" },
     ];
 
@@ -62,6 +64,7 @@ export default function Clientes() {
                 nombre: body.nombre.trim(),
                 apellido: body.apellido.trim(),
                 telefono: body.telefono.trim(),
+                email: body.email?.trim() || null,
                 fecha_nacimiento: body.fecha_nacimiento || null,
             };
             if (cliente) await editarClienteApi(cliente.id_cliente, payload);
@@ -141,6 +144,12 @@ export default function Clientes() {
                                                 <div className={styles.dato}>
                                                     <small>NACIMIENTO</small>
                                                     <strong>{item.fecha_nacimiento || "Sin definir"}</strong>
+                                                </div>
+                                            </div>
+                                            <div className="col-12">
+                                                <div className={styles.dato}>
+                                                    <small>EMAIL</small>
+                                                    <strong>{item.email || "Sin definir"}</strong>
                                                 </div>
                                             </div>
                                         </div>

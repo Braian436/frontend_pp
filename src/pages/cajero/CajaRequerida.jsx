@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useCajaContext } from "./cajaContexto.js";
 import styles from "./CajaRequerida.module.css";
 
-export default function CajaRequerida({ children }) {
+export default function CajaRequerida({ children, redirectTo = "/cajero" }) {
     const contexto = useCajaContext();
     const location = useLocation();
 
@@ -23,7 +23,7 @@ export default function CajaRequerida({ children }) {
     if (!contexto.cajaAbierta) {
         return (
             <Navigate
-                to="/cajero"
+                to={redirectTo}
                 replace
                 state={{
                     avisoCaja: true,

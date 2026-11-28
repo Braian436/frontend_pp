@@ -308,6 +308,24 @@ export function useCajaApi() {
         return true;
     };
 
+    const agregarItemTicket = async (id, datos) => {
+        setError("");
+        setProcesando(true);
+        try {
+            await apiRequest(`${ENDPOINTS.ventas}${id}/agregar-item/`, {
+                method: "POST",
+                body: datos,
+            });
+        } catch (fallo) {
+            setError(fallo.message);
+            setProcesando(false);
+            return false;
+        }
+        setProcesando(false);
+        await recargar();
+        return true;
+    };
+
     const cancelarTicket = async (id, { motivo }) => {
         setError("");
         setProcesando(true);
@@ -344,6 +362,7 @@ export function useCajaApi() {
         cobrarTicket,
         crearTicket,
         anularTicket,
+        agregarItemTicket,
         cancelarTicket,
     };
 }
