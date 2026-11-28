@@ -89,6 +89,14 @@ function App() {
                 <Route path="/admin/agenda" element={<RutaProtegida roles={ROLES_ADMIN}><AgendaAdministrador /></RutaProtegida>} />
                 <Route path="/admin/caja" element={<RutaProtegida roles={ROLES_ADMIN}><CajaCajero /></RutaProtegida>} />
                 <Route
+                    path="/admin/tickets"
+                    element={
+                        <RutaProtegida roles={ROLES_ADMIN}>
+                            <CajaRequerida redirectTo="/admin/caja"><TicketsCajero /></CajaRequerida>
+                        </RutaProtegida>
+                    }
+                />
+                <Route
                     path="/admin/asistencias"
                     element={
                         <RutaProtegida roles={ROLES_ADMIN}>

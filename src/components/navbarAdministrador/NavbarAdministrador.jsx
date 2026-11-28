@@ -12,6 +12,7 @@ const menuAdministrador = [
     { type: "link", label: "Agenda", to: "/admin/agenda", icon: "wallet" },
     { type: "heading", label: "Gestion" },
     { type: "link", label: "Caja", to: "/admin/caja", icon: "dollar" },
+    { type: "link", label: "Tickets", to: "/admin/tickets", icon: "ticket" },
     { type: "link", label: "Empleados", to: "/admin/empleados", icon: "users" },
     { type: "link", label: "Asistencias", to: "/admin/asistencias", icon: "users" },
     { type: "link", label: "Liquidaciones", to: "/admin/liquidaciones", icon: "wallet" },
